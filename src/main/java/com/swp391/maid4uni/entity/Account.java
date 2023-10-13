@@ -16,7 +16,7 @@ import java.util.Date;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
+            @Column(name = "account_id")
     int id;
 
     @Column(nullable = false, unique = true, name = "usename")
@@ -40,5 +40,5 @@ public class Account {
     @JoinColumn(name = "role_id")
     Role role;
 
-
+    
 }
