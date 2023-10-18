@@ -1,10 +1,11 @@
 package com.swp391.maid4uni.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "ACCOUNT_TBL")
@@ -19,7 +20,7 @@ public class Account {
             @Column(name = "account_id")
     int id;
 
-    @Column(nullable = false, unique = true, name = "usename")
+    @Column(nullable = false, unique = true, name = "username")
     String userName;
     @Column(nullable = false)
     String password;
@@ -40,5 +41,13 @@ public class Account {
     @JoinColumn(name = "role_id")
     Role role;
 
-    
+    @OneToMany(mappedBy = "sender")
+    List<Feedback> sentFeedback;
+
+    @OneToMany(mappedBy = "receiver")
+    List<Feedback> receivedFeedback;
+
+    @OneToMany(mappedBy = "creator")
+    List<Package> createdPackage;
+
 }

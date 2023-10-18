@@ -1,8 +1,10 @@
 package com.swp391.maid4uni.entity;
 
-import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "RATING_TBL")

@@ -1,9 +1,9 @@
 package com.swp391.maid4uni.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -18,28 +18,20 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feedback_id", nullable = false)
     int id;
-
     @Column(name = "content")
     String content;
-
     @Column(name = "date")
     LocalDate date;
 
-    @Column(name="sender_username")
-     String senderUsername;
+    @ManyToOne
+    @JoinColumn(name="sender")
+    Account sender;
 
     @ManyToOne
-    @JoinColumn(name="sender_username", referencedColumnName="username")
-     Account sender;
-
-    @Column(name="receiver_username")
-     String receiverUsername;
-
-    @ManyToOne
-    @JoinColumn(name="receiver_username", referencedColumnName="username")
-     Account receiver;
+    @JoinColumn(name="receiver")
+    Account receiver;
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="rating_id")
-     Rating rating;
+    Rating rating;
 }
