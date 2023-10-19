@@ -3,11 +3,8 @@ package com.swp391.maid4uni.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.apache.catalina.LifecycleState;
 
-import javax.persistence.*;
-import java.beans.ConstructorProperties;
-import java.sql.Time;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 

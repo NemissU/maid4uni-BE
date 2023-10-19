@@ -3,7 +3,7 @@ package com.swp391.maid4uni.entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -24,14 +24,14 @@ public class Feedback {
     LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name="sender")
+    @JoinColumn(name = "sender")
     Account sender;
 
     @ManyToOne
-    @JoinColumn(name="receiver")
+    @JoinColumn(name = "receiver")
     Account receiver;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="rating_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id")
     Rating rating;
 }

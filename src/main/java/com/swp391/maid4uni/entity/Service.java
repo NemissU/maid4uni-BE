@@ -1,11 +1,10 @@
 package com.swp391.maid4uni.entity;
 
 
-import jdk.dynalink.linker.LinkerServices;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class Service {
     String description;
     @Column(nullable = false)
     double price;
-    @Column(name = "created_at",nullable = false)
+    @Column(name = "created_at", nullable = false)
     Date createdAt;
     @Column(name = "updated_at")
     Date updateAt;

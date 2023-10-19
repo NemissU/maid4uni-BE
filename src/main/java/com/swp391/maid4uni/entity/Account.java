@@ -3,7 +3,7 @@ package com.swp391.maid4uni.entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-            @Column(name = "account_id")
+    @Column(name = "account_id")
     int id;
 
     @Column(nullable = false, unique = true, name = "username")
@@ -36,6 +36,8 @@ public class Account {
     String gender;
     @Column
     String address;
+    @Column
+    String img;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

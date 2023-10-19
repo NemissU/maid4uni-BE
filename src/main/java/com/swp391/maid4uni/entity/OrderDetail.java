@@ -3,7 +3,7 @@ package com.swp391.maid4uni.entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
@@ -28,11 +28,9 @@ public class OrderDetail {
     Time endTime;
     @Column
     boolean status;
-
     @ManyToOne
     @JoinColumn(name = "order_id")
     Order order;
-
     @OneToMany(mappedBy = "orderDetail")
     List<Task> taskList;
 }

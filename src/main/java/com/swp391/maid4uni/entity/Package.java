@@ -3,7 +3,7 @@ package com.swp391.maid4uni.entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class Package {
     String description;
     @Column(nullable = false)
     double price;
-    @Column(name = "created_at",nullable = false)
+    @Column(name = "created_at", nullable = false)
     Date createdAt;
     @Column(name = "updated_at")
     Date updateAt;
@@ -36,7 +36,7 @@ public class Package {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "package_service"
-            ,joinColumns = @JoinColumn(name = "package_id")
-            ,inverseJoinColumns = @JoinColumn(name = "service_id"))
+            , joinColumns = @JoinColumn(name = "package_id")
+            , inverseJoinColumns = @JoinColumn(name = "service_id"))
     List<Service> serviceList;
 }

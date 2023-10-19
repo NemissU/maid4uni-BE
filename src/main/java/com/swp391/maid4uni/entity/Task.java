@@ -3,7 +3,7 @@ package com.swp391.maid4uni.entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -27,14 +27,14 @@ public class Task {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "task_staff"
-            ,joinColumns = @JoinColumn(name = "task_id")
-            ,inverseJoinColumns = @JoinColumn(name = "staff_id"))
+            , joinColumns = @JoinColumn(name = "task_id")
+            , inverseJoinColumns = @JoinColumn(name = "staff_id"))
     List<Account> staffs;
 
     @ManyToOne
     @JoinColumn(name = "order_detail_id")
     OrderDetail orderDetail;
 
-    @ManyToMany(mappedBy = "taskList",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "taskList", fetch = FetchType.LAZY)
     List<Tracker> belongedTrackers;
 }
