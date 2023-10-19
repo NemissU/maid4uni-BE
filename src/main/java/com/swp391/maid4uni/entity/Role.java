@@ -1,9 +1,9 @@
 package com.swp391.maid4uni.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,10 +15,13 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role {
     @Id
-    @Column(name = "role_id", nullable = false)
+    @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    int id;
 
     @Column(name = "role_name", nullable = false)
     String roleName;
+
+    @OneToMany(mappedBy = "role")
+    List<Account> accountsLinked;
 }
