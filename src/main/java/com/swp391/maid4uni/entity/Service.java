@@ -38,4 +38,7 @@ public class Service {
 
     @ManyToMany(mappedBy = "serviceList", fetch = FetchType.LAZY)
     List<Package> belongedPackage;
+
+    @OneToMany(mappedBy = "service")
+    List<Task> taskList;
 }
