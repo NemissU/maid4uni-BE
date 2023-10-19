@@ -19,8 +19,10 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping(API_PARAMS.LOGIN)
-    public ResponseEntity<AccountResponse> login(
+    public ResponseEntity<AccountResponse> loginUsingAccount(
             @RequestBody AccountRequest request) {
-        return ResponseEntity.ok(accountService.login(request));
+        return ResponseEntity.ok(accountService.loginUsingAccount(request));
     }
+
+
 }

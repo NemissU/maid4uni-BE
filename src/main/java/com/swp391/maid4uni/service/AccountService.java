@@ -1,8 +1,9 @@
 package com.swp391.maid4uni.service;
 
 
-public interface AccountService{
-    AccountDTOResponse createAccount(AccountDTOCreate accountDTOCreate);
+import com.swp391.maid4uni.request.AccountRequest;
+import com.swp391.maid4uni.response.AccountResponse;
 
-    LoginDTOResponse login(LoginDTORequest loginDTORequest);
+public interface AccountService{
+    AccountResponse loginUsingAccount(AccountRequest request);
 }
