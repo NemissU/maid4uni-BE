@@ -50,4 +50,10 @@ public class Account {
     @OneToMany(mappedBy = "creator")
     List<Package> createdPackage;
 
+    @OneToMany(mappedBy = "customer")
+    List<Order> orderedList;
+
+    @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
+    List<Task> taskList;
+
 }
