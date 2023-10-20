@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Tracker.
+ */
 @Entity
 @Table(name = "TRACKER_TBL")
 @Data

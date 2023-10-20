@@ -1,4 +1,4 @@
-package com.swp391.maid4uni.response;
+package com.swp391.maid4uni.dto;
 
 import com.swp391.maid4uni.entity.Role;
 import lombok.*;
@@ -7,14 +7,15 @@ import lombok.experimental.FieldDefaults;
 import java.util.Date;
 
 /**
- * The type Account response.
+ * The type Account dto.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AccountResponse {
+
+public class AccountDto {
     int id;
     String username;
     String email;
@@ -25,4 +26,5 @@ public class AccountResponse {
     String address;
     String img;
     Role role;
+
 }

@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Service.
+ */
 @Entity
 @Table(name = "SERVICE_TBL")
 @Data

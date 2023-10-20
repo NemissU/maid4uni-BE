@@ -6,6 +6,9 @@ import lombok.experimental.FieldDefaults;
 import jakarta.persistence.*;
 import java.util.List;
 
+/**
+ * The type Task.
+ */
 @Entity
 @Table(name = "TASK_TBL")
 @Data
