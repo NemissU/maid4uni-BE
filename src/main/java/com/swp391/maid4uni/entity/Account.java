@@ -4,7 +4,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
-import org.mapstruct.Mapping;
 
 import java.util.Date;
 import java.util.List;
@@ -45,8 +44,7 @@ public class Account {
     @Column
     String img;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
+    @Enumerated
     Role role;
 
     @OneToMany(mappedBy = "sender")

@@ -11,7 +11,7 @@ public class API_PARAMS {
     /**
      * The constant LOGIN.
      */
-    public static final String LOGIN = "/login";
+    public static final String LOGIN_BY_USERNAME = "/login";
     /**
      * The constant REGISTER.
      */
@@ -32,5 +32,6 @@ public class API_PARAMS {
      */
     public static final String GET_STAFF_LIST = "/get-staff-list";
 
+    public static final String GET_CUSTOMER_LIST = "/get-customer-list";
 }
 

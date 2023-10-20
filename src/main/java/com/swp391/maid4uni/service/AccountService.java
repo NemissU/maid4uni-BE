@@ -2,6 +2,7 @@ package com.swp391.maid4uni.service;
 
 
 import com.swp391.maid4uni.request.LoginByUsernameRequest;
+import com.swp391.maid4uni.request.RegisterAccountRequest;
 import com.swp391.maid4uni.response.AccountResponse;
 import com.swp391.maid4uni.response.LoginByUsernameResponse;
 
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * The interface Account service.
  */
-public interface AccountService{
+public interface AccountService {
 
     /**
      * Login by username login by username response.
@@ -40,4 +41,10 @@ public interface AccountService{
      * @return the staff list
      */
     List<AccountResponse> getStaffList();
+
+    List<AccountResponse> getCustomerList();
+
+
+    AccountResponse register(RegisterAccountRequest registerAccountRequest);
+
 }
