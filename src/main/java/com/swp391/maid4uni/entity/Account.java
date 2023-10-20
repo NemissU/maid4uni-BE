@@ -4,9 +4,14 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
+import org.mapstruct.Mapping;
+
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Account.
+ */
 @Entity
 @Table(name = "ACCOUNT_TBL")
 @Data
@@ -14,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +27,7 @@ public class Account {
     int id;
 
     @Column(nullable = false, unique = true, name = "username")
-    String userName;
+    String username;
     @Column(nullable = false)
     String password;
     @Column(unique = true)

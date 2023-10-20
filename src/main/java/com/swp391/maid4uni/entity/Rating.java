@@ -6,6 +6,9 @@ import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
 
+/**
+ * The type Rating.
+ */
 @Entity
 @Table(name = "RATING_TBL")
 @Data

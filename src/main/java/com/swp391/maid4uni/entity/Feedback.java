@@ -6,6 +6,9 @@ import lombok.experimental.FieldDefaults;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * The type Feedback.
+ */
 @Entity
 @Table(name = "FEEDBACK_TBL")
 @Data

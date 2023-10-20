@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Payment.
+ */
 @Entity
 @Table(name = "PAYMENT_TBL")
 @Data
