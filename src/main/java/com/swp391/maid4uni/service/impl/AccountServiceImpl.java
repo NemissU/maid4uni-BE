@@ -37,7 +37,9 @@ public class AccountServiceImpl implements AccountService {
     PasswordEncoder passwordEncoder;
     JwtTokenUtil jwtTokenUtil;
 
-    /** Login by username */
+    /**
+     * Login by username
+     */
     @Override
     public LoginByUsernameResponse loginByUsername(LoginByUsernameRequest request) {
         Account account = accountRepository
@@ -52,11 +54,6 @@ public class AccountServiceImpl implements AccountService {
         }
 
         // build token payload từ account
-//        TokenPayload tokenPayload = TokenPayload
-//                .builder()
-//                .accountId(account.getId())
-//                .username(account.getUsername())
-//                .build();
         // set token timeout 1 ngày
         String accessToken = jwtTokenUtil.generateToken(AccountConverter.INSTANCE.fromAccountToTokenPayload(account), ENUMS.JWT_EXPIRATION_ONE_DAY);
         return LoginByUsernameResponse
@@ -66,7 +63,9 @@ public class AccountServiceImpl implements AccountService {
                 .build();
     }
 
-    /** Get list account */
+    /**
+     * Get list account
+     */
 
     @Override
     public List<AccountResponse> getAccountList() {
@@ -74,20 +73,24 @@ public class AccountServiceImpl implements AccountService {
         // !CollectionUtils.isEmpty(accountList) trả về true nếu list k rỗng và khác null
         List<AccountResponse> accountResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(accountList)) {
-            accountList.stream()
-                    .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
-                    .toList();
+            accountResponseList =
+                    accountList.stream()
+                            .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
+                            .toList();
         }
         return accountResponseList;
     }
 
-    /** Get list manager */
+    /**
+     * Get list manager
+     */
 
     @Override
     public List<AccountResponse> getManagerList() {
         List<Account> managerList = accountRepository.findByRole(Role.MANAGER);
         List<AccountResponse> managerResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(managerList)) {
+            managerResponseList =
             managerList.stream()
                     .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
                     .toList();
@@ -95,13 +98,16 @@ public class AccountServiceImpl implements AccountService {
         return managerResponseList;
     }
 
-    /** Get list staff */
+    /**
+     * Get list staff
+     */
 
     @Override
     public List<AccountResponse> getStaffList() {
         List<Account> staffList = accountRepository.findByRole(Role.STAFF);
         List<AccountResponse> staffResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(staffList)) {
+            staffResponseList =
             staffList.stream()
                     .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
                     .toList();
@@ -114,6 +120,7 @@ public class AccountServiceImpl implements AccountService {
         List<Account> customerList = accountRepository.findByRole(Role.CUSTOMER);
         List<AccountResponse> customerResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(customerList)) {
+            customerResponseList =
             customerList.stream()
                     .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
                     .toList();
@@ -136,10 +143,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private void validateRegisterAccountRequest(RegisterAccountRequest RegisterAccountRequest) {
-        if(accountRepository.existsByUsername(RegisterAccountRequest.getUsername())){
+        if (accountRepository.existsByUsername(RegisterAccountRequest.getUsername())) {
             throw Maid4UniException.badRequest("Username is existed");
         }
-        if(accountRepository.existsByEmail(RegisterAccountRequest.getEmail())){
+        if (accountRepository.existsByEmail(RegisterAccountRequest.getEmail())) {
             throw Maid4UniException.badRequest("Email is existed");
         }
     }

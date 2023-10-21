@@ -42,9 +42,20 @@ public interface AccountService {
      */
     List<AccountResponse> getStaffList();
 
+    /**
+     * Gets customer list.
+     *
+     * @return the customer list
+     */
     List<AccountResponse> getCustomerList();
 
 
+    /**
+     * Register account response.
+     *
+     * @param registerAccountRequest the register account request
+     * @return the account response
+     */
     AccountResponse register(RegisterAccountRequest registerAccountRequest);
 
 }

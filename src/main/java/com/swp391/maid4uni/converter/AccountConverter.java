@@ -36,10 +36,22 @@ public interface AccountConverter {
      */
     AccountResponse fromAccountToAccountResponse(Account account);
 
+    /**
+     * From register account request to account account.
+     *
+     * @param registerAccountRequest the register account request
+     * @return the account
+     */
 //    @Mapping(target = "password", ignore = true)
     Account fromRegisterAccountRequestToAccount(RegisterAccountRequest registerAccountRequest);
 
-    // build token payload từ account
+    /**
+     * From account to token payload token payload.
+     *
+     * @param account the account
+     * @return the token payload
+     */
+// build token payload từ account
     // dùng default để MapStruct k convert
     default TokenPayload fromAccountToTokenPayload(Account account){
         if (account == null){
