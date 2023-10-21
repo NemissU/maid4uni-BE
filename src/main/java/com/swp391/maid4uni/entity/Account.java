@@ -62,4 +62,5 @@ public class Account {
     @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
     List<Task> taskList;
 
+
 }

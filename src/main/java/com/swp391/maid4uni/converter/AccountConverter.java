@@ -42,7 +42,6 @@ public interface AccountConverter {
      * @param registerAccountRequest the register account request
      * @return the account
      */
-
     Account fromRegisterAccountRequestToAccount(RegisterAccountRequest registerAccountRequest);
 
     /**
