@@ -20,11 +20,8 @@ import java.util.Date;
  * The type App.
  */
 @SpringBootApplication
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class App implements CommandLineRunner {
+
+public class App {
     /**
      * The entry point of application.
      *
@@ -34,26 +31,6 @@ public class App implements CommandLineRunner {
         ApplicationContext context = SpringApplication.run(App.class, args);
 
     }
-    @Autowired
-    private AccountRepository accountRepository;
-    @Override
-    public void run(String... args) throws Exception {
 
-        accountRepository.deleteAll();
-        Account account = new Account();
-        account = Account.builder()
-                .role(Role.ADMIN)
-                .email("email")
-                .img("img")
-                .address("address")
-                .gender("gender")
-                .address("address")
-                .fullName("fullname")
-                .username("admin")
-                .password("admin")
-                .phoneNumber("0123456789")
-                .build();
-        accountRepository.save(account);
-        System.out.println(account);
-    }
+
 }

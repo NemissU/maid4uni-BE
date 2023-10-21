@@ -32,6 +32,9 @@ public class API_PARAMS {
      */
     public static final String GET_STAFF_LIST = "/get-staff-list";
 
+    /**
+     * The constant GET_CUSTOMER_LIST.
+     */
     public static final String GET_CUSTOMER_LIST = "/get-customer-list";
 }
 

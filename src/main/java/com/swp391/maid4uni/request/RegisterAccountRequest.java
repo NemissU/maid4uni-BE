@@ -9,6 +9,9 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 
+/**
+ * The type Register account request.
+ */
 @Getter
 @Setter
 @Builder
