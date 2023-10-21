@@ -27,4 +27,5 @@ public class RegisterAccountRequest {
     String gender;
     String address;
     String img;
+    Role role;
 }

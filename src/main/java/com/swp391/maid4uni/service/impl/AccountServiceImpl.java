@@ -14,6 +14,7 @@ import com.swp391.maid4uni.service.AccountService;
 import com.swp391.maid4uni.ulti.JwtTokenUtil;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import java.util.List;
  */
 @Service
 @Data
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @NoArgsConstructor(force = true)
 @Builder
@@ -34,7 +36,9 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
     JwtTokenUtil jwtTokenUtil;
 
     /**
@@ -130,7 +134,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountResponse register(RegisterAccountRequest registerAccountRequest) {
+        log.info("Start Validating register request");
         validateRegisterAccountRequest(registerAccountRequest);
+//        Account account = AccountConverter.INSTANCE.fromRegisterAccountRequestToAccount(registerAccountRequest);
         Account account = AccountConverter.INSTANCE.fromRegisterAccountRequestToAccount(registerAccountRequest);
         // mã hóa password
         String rawPassword = account.getPassword();
