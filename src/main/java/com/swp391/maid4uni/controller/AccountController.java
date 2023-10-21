@@ -96,7 +96,6 @@ public class AccountController {
         );
     }
 
-
     /**
      * Register response entity.
      *
@@ -111,4 +110,6 @@ public class AccountController {
                 new ResponseObject("OK", "REGISTER SUCCESSFULLY", accountService.register(registerAccountRequest))
         );
     }
+
+
 }

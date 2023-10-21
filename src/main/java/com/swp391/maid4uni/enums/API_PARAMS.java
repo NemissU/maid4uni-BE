@@ -7,6 +7,10 @@ public class API_PARAMS {
     /**
      * The constant API_VERSION.
      */
+
+    /**
+     * ACCOUNT APIs
+     */
     public static final String API_VERSION = "/api/v1";
     /**
      * The constant LOGIN.
@@ -36,5 +40,12 @@ public class API_PARAMS {
      * The constant GET_CUSTOMER_LIST.
      */
     public static final String GET_CUSTOMER_LIST = "/get-customer-list";
+
+
+    /**
+     * FEEDBACK APIs
+     */
+    public static final String GET_ALL_FEEDBACK_LIST = "/get-all-feedback-list";
+
 }
 
