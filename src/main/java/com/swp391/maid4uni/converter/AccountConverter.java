@@ -13,7 +13,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * The interface Account converter.
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AccountConverter {
     /**
      * The constant INSTANCE.
@@ -42,7 +42,7 @@ public interface AccountConverter {
      * @param registerAccountRequest the register account request
      * @return the account
      */
-//    @Mapping(target = "password", ignore = true)
+
     Account fromRegisterAccountRequestToAccount(RegisterAccountRequest registerAccountRequest);
 
     /**

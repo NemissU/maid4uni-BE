@@ -2,7 +2,7 @@ package com.swp391.maid4uni.entity;
 
 
 /**
- * The type Role.
+ * The enum Role.
  */
 public enum Role {
     /**
@@ -14,11 +14,12 @@ public enum Role {
      */
     STAFF,
     /**
+     * Manager role.
+     */
+    MANAGER,
+    /**
      * Admin role.
      */
     ADMIN,
-    /**
-     * Manager role.
-     */
-    MANAGER
+
 }
