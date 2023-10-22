@@ -36,4 +36,6 @@ public class OrderDetail {
     Order order;
     @OneToMany(mappedBy = "orderDetail")
     List<Task> taskList;
+    @Column
+    short logicalDeleteStatus;
 }

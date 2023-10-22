@@ -31,7 +31,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     private FeedbackRepository feedbackRepository;
     @Override
     public List<FeedbackResponse> getAllFeedbackList() {
-        List<Feedback> feedbackList = feedbackRepository.findAll();
+        List<Feedback> feedbackList = feedbackRepository.findAllByLogicalDeleteStatus(0);
         List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(feedbackList)) {
             feedbackResponseList =
@@ -44,7 +44,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public List<FeedbackResponse> getFeedbackByReceiverId(AccountDto accountDto) {
-        List<Feedback> feedbackList = feedbackRepository.findAllByReceiverId(accountDto.getId());
+        List<Feedback> feedbackList = feedbackRepository.findAllByReceiverIdAndLogicalDeleteStatus(accountDto.getId(),0);
         List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(feedbackList)) {
             feedbackResponseList =
@@ -57,7 +57,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public List<FeedbackResponse> getFeedbackBySenderId(AccountDto accountDto) {
-        List<Feedback> feedbackList = feedbackRepository.findAllBySenderId(accountDto.getId());
+        List<Feedback> feedbackList = feedbackRepository.findAllBySenderIdAndLogicalDeleteStatus(accountDto.getId(),0);
         List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(feedbackList)) {
             feedbackResponseList =

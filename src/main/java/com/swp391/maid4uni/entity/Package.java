@@ -32,6 +32,8 @@ public class Package {
     Date createdAt;
     @Column(name = "updated_at")
     Date updateAt;
+    @Column
+    short logicalDeleteStatus;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")

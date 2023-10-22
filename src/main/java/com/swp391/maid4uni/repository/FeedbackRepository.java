@@ -9,7 +9,9 @@ import java.util.List;
  * The interface Feedback repository.
  */
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
-    List<Feedback> findAllByReceiverId(int receiverId);
+    List<Feedback> findAllByReceiverIdAndLogicalDeleteStatus(int receiverId, int logicalDeleteStatus);
 
-    List<Feedback> findAllBySenderId(int senderId);
+    List<Feedback> findAllBySenderIdAndLogicalDeleteStatus(int senderId, int logicalDeleteStatus);
+
+    List<Feedback> findAllByLogicalDeleteStatus(int logicalDeleteStatus);
 }

@@ -32,6 +32,8 @@ public class Order {
     int duration;
     @Column(name = "period_Type")
     String periodType;
+    @Column
+    short logicalDeleteStatus;
 
     @ManyToOne
     @JoinColumn(name = "cutomer_id")

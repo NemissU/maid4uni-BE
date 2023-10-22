@@ -25,6 +25,8 @@ public class Feedback {
     String comment;
     @Column(name = "date")
     LocalDate date;
+    @Column
+    short logicalDeleteStatus;
 
 
     @ManyToOne
