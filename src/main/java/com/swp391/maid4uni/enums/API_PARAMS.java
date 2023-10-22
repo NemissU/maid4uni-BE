@@ -7,11 +7,14 @@ public class API_PARAMS {
     /**
      * The constant API_VERSION.
      */
-
-    /**
-     * ACCOUNT APIs
-     */
     public static final String API_VERSION = "/api/v1";
+
+
+    /********************************************************
+     *                     ACCOUNT APIs                     *
+     ********************************************************/
+
+
     /**
      * The constant LOGIN.
      */
@@ -41,10 +44,13 @@ public class API_PARAMS {
      */
     public static final String GET_CUSTOMER_LIST = "/get-customer-list";
 
+    public static final String UPDATE_ACCOUNT_INFO = "/update-account-info";
 
-    /**
-     * FEEDBACK APIs
-     */
+    public static final String UPDATE_ROLE = "/update-role";
+
+    /********************************************************
+     *                    FEEDBACK APIs                     *
+     ********************************************************/
     public static final String GET_ALL_FEEDBACK_LIST = "/get-all-feedback-list";
 
 }

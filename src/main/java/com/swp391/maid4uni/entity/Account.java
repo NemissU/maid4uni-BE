@@ -43,7 +43,8 @@ public class Account {
     String address;
     @Column
     String img;
-
+    @Column
+    short logicalDeleteStatus;
     @Enumerated
     Role role;
 

@@ -18,11 +18,11 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RegisterAccountRequest {
     int id;
+    String fullName;
     String username;
     String password;
     String email;
     String phoneNumber;
-    String fullName;
     Date dOB;
     String gender;
     String address;
