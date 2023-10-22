@@ -1,5 +1,6 @@
 package com.swp391.maid4uni.controller;
 
+import com.swp391.maid4uni.dto.AccountDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.FeedbackService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +40,16 @@ public class FeedbackController {
         log.info("Start get all feedback list");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK", "GET ALL FEEDBACK LIST SUCCESSFULLY", feedbackService.getAllFeedbackList())
+        );
+    }
+
+    @GetMapping(API_PARAMS.GET_FEEDBACK_BY_RECEIVER_ID)
+    public ResponseEntity<ResponseObject> getFeedbackByReceiverId(
+            @RequestBody AccountDto accountDto){
+        log.info("Start get feedback by receiver id");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK","GET FEEDBACK BY RECEIVER ID SUCCESSFULLY",
+                        feedbackService.getFeedbackByReceiverId(accountDto))
         );
     }
 }

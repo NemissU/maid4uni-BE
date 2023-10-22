@@ -47,5 +47,6 @@ public class API_PARAMS {
      */
     public static final String GET_ALL_FEEDBACK_LIST = "/get-all-feedback-list";
 
+    public static final String GET_FEEDBACK_BY_RECEIVER_ID = "/get-feedback-by-receiver-id";
 }
 
