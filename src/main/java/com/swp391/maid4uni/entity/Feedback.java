@@ -26,6 +26,7 @@ public class Feedback {
     @Column(name = "date")
     LocalDate date;
 
+
     @ManyToOne
     @JoinColumn(name = "sender")
     Account sender;

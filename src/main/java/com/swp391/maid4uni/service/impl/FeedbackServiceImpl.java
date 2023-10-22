@@ -54,4 +54,17 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
         return feedbackResponseList;
     }
+
+    @Override
+    public List<FeedbackResponse> getFeedbackBySenderId(AccountDto accountDto) {
+        List<Feedback> feedbackList = feedbackRepository.findAllBySenderId(accountDto.getId());
+        List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(feedbackList)) {
+            feedbackResponseList =
+                    feedbackList.stream()
+                            .map(FeedbackConverter.INSTANCE::fromFeedbackToFeedbackResponse)
+                            .toList();
+        }
+        return feedbackResponseList;
+    }
 }

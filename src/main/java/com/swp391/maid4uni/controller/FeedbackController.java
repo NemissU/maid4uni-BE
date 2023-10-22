@@ -52,4 +52,14 @@ public class FeedbackController {
                         feedbackService.getFeedbackByReceiverId(accountDto))
         );
     }
+
+    @GetMapping(API_PARAMS.GET_FEEDBACK_BY_SENDER_ID)
+    public ResponseEntity<ResponseObject> getFeedbackBySenderId(
+            @RequestBody AccountDto accountDto){
+        log.info("Start get feedback by sender id");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK","GET FEEDBACK BY SENDER ID SUCCESSFULLY",
+                        feedbackService.getFeedbackBySenderId(accountDto))
+        );
+    }
 }
