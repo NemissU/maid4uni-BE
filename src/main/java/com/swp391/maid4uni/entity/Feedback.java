@@ -21,8 +21,8 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feedback_id", nullable = false)
     int id;
-    @Column(name = "content")
-    String content;
+    @Column(name = "comment")
+    String comment;
     @Column(name = "date")
     LocalDate date;
 

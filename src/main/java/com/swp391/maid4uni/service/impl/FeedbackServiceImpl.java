@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.FeedbackConverter;
+import com.swp391.maid4uni.dto.AccountDto;
 import com.swp391.maid4uni.entity.Feedback;
 import com.swp391.maid4uni.repository.FeedbackRepository;
 import com.swp391.maid4uni.response.FeedbackResponse;
@@ -31,6 +32,19 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public List<FeedbackResponse> getAllFeedbackList() {
         List<Feedback> feedbackList = feedbackRepository.findAll();
+        List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(feedbackList)) {
+            feedbackResponseList =
+                    feedbackList.stream()
+                            .map(FeedbackConverter.INSTANCE::fromFeedbackToFeedbackResponse)
+                            .toList();
+        }
+        return feedbackResponseList;
+    }
+
+    @Override
+    public List<FeedbackResponse> getFeedbackByReceiverId(AccountDto accountDto) {
+        List<Feedback> feedbackList = feedbackRepository.findAllByReceiverId(accountDto.getId());
         List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(feedbackList)) {
             feedbackResponseList =
