@@ -1,24 +1,24 @@
-package com.swp391.maid4uni.response;
+package com.swp391.maid4uni.dto;
 
-import com.swp391.maid4uni.entity.Account;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
-import java.util.List;
 
-@Getter
-@Setter
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PackageResponse {
+public class ServiceDto {
+    int id;
     String name;
     String description;
     double price;
     Date createdAt;
     Date updatedAt;
-    AccountResponse creator;
-    List<ServiceResponse> serviceList;
+    short logicalDeleteStatus;
+    AccountDto creator;
 }

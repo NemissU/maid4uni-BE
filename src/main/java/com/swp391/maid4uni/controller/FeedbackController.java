@@ -47,12 +47,11 @@ public class FeedbackController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_FEEDBACK_BY_RECEIVER_ID)
-    public ResponseEntity<ResponseObject> getFeedbackByReceiverId(
-            @RequestBody AccountDto accountDto){
+    public ResponseEntity<ResponseObject> getFeedbackByReceiverId(@PathVariable int id){
         log.info("Start get feedback by receiver id");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK","GET FEEDBACK BY RECEIVER ID SUCCESSFULLY",
-                        feedbackService.getFeedbackByReceiverId(accountDto))
+                        feedbackService.getFeedbackByReceiverId(id))
         );
     }
 

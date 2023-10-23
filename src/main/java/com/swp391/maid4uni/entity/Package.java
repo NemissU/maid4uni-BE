@@ -4,6 +4,12 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +17,7 @@ import java.util.List;
  * The type Package.
  */
 @Entity
+@EnableJpaAuditing
 @Table(name = "PACKAGE_TBL")
 @Data
 @Builder
@@ -28,8 +35,10 @@ public class Package {
     String description;
     @Column(nullable = false)
     double price;
-    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     Date createdAt;
+    @UpdateTimestamp
     @Column(name = "updated_at")
     Date updatedAt;
     @Column
