@@ -44,15 +44,16 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<FeedbackResponse> getFeedbackByReceiverId(AccountDto accountDto) {
-        List<Feedback> feedbackList = feedbackRepository.findAllByReceiverIdAndLogicalDeleteStatus(accountDto.getId(),0);
+    public List<FeedbackResponse> getFeedbackByReceiverId(int id) {
+        List<Feedback> feedbackList = feedbackRepository.findAllByReceiverIdAndLogicalDeleteStatus(id,0);
         List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(feedbackList)) {
             feedbackResponseList =
                     feedbackList.stream()
                             .map(FeedbackConverter.INSTANCE::fromFeedbackToFeedbackResponse)
                             .toList();
-        }
+        }else
+            throw Maid4UniException.notFound("Not found any feedbacks of receiver: " + id);
         return feedbackResponseList;
     }
 
@@ -66,7 +67,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                             .map(FeedbackConverter.INSTANCE::fromFeedbackToFeedbackResponse)
                             .toList();
         } else
-            throw Maid4UniException.notFound("SenderId does not exist");
+            throw Maid4UniException.notFound("Not found any feedbacks of sender: " + id);
         return feedbackResponseList;
     }
 }

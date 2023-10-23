@@ -53,7 +53,7 @@ public class API_PARAMS {
      ********************************************************/
     public static final String GET_ALL_FEEDBACK_LIST = "/get-all-feedback-list";
 
-    public static final String GET_FEEDBACK_BY_RECEIVER_ID = "/get-feedback-by-receiver-id";
+    public static final String GET_FEEDBACK_BY_RECEIVER_ID = "/get-feedback-by-receiver-id/{id}";
 
     public static final String GET_FEEDBACK_BY_SENDER_ID = "/get-feedback-by-sender-id/{id}";
 

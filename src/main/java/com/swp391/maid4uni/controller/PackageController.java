@@ -1,7 +1,10 @@
 package com.swp391.maid4uni.controller;
 
+import com.swp391.maid4uni.converter.PackageConverter;
 import com.swp391.maid4uni.dto.AccountDto;
+import com.swp391.maid4uni.dto.PackageDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
+import com.swp391.maid4uni.request.CreatePackageRequest;
 import com.swp391.maid4uni.response.PackageResponse;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.AccountService;
@@ -30,6 +33,11 @@ public class PackageController {
     @Autowired
     private PackageService packageService;
 
+    /**
+     * Get all package response entity.
+     *
+     * @return the response entity
+     */
     @GetMapping(API_PARAMS.GET_ALL_PACKAGE)
     public ResponseEntity<ResponseObject> getAllPackage(){
         log.info("Start get all package");
@@ -37,14 +45,26 @@ public class PackageController {
                 new ResponseObject("OK","GET ALL PACKAGE SUCCESSFULLY", packageService.getAllPackage())
         );
     }
-    /*
-    IN PROCESS
-    @PostMapping(API_PARAMS.CREATE_PACKAGE)
-    public ResponseEntity<ResponseObject> createPackage(@RequestBody PackageResponse packageResponse){
-        log.info("Start create package");
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK","CREATE PACKAGE SUCCESSFULLY", packageService.createPackage(packageResponse))
-        )
-    }
+
+    /**
+     * Create package response entity.
+     *
+     * @param createPackageRequest the create package request
+     * @return the response entity
      */
+    @PostMapping(API_PARAMS.CREATE_PACKAGE)
+    public ResponseEntity<ResponseObject> createPackage(
+            @RequestBody CreatePackageRequest createPackageRequest){
+        log.info("Start create package");
+        PackageDto packageDto = PackageConverter
+                .INSTANCE
+                .fromCreatePackageRequestToPackageDto(createPackageRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK"
+                        ,"CREATE PACKAGE SUCCESSFULLY"
+                        , PackageConverter
+                        .INSTANCE
+                        .fromPackageDtoToPackageResponse(packageService.createPackage(packageDto)))
+        );
+    }
 }

@@ -1,19 +1,22 @@
 package com.swp391.maid4uni.service.impl;
 
-import com.swp391.maid4uni.converter.FeedbackConverter;
 import com.swp391.maid4uni.converter.PackageConverter;
-import com.swp391.maid4uni.converter.ServiceConverter;
-import com.swp391.maid4uni.entity.Feedback;
+import com.swp391.maid4uni.dto.PackageDto;
+import com.swp391.maid4uni.dto.ServiceDto;
+import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Package;
+import com.swp391.maid4uni.exception.Maid4UniException;
+import com.swp391.maid4uni.repository.AccountRepository;
 import com.swp391.maid4uni.repository.PackageRepository;
-import com.swp391.maid4uni.response.FeedbackResponse;
+import com.swp391.maid4uni.repository.ServiceRepository;
 import com.swp391.maid4uni.response.PackageResponse;
-import com.swp391.maid4uni.response.ServiceResponse;
 import com.swp391.maid4uni.service.PackageService;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -28,6 +31,8 @@ import java.util.List;
 @Builder
 public class PackageServiceImpl implements PackageService {
     PackageRepository packageRepository;
+    AccountRepository accountRepository;
+    ServiceRepository serviceRepository;
 
     @Override
     public List<PackageResponse> getAllPackage() {
@@ -40,5 +45,41 @@ public class PackageServiceImpl implements PackageService {
                             .toList();
         }
         return packageResponseList;
+    }
+
+    @Override
+    public PackageDto createPackage(PackageDto packageDto) {
+        Account accountByGet = new Account();
+
+        if (!accountRepository.findById(packageDto.getCreator().getId()).isPresent())
+            throw Maid4UniException.notFound("CreatorId does not exist");
+        else {
+            accountByGet = accountRepository.findById(packageDto.getCreator().getId()).get();
+        }
+        List<com.swp391.maid4uni.entity.Service> serviceListByGet = new ArrayList<>();
+        for (ServiceDto serviceDto : packageDto.getServiceList()) {
+            com.swp391.maid4uni.entity.Service service = serviceRepository
+                    .findByIdAndLogicalDeleteStatus(serviceDto.getId(), 0);
+            if (service != null)
+                serviceListByGet.add(service);
+        }
+        if (serviceListByGet.isEmpty())
+            throw Maid4UniException.notFound("List service can't be empty");
+        Package aPackage = PackageConverter
+                .INSTANCE
+                .fromPackageDtoToPackage(packageDto);
+        aPackage.setPrice(getPriceFromListService(serviceListByGet));
+        aPackage.setCreator(accountByGet);
+        aPackage.setServiceList(serviceListByGet);
+        packageRepository.save(aPackage);
+        return PackageConverter.INSTANCE.fromPackageToPackageDto(aPackage);
+    }
+
+    private double getPriceFromListService(List<com.swp391.maid4uni.entity.Service> serviceList) {
+        double sum = 0;
+        for (com.swp391.maid4uni.entity.Service s : serviceList) {
+            sum+=s.getPrice();
+        }
+        return sum;
     }
 }
