@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The type Feedback controller.
@@ -62,16 +59,15 @@ public class FeedbackController {
     /**
      * Get feedback by sender id response entity.
      *
-     * @param accountDto the account dto
+     * @param id the account dto
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_FEEDBACK_BY_SENDER_ID)
-    public ResponseEntity<ResponseObject> getFeedbackBySenderId(
-            @RequestBody AccountDto accountDto){
+    public ResponseEntity<ResponseObject> getFeedbackBySenderId(@PathVariable int id){
         log.info("Start get feedback by sender id");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK","GET FEEDBACK BY SENDER ID SUCCESSFULLY",
-                        feedbackService.getFeedbackBySenderId(accountDto))
+                        feedbackService.getFeedbackBySenderId(id))
         );
     }
 

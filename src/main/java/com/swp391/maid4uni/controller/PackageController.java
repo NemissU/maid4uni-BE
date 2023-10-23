@@ -2,6 +2,7 @@ package com.swp391.maid4uni.controller;
 
 import com.swp391.maid4uni.dto.AccountDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
+import com.swp391.maid4uni.response.PackageResponse;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.AccountService;
 import com.swp391.maid4uni.service.PackageService;
@@ -14,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The type Package controller.
@@ -39,4 +37,14 @@ public class PackageController {
                 new ResponseObject("OK","GET ALL PACKAGE SUCCESSFULLY", packageService.getAllPackage())
         );
     }
+    /*
+    IN PROCESS
+    @PostMapping(API_PARAMS.CREATE_PACKAGE)
+    public ResponseEntity<ResponseObject> createPackage(@RequestBody PackageResponse packageResponse){
+        log.info("Start create package");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK","CREATE PACKAGE SUCCESSFULLY", packageService.createPackage(packageResponse))
+        )
+    }
+     */
 }

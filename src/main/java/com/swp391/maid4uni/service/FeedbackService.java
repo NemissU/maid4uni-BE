@@ -18,5 +18,5 @@ public interface FeedbackService {
 
     List<FeedbackResponse> getFeedbackByReceiverId(AccountDto accountDto);
 
-    List<FeedbackResponse> getFeedbackBySenderId(AccountDto accountDto);
+    List<FeedbackResponse> getFeedbackBySenderId(int id);
 }

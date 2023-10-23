@@ -3,6 +3,7 @@ package com.swp391.maid4uni.service.impl;
 import com.swp391.maid4uni.converter.FeedbackConverter;
 import com.swp391.maid4uni.dto.AccountDto;
 import com.swp391.maid4uni.entity.Feedback;
+import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.FeedbackRepository;
 import com.swp391.maid4uni.response.FeedbackResponse;
 import com.swp391.maid4uni.service.FeedbackService;
@@ -56,15 +57,16 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<FeedbackResponse> getFeedbackBySenderId(AccountDto accountDto) {
-        List<Feedback> feedbackList = feedbackRepository.findAllBySenderIdAndLogicalDeleteStatus(accountDto.getId(),0);
+    public List<FeedbackResponse> getFeedbackBySenderId(int id) {
+        List<Feedback> feedbackList = feedbackRepository.findAllBySenderIdAndLogicalDeleteStatus(id,0);
         List<FeedbackResponse> feedbackResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(feedbackList)) {
             feedbackResponseList =
                     feedbackList.stream()
                             .map(FeedbackConverter.INSTANCE::fromFeedbackToFeedbackResponse)
                             .toList();
-        }
+        } else
+            throw Maid4UniException.notFound("SenderId does not exist");
         return feedbackResponseList;
     }
 }
