@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Service service.
+ */
 @org.springframework.stereotype.Service
 @Data
 @Slf4j

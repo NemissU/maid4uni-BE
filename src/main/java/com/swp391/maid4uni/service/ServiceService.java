@@ -5,8 +5,22 @@ import com.swp391.maid4uni.response.ServiceResponse;
 
 import java.util.List;
 
+/**
+ * The interface Service service.
+ */
 public interface ServiceService {
+    /**
+     * Gets all service.
+     *
+     * @return the all service
+     */
     List<ServiceResponse> getAllService();
 
+    /**
+     * Create service service response.
+     *
+     * @param serviceDto the service dto
+     * @return the service response
+     */
     ServiceResponse createService(ServiceDto serviceDto);
 }

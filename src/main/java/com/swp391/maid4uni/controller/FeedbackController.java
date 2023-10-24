@@ -43,7 +43,7 @@ public class FeedbackController {
     /**
      * Get feedback by receiver id response entity.
      *
-     * @param accountDto the account dto
+     * @param id the id
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_FEEDBACK_BY_RECEIVER_ID)

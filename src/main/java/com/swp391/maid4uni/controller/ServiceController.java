@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Service controller.
+ */
 @RestController
 @RequestMapping(API_PARAMS.API_VERSION)
 @RequiredArgsConstructor
@@ -29,6 +32,12 @@ public class ServiceController {
     @Autowired
     ServiceService serviceService;
 
+    /**
+     * Create service response entity.
+     *
+     * @param createServiceRequest the create service request
+     * @return the response entity
+     */
     @PostMapping(API_PARAMS.CREATE_SERVICE)
     public ResponseEntity<ResponseObject> createService(@RequestBody CreateServiceRequest createServiceRequest){
         log.info("Start create package");

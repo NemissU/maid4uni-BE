@@ -9,6 +9,9 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 
+/**
+ * The type Update package request.
+ */
 @Getter
 @Setter
 @Builder
