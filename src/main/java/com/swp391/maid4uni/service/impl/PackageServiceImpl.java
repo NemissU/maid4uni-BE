@@ -82,10 +82,30 @@ public class PackageServiceImpl implements PackageService {
         if(aPackage.isPresent() && aPackage.get().getLogicalDeleteStatus() == 0) {
             aPackage.get().setLogicalDeleteStatus((short) 1);
             packageRepository.save(aPackage.get());
-            return PackageConverter.INSTANCE.fromPackageToPackageResponse(aPackage.get());
         }
         else
             throw Maid4UniException.notFound("Package id " + id + " does not exist");
+        return PackageConverter.INSTANCE.fromPackageToPackageResponse(aPackage.get());
+    }
+
+    @Override
+    public PackageResponse updatePackage(PackageDto packageDto, int id) {
+        Optional<Package> aPackage = packageRepository.findById(id);
+        //Kiểm tra id package và logicalStatus
+        if(aPackage.isPresent() && aPackage.get().getLogicalDeleteStatus() == 0) {
+
+            //Convert packageDto thành package
+            Package uPackage = PackageConverter.INSTANCE.fromPackageDtoToPackage(packageDto);
+
+            //Update vào package có id được truyền vào
+            aPackage.get().setServiceList(uPackage.getServiceList());
+            aPackage.get().setName(uPackage.getName());
+            aPackage.get().setDescription(uPackage.getDescription());
+            packageRepository.save(aPackage.get());
+        }
+            else
+                throw Maid4UniException.notFound("Package id " + id + " does not exist");
+        return PackageConverter.INSTANCE.fromPackageToPackageResponse(aPackage.get());
     }
 
     private double getPriceFromListService(List<com.swp391.maid4uni.entity.Service> serviceList) {

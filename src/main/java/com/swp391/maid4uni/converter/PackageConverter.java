@@ -6,9 +6,7 @@ import com.swp391.maid4uni.dto.ServiceDto;
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Package;
 import com.swp391.maid4uni.entity.Service;
-import com.swp391.maid4uni.request.AccountDutyRequest;
-import com.swp391.maid4uni.request.CreatePackageRequest;
-import com.swp391.maid4uni.request.CreateServiceRequest;
+import com.swp391.maid4uni.request.*;
 import com.swp391.maid4uni.response.AccountResponse;
 import com.swp391.maid4uni.response.PackageResponse;
 import com.swp391.maid4uni.response.ServiceResponse;
@@ -41,4 +39,8 @@ public interface PackageConverter {
     PackageDto fromCreatePackageRequestToPackageDto(CreatePackageRequest createPackageRequest);
 
     PackageResponse fromPackageDtoToPackageResponse(PackageDto aPackage);
+
+    PackageDto fromUpdatePackageRequestToPackageDto(UpdatePackageRequest updatePackageRequest);
+
+    List<ServiceDto> mapUpdateServiceRequestList(List<UpdateServiceRequest> serviceList);
 }

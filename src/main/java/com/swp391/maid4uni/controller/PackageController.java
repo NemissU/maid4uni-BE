@@ -4,6 +4,7 @@ import com.swp391.maid4uni.converter.PackageConverter;
 import com.swp391.maid4uni.dto.PackageDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
 import com.swp391.maid4uni.request.CreatePackageRequest;
+import com.swp391.maid4uni.request.UpdatePackageRequest;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.PackageService;
 import lombok.AccessLevel;
@@ -73,6 +74,21 @@ public class PackageController {
                 new ResponseObject("OK"
                         , "DELETE PACKAGE SUCCESSFULLY"
                         , packageService.deletePackage(id))
+        );
+    }
+
+    @PutMapping(API_PARAMS.UPDATE_PACKAGE)
+    public ResponseEntity<ResponseObject> updatePackage(
+            @PathVariable int id,
+            @RequestBody UpdatePackageRequest updatePackageRequest) {
+        log.info("Start update package");
+        PackageDto packageDto = PackageConverter
+                .INSTANCE
+                .fromUpdatePackageRequestToPackageDto(updatePackageRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK"
+                ,"UPDATE PACKAGE SUCCESSFULLY"
+                , packageService.updatePackage(packageDto, id))
         );
     }
 }
