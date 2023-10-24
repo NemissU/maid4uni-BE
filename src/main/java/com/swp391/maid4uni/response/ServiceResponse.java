@@ -18,5 +18,5 @@ public class ServiceResponse {
     double price;
     Date createdAt;
     Date updateAt;
-    Account creator;
+    AccountResponse creator;
 }

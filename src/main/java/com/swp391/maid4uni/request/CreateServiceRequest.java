@@ -14,5 +14,6 @@ public class CreateServiceRequest {
     int id;
     String name;
     String description;
-    AccountDutyRequest creatorId;
+    double price;
+    AccountDutyRequest creator;
 }

@@ -17,4 +17,7 @@ public interface ServiceConverter {
 
     Service fromServiceDtoToService(ServiceDto serviceDto);
 
+    ServiceDto fromCreateServiceRequestToServiceDto(CreateServiceRequest createServiceRequest);
+
+    ServiceResponse fromServiceDtoToServiceResponse(ServiceDto serviceDto);
 }
