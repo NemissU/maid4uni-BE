@@ -4,6 +4,7 @@ import com.swp391.maid4uni.dto.AccountDto;
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.model.TokenPayload;
 import com.swp391.maid4uni.request.RegisterAccountRequest;
+import com.swp391.maid4uni.request.UpdateAccountRequest;
 import com.swp391.maid4uni.response.AccountResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -62,4 +63,6 @@ public interface AccountConverter {
                 .username(account.getUsername())
                 .build();
     }
+
+    Account fromUpdateAccountRequestToAccount(UpdateAccountRequest updateAccountRequest);
 }
