@@ -22,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Data
@@ -73,6 +74,18 @@ public class PackageServiceImpl implements PackageService {
         aPackage.setServiceList(serviceListByGet);
         packageRepository.save(aPackage);
         return PackageConverter.INSTANCE.fromPackageToPackageDto(aPackage);
+    }
+
+    @Override
+    public PackageResponse deletePackage(int id) {
+        Optional<Package> aPackage = packageRepository.findById(id);
+        if(aPackage.isPresent() && aPackage.get().getLogicalDeleteStatus() == 0) {
+            aPackage.get().setLogicalDeleteStatus((short) 1);
+            packageRepository.save(aPackage.get());
+            return PackageConverter.INSTANCE.fromPackageToPackageResponse(aPackage.get());
+        }
+        else
+            throw Maid4UniException.notFound("Package id " + id + " does not exist");
     }
 
     private double getPriceFromListService(List<com.swp391.maid4uni.entity.Service> serviceList) {

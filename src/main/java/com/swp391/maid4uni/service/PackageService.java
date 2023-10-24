@@ -11,4 +11,6 @@ public interface PackageService {
     List<PackageResponse> getAllPackage();
 
     PackageDto createPackage(PackageDto packageDto);
+
+    PackageResponse deletePackage(int id);
 }
