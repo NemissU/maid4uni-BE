@@ -18,6 +18,5 @@ public class ServiceResponse {
     double price;
     Date createdAt;
     Date updateAt;
-    short logicalDeleteStatus;
     Account creator;
 }
