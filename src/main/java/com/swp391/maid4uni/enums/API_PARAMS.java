@@ -44,21 +44,44 @@ public class API_PARAMS {
      */
     public static final String GET_CUSTOMER_LIST = "/get-customer-list";
 
+    /**
+     * The constant UPDATE_ACCOUNT_INFO.
+     */
     public static final String UPDATE_ACCOUNT_INFO = "/update-account-info";
 
+    /**
+     * The constant UPDATE_ROLE.
+     */
     public static final String UPDATE_ROLE = "/update-role";
 
     /********************************************************
      *                    FEEDBACK APIs                     *
-     ********************************************************/
+     */
     public static final String GET_ALL_FEEDBACK_LIST = "/get-all-feedback-list";
 
+    /**
+     * The constant GET_FEEDBACK_BY_RECEIVER_ID.
+     */
     public static final String GET_FEEDBACK_BY_RECEIVER_ID = "/get-feedback-by-receiver-id/{id}";
 
+    /**
+     * The constant GET_FEEDBACK_BY_SENDER_ID.
+     */
     public static final String GET_FEEDBACK_BY_SENDER_ID = "/get-feedback-by-sender-id/{id}";
 
+    /**
+     * The constant GET_ALL_PACKAGE.
+     */
     public static final String GET_ALL_PACKAGE = "/get-all-package";
 
+    /**
+     * The constant CREATE_PACKAGE.
+     */
     public static final String CREATE_PACKAGE = "/create-package";
+
+    /**
+     * The constant DELETE_PACKAGE.
+     */
+    public static final String DELETE_PACKAGE = "/delete-package/{id}";
 }
 
