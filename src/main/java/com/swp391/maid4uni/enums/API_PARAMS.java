@@ -85,5 +85,7 @@ public class API_PARAMS {
     public static final String DELETE_PACKAGE = "/delete-package/{id}";
 
     public static final String UPDATE_PACKAGE = "/update-package/{id}";
+
+    public static final String CREATE_SERVICE = "create-service";
 }
 

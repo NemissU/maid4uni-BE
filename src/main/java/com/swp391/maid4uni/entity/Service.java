@@ -5,6 +5,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +32,10 @@ public class Service {
     String description;
     @Column(nullable = false)
     double price;
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     Date createdAt;
+    @UpdateTimestamp
     @Column(name = "updated_at")
     Date updateAt;
     @Column

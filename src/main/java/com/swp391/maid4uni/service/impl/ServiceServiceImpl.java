@@ -2,8 +2,12 @@ package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.PackageConverter;
 import com.swp391.maid4uni.converter.ServiceConverter;
+import com.swp391.maid4uni.dto.ServiceDto;
+import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Package;
 import com.swp391.maid4uni.entity.Service;
+import com.swp391.maid4uni.exception.Maid4UniException;
+import com.swp391.maid4uni.repository.AccountRepository;
 import com.swp391.maid4uni.repository.ServiceRepository;
 import com.swp391.maid4uni.response.PackageResponse;
 import com.swp391.maid4uni.response.ServiceResponse;
@@ -18,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @org.springframework.stereotype.Service
 @Data
@@ -27,6 +32,7 @@ import java.util.List;
 @Builder
 public class ServiceServiceImpl implements ServiceService {
     ServiceRepository serviceRepository;
+    AccountRepository accountRepository;
 
     @Override
     public List<ServiceResponse> getAllService() {
@@ -39,5 +45,23 @@ public class ServiceServiceImpl implements ServiceService {
                             .toList();
         }
         return serviceResponseList;
+    }
+
+    @Override
+    public ServiceResponse createService(ServiceDto serviceDto) {
+        //Xử lý tìm kiếm creator
+        Account accountByGet = new Account();
+
+        if (!accountRepository.findById(serviceDto.getCreator().getId()).isPresent())
+            throw Maid4UniException.notFound("CreatorId does not exist");
+        else {
+            accountByGet = accountRepository.findById(serviceDto.getCreator().getId()).get();
+        }
+
+        //Convert dto -> service entity, set creator tìm kiếm được ở trên
+        Service service = ServiceConverter.INSTANCE.fromServiceDtoToService(serviceDto);
+        service.setCreator(accountByGet);
+        serviceRepository.save(service);
+        return ServiceConverter.INSTANCE.fromServiceToServiceResponse(service);
     }
 }
