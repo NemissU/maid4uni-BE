@@ -8,6 +8,9 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+/**
+ * The type Create package request.
+ */
 @Getter
 @Setter
 @Builder

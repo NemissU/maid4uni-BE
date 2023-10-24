@@ -59,5 +59,12 @@ public interface AccountService {
      */
     AccountResponse register(RegisterAccountRequest registerAccountRequest);
 
+    /**
+     * Update account info by id account response.
+     *
+     * @param accountId            the account id
+     * @param updateAccountRequest the update account request
+     * @return the account response
+     */
     AccountResponse updateAccountInfoById(Integer accountId, UpdateAccountRequest updateAccountRequest);
 }

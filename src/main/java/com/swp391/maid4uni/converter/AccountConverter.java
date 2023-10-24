@@ -64,5 +64,11 @@ public interface AccountConverter {
                 .build();
     }
 
+    /**
+     * From update account request to account account.
+     *
+     * @param updateAccountRequest the update account request
+     * @return the account
+     */
     Account fromUpdateAccountRequestToAccount(UpdateAccountRequest updateAccountRequest);
 }

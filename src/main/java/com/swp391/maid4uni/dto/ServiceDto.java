@@ -5,6 +5,9 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 
+/**
+ * The type Service dto.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

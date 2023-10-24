@@ -67,6 +67,12 @@ public class PackageController {
         );
     }
 
+    /**
+     * Delete package response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @DeleteMapping(API_PARAMS.DELETE_PACKAGE)
     public ResponseEntity<ResponseObject> deletePackage(@PathVariable int id) {
         log.info("Start delete package");
@@ -77,6 +83,13 @@ public class PackageController {
         );
     }
 
+    /**
+     * Update package response entity.
+     *
+     * @param id                   the id
+     * @param updatePackageRequest the update package request
+     * @return the response entity
+     */
     @PutMapping(API_PARAMS.UPDATE_PACKAGE)
     public ResponseEntity<ResponseObject> updatePackage(
             @PathVariable int id,

@@ -112,6 +112,12 @@ public class AccountController {
         );
     }
 
+    /**
+     * Update account info by id response entity.
+     *
+     * @param updateAccountRequest the update account request
+     * @return the response entity
+     */
     @PutMapping(API_PARAMS.UPDATE_ACCOUNT_INFO)
     public ResponseEntity<ResponseObject> updateAccountInfoById(
             @RequestBody UpdateAccountRequest updateAccountRequest) {

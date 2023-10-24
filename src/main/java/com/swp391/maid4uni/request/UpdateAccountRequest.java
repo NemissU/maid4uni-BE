@@ -6,6 +6,9 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 
+/**
+ * The type Update account request.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
