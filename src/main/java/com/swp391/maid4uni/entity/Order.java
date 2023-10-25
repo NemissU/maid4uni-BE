@@ -34,7 +34,6 @@ public class Order {
     String periodType;
     @Column
     short logicalDeleteStatus;
-
     @ManyToOne
     @JoinColumn(name = "cutomer_id")
     Account customer;
