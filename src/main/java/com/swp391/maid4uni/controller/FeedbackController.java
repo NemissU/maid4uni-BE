@@ -82,5 +82,12 @@ public class FeedbackController {
         );
     }
 
+    @GetMapping(API_PARAMS.GET_ACCOUNT_RATING)
+    public ResponseEntity<ResponseObject> getAccountRating(@PathVariable int id){
+        log.info("Start get account rating");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK","GET ACCOUNT RATING SUCCESSFULLY", feedbackService.getRatingByAccountId(id))
+        );
+    }
 
 }
