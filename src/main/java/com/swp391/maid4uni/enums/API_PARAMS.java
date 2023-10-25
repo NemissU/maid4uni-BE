@@ -114,5 +114,6 @@ public class API_PARAMS {
      */
     public static final String DELETE_SERVICE = "/delete-service/{id}";
 
+    public static final String GET_ACCOUNT_RATING = "/get-account-rating/{id}";
 }
 
