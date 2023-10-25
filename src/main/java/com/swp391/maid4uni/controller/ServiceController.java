@@ -94,6 +94,7 @@ public class ServiceController {
         log.info("Start delete service");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK","DELETE SERVICE SUCCESSFULLY",serviceService.deleteService(id))
+
         );
     }
 }

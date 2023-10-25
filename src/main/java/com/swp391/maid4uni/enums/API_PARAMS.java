@@ -113,5 +113,6 @@ public class API_PARAMS {
      * The constant DELETE_SERVICE.
      */
     public static final String DELETE_SERVICE = "/delete-service/{id}";
+
 }
 
