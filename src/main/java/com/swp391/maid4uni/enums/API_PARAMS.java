@@ -99,5 +99,6 @@ public class API_PARAMS {
 
     public static final String GET_ALL_SERVICE = "/get-all-service";
 
+    public static final String UPDATE_SERVICE = "/update-service/{id}";
 }
 
