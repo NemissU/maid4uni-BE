@@ -80,6 +80,26 @@ public class ServiceServiceImpl implements ServiceService {
         return ServiceConverter.INSTANCE.fromServiceToServiceResponse(service);
     }
 
+    @Override
+    public ServiceResponse deleteService(int id) {
+        Service service = serviceRepository.findByIdAndLogicalDeleteStatus(id,0);
+        if (service == null)
+            throw Maid4UniException.notFound("Service id: " + id + " does not exist");
+        service.setLogicalDeleteStatus((short) 1);
+        serviceRepository.save(service);
+        reUpdatePackageAfterDeleteService(service);
+        return ServiceConverter.INSTANCE.fromServiceToServiceResponse(service);
+    }
+
+    private void reUpdatePackageAfterDeleteService(Service service) {
+        List<Package> packages = service.getBelongedPackage();
+        for (Package p:packages) {
+            p.getServiceList().remove(service);
+            p.setPrice(p.getServiceList().stream().mapToDouble(Service::getPrice).sum());
+        }
+        packageRepository.saveAll(packages);
+    }
+
     private void reUpdatePackage(Service service){
         List<Package> packages = service.getBelongedPackage();
         for (Package p:packages) {

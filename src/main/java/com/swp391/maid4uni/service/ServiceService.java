@@ -26,4 +26,6 @@ public interface ServiceService {
     ServiceResponse createService(ServiceDto serviceDto);
 
     ServiceResponse updateService(ServiceDto ServiceDto, int id);
+
+    ServiceResponse deleteService(int id);
 }
