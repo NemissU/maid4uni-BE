@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.service;
 
 import com.swp391.maid4uni.dto.AccountDto;
+import com.swp391.maid4uni.dto.FeedBackDto;
 import com.swp391.maid4uni.response.FeedbackResponse;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface FeedbackService {
      * @return the feedback by sender id
      */
     List<FeedbackResponse> getFeedbackBySenderId(int id);
+
+    FeedbackResponse createFeedback(FeedBackDto feedBackDto);
 }
