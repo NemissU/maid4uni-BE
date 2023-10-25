@@ -15,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The type Service controller.
@@ -48,6 +45,16 @@ public class ServiceController {
                 new ResponseObject("OK"
                         ,"CREATE PACKAGE SUCCESSFULLY"
                         ,serviceService.createService(serviceDto))
+        );
+    }
+
+    @GetMapping(API_PARAMS.GET_ALL_SERVICE)
+    public ResponseEntity<ResponseObject> getAllService(){
+        log.info("Start get all service");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK"
+                        ,"GET ALL SERVICE SUCCESSFULLY"
+                        ,serviceService.getAllService())
         );
     }
 }

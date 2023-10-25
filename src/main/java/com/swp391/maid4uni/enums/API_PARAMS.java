@@ -92,6 +92,8 @@ public class API_PARAMS {
     /**
      * The constant CREATE_SERVICE.
      */
-    public static final String CREATE_SERVICE = "create-service";
+    public static final String CREATE_SERVICE = "/create-service";
+
+    public static final String GET_ALL_SERVICE = "/get-all-service";
 }
 
