@@ -97,4 +97,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
      * @return the boolean
      */
     boolean existsByPhoneNumberAndLogicalDeleteStatus(String phoneNumber, short logicalDeleteStatus);
+
+    Account findAccountByIdAndLogicalDeleteStatus(int id, int logicalDeleteStatus);
 }

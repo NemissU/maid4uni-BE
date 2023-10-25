@@ -1,7 +1,10 @@
 package com.swp391.maid4uni.controller;
 
+import com.swp391.maid4uni.converter.FeedbackConverter;
 import com.swp391.maid4uni.dto.AccountDto;
+import com.swp391.maid4uni.dto.FeedBackDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
+import com.swp391.maid4uni.request.CreateFeedbackRequest;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.FeedbackService;
 import lombok.AccessLevel;
@@ -67,6 +70,15 @@ public class FeedbackController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK","GET FEEDBACK BY SENDER ID SUCCESSFULLY",
                         feedbackService.getFeedbackBySenderId(id))
+        );
+    }
+
+    @PostMapping(API_PARAMS.CREATE_FEEDBACK)
+    public ResponseEntity<ResponseObject> createFeedback(@RequestBody CreateFeedbackRequest createFeedbackRequest){
+        log.info("Start create feedback");
+        FeedBackDto feedBackDto = FeedbackConverter.INSTANCE.fromCreateFeedbackRequestToFeedbackDto(createFeedbackRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK","CREATE FEEDBACK SUCCESSFULLY", feedbackService.createFeedback(feedBackDto))
         );
     }
 
