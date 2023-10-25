@@ -3,6 +3,7 @@ package com.swp391.maid4uni.converter;
 import com.swp391.maid4uni.dto.ServiceDto;
 import com.swp391.maid4uni.entity.Service;
 import com.swp391.maid4uni.request.CreateServiceRequest;
+import com.swp391.maid4uni.request.UpdateServiceRequest;
 import com.swp391.maid4uni.response.ServiceResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -50,4 +51,6 @@ public interface ServiceConverter {
      * @return the service response
      */
     ServiceResponse fromServiceDtoToServiceResponse(ServiceDto serviceDto);
+
+    ServiceDto fromUpdateServiceRequestToServiceDto(UpdateServiceRequest updateServiceRequest);
 }

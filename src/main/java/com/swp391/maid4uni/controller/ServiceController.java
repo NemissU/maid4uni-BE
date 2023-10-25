@@ -6,6 +6,7 @@ import com.swp391.maid4uni.dto.PackageDto;
 import com.swp391.maid4uni.dto.ServiceDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
 import com.swp391.maid4uni.request.CreateServiceRequest;
+import com.swp391.maid4uni.request.UpdateServiceRequest;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.ServiceService;
 import lombok.AccessLevel;
@@ -55,6 +56,18 @@ public class ServiceController {
                 new ResponseObject("OK"
                         ,"GET ALL SERVICE SUCCESSFULLY"
                         ,serviceService.getAllService())
+        );
+    }
+
+    @PutMapping(API_PARAMS.UPDATE_SERVICE)
+    public ResponseEntity<ResponseObject> updateService(@PathVariable int id,
+                                                        @RequestBody UpdateServiceRequest updateServiceRequest){
+        log.info("Start update service");
+        ServiceDto serviceDto = ServiceConverter.INSTANCE.fromUpdateServiceRequestToServiceDto(updateServiceRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK"
+                        ,"UPDATE SERVICE SUCCESSFULLY"
+                        ,serviceService.updateService(serviceDto,id))
         );
     }
 }

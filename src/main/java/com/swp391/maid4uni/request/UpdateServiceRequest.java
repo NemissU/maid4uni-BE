@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateServiceRequest {
-    int id;
     String name;
     String description;
+    double price;
 }
