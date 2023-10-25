@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.service;
 
 import com.swp391.maid4uni.dto.ServiceDto;
+import com.swp391.maid4uni.request.UpdateServiceRequest;
 import com.swp391.maid4uni.response.ServiceResponse;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface ServiceService {
      * @return the service response
      */
     ServiceResponse createService(ServiceDto serviceDto);
+
+    ServiceResponse updateService(ServiceDto ServiceDto, int id);
+
+    ServiceResponse deleteService(int id);
 }

@@ -6,15 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-/**
- * The type Update service request.
- */
 @Getter
 @Setter
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UpdateServiceRequest {
-    String name;
-    String description;
-    double price;
+public class CreateFeedbackRequest {
+    String comment;
+    AccountDutyRequest sender;
+    AccountDutyRequest receiver;
+    RatingRequest rating;
 }

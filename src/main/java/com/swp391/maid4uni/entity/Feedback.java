@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDate;
 
 /**
@@ -23,6 +25,7 @@ public class Feedback {
     int id;
     @Column(name = "comment")
     String comment;
+    @CreationTimestamp
     @Column(name = "date")
     LocalDate date;
     @Column

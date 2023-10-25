@@ -1,10 +1,13 @@
 package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.FeedbackConverter;
-import com.swp391.maid4uni.dto.AccountDto;
+import com.swp391.maid4uni.dto.FeedBackDto;
+import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Feedback;
 import com.swp391.maid4uni.exception.Maid4UniException;
+import com.swp391.maid4uni.repository.AccountRepository;
 import com.swp391.maid4uni.repository.FeedbackRepository;
+import com.swp391.maid4uni.repository.RatingRepository;
 import com.swp391.maid4uni.response.FeedbackResponse;
 import com.swp391.maid4uni.service.FeedbackService;
 import lombok.*;
@@ -24,12 +27,13 @@ import java.util.List;
 @Data
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
 @Builder
-@AllArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
-    @Autowired
-    private FeedbackRepository feedbackRepository;
+    FeedbackRepository feedbackRepository;
+    AccountRepository accountRepository;
+    RatingRepository ratingRepository;
+
     @Override
     public List<FeedbackResponse> getAllFeedbackList() {
         List<Feedback> feedbackList = feedbackRepository.findAllByLogicalDeleteStatus(0);
@@ -69,5 +73,20 @@ public class FeedbackServiceImpl implements FeedbackService {
         } else
             throw Maid4UniException.notFound("Not found any feedbacks of sender: " + id);
         return feedbackResponseList;
+    }
+
+    @Override
+    public FeedbackResponse createFeedback(FeedBackDto feedBackDto) {
+        Account sender = accountRepository.findAccountByIdAndLogicalDeleteStatus(feedBackDto.getSender().getId(),0);
+        Account receiver = accountRepository.findAccountByIdAndLogicalDeleteStatus(feedBackDto.getReceiver().getId(),0);
+        if(sender == null){
+            throw Maid4UniException.notFound("Sender does not exist");
+        }
+        if(receiver == null){
+            throw Maid4UniException.notFound("Receiver does not exist");
+        }
+        Feedback feedback = FeedbackConverter.INSTANCE.fromFeedbackDtoToFeedback(feedBackDto);
+        feedbackRepository.save(feedback);
+        return FeedbackConverter.INSTANCE.fromFeedbackToFeedbackResponse(feedback);
     }
 }
