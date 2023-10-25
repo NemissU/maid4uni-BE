@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column
-    Date time;
+    LocalDate workDay;
     @Column(name = "start_time")
     Time startTime;
     @Column(name = "end_time")
