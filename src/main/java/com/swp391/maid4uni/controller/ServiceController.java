@@ -49,6 +49,11 @@ public class ServiceController {
         );
     }
 
+    /**
+     * Get all service response entity.
+     *
+     * @return the response entity
+     */
     @GetMapping(API_PARAMS.GET_ALL_SERVICE)
     public ResponseEntity<ResponseObject> getAllService(){
         log.info("Start get all service");
@@ -59,6 +64,13 @@ public class ServiceController {
         );
     }
 
+    /**
+     * Update service response entity.
+     *
+     * @param id                   the id
+     * @param updateServiceRequest the update service request
+     * @return the response entity
+     */
     @PutMapping(API_PARAMS.UPDATE_SERVICE)
     public ResponseEntity<ResponseObject> updateService(@PathVariable int id,
                                                         @RequestBody UpdateServiceRequest updateServiceRequest){
@@ -68,6 +80,20 @@ public class ServiceController {
                 new ResponseObject("OK"
                         ,"UPDATE SERVICE SUCCESSFULLY"
                         ,serviceService.updateService(serviceDto,id))
+        );
+    }
+
+    /**
+     * Delete service response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
+    @DeleteMapping(API_PARAMS.DELETE_SERVICE)
+    public ResponseEntity<ResponseObject> deleteService(@PathVariable int id){
+        log.info("Start delete service");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK","DELETE SERVICE SUCCESSFULLY",serviceService.deleteService(id))
         );
     }
 }

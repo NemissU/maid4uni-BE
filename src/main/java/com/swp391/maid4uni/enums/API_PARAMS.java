@@ -57,9 +57,11 @@ public class API_PARAMS {
     /********************************************************
      *                    FEEDBACK APIs                     *
      */
-
     public static final String CREATE_FEEDBACK = "/create-feedback";
 
+    /**
+     * The constant GET_ALL_FEEDBACK_LIST.
+     */
     public static final String GET_ALL_FEEDBACK_LIST = "/get-all-feedback-list";
 
     /**
@@ -97,8 +99,19 @@ public class API_PARAMS {
      */
     public static final String CREATE_SERVICE = "/create-service";
 
+    /**
+     * The constant GET_ALL_SERVICE.
+     */
     public static final String GET_ALL_SERVICE = "/get-all-service";
 
+    /**
+     * The constant UPDATE_SERVICE.
+     */
     public static final String UPDATE_SERVICE = "/update-service/{id}";
+
+    /**
+     * The constant DELETE_SERVICE.
+     */
+    public static final String DELETE_SERVICE = "/delete-service/{id}";
 }
 
