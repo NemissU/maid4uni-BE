@@ -3,7 +3,7 @@ package com.swp391.maid4uni.enums;
 /**
  * The type Enums.
  */
-public class ENUMS {
+public class Constants {
     /**
      * The constant ONE_DAY.
      */
