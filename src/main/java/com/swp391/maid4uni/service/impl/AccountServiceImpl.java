@@ -3,7 +3,7 @@ package com.swp391.maid4uni.service.impl;
 import com.swp391.maid4uni.converter.AccountConverter;
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Role;
-import com.swp391.maid4uni.enums.ENUMS;
+import com.swp391.maid4uni.enums.Constants;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.AccountRepository;
 import com.swp391.maid4uni.request.LoginByUsernameRequest;
@@ -61,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
 
         // build token payload từ account
         // set token timeout 1 ngày
-        String accessToken = jwtTokenUtil.generateToken(AccountConverter.INSTANCE.fromAccountToTokenPayload(account), ENUMS.JWT_EXPIRATION_ONE_DAY);
+        String accessToken = jwtTokenUtil.generateToken(AccountConverter.INSTANCE.fromAccountToTokenPayload(account), Constants.JWT_EXPIRATION_ONE_DAY);
         return LoginByUsernameResponse
                 .builder()
                 .account(AccountConverter.INSTANCE.fromAccountToAccountDTO(account))
