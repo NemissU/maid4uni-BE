@@ -34,4 +34,6 @@ public interface FeedbackService {
     List<FeedbackResponse> getFeedbackBySenderId(int id);
 
     FeedbackResponse createFeedback(FeedBackDto feedBackDto);
+
+    int getRatingByAccountId(int id);
 }

@@ -23,5 +23,5 @@ public class Rating {
     int id;
 
     @Column(name = "star")
-    float star;
+    int star;
 }

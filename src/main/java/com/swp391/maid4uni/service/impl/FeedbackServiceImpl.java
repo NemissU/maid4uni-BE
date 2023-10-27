@@ -89,4 +89,18 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedbackRepository.save(feedback);
         return FeedbackConverter.INSTANCE.fromFeedbackToFeedbackResponse(feedback);
     }
+
+    @Override
+    public int getRatingByAccountId(int id) {
+        int avgRating = 0;
+//        List<FeedbackResponse> feedbackList = getFeedbackByReceiverId(id);
+        List<Feedback> feedbackList = feedbackRepository.findAllByReceiverIdAndLogicalDeleteStatus(id,0);
+        for (Feedback item: feedbackList) {
+             avgRating += item.getRating().getStar();
+        }
+        avgRating = avgRating/feedbackList.size();
+        return avgRating;
+    }
+
+
 }
