@@ -17,7 +17,6 @@ import java.util.Date;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RegisterAccountRequest {
-    int id;
     String username;
     String password;
     String fullName;
