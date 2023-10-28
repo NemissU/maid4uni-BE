@@ -1,5 +1,6 @@
 package com.swp391.maid4uni.security;
 
+import com.swp391.maid4uni.ulti.CorsConfig;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -57,8 +58,7 @@ public class WebSecurityConfig {
                 )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().cors().configurationSource(corsConfigurationSource()).and()
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+                .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
 //
 //        return httpSecurity.csrf().disable()
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -69,17 +69,6 @@ public class WebSecurityConfig {
 //                .anyRequest().permitAll()
 //                .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
 //                .build();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.addAllowedMethod("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
     }
 
 }
