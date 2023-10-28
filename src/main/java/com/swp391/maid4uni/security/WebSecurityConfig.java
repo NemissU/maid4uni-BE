@@ -46,7 +46,7 @@ public class WebSecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
+        return httpSecurity.csrf().disable()
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 // quyền login + register thì ai cũng đc permit
@@ -57,9 +57,18 @@ public class WebSecurityConfig {
                 )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().cors().configurationSource(corsConfigurationSource());
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        return httpSecurity.build();
+                .and().cors().configurationSource(corsConfigurationSource()).and()
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+//
+//        return httpSecurity.csrf().disable()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and().cors().configurationSource(corsConfigurationSource()).and()
+//                .authorizeHttpRequests()
+//                .antMatchers("/login").permitAll()
+//                .antMatchers("/register").permitAll()
+//                .anyRequest().permitAll()
+//                .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
     }
 
     @Bean
