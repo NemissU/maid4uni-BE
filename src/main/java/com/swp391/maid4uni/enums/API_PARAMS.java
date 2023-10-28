@@ -56,7 +56,7 @@ public class API_PARAMS {
 
     /********************************************************
      *                    FEEDBACK APIs                     *
-     */
+     ********************************************************/
     public static final String CREATE_FEEDBACK = "/create-feedback";
 
     /**
@@ -73,6 +73,12 @@ public class API_PARAMS {
      * The constant GET_FEEDBACK_BY_SENDER_ID.
      */
     public static final String GET_FEEDBACK_BY_SENDER_ID = "/get-feedback-by-sender-id/{id}";
+    public static final String GET_ACCOUNT_RATING = "/get-account-rating/{id}";
+
+    /********************************************************
+     *                    PACKAGE APIs                      *
+     ********************************************************/
+
 
     /**
      * The constant GET_ALL_PACKAGE.
@@ -94,6 +100,10 @@ public class API_PARAMS {
      */
     public static final String UPDATE_PACKAGE = "/update-package/{id}";
 
+    /********************************************************
+     *                     SERVICE APIs                     *
+     ********************************************************/
+
     /**
      * The constant CREATE_SERVICE.
      */
@@ -114,7 +124,11 @@ public class API_PARAMS {
      */
     public static final String DELETE_SERVICE = "/delete-service/{id}";
 
-    public static final String GET_ACCOUNT_RATING = "/get-account-rating/{id}";
+    /********************************************************
+     *                      ORDER APIs                      *
+     ********************************************************/
+
     public static final String GET_ORDER_INFO_BY_CUSTOMER = "/get-order-info-by-customer/{id}";
+    public static final String CREATE_ORDER = "/create-order";
 }
 

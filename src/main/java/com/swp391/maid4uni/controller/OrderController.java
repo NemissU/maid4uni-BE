@@ -1,6 +1,9 @@
 package com.swp391.maid4uni.controller;
 
+import com.swp391.maid4uni.converter.OrderConverter;
+import com.swp391.maid4uni.dto.OrderDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
+import com.swp391.maid4uni.request.OrderRequest;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.OrderService;
 import lombok.AccessLevel;
@@ -9,10 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(API_PARAMS.API_VERSION)
@@ -29,5 +29,13 @@ public class OrderController {
         log.info("Start getOrderInfoByCustomer");
         return ResponseEntity.ok().body(
                 new ResponseObject("OK", "GET ORDER INFO BY CUSTOMER ID SUCCESSFULLY", orderService.getOrderInfoByCustomer(id)));
+    }
+
+    @PostMapping(API_PARAMS.CREATE_ORDER)
+    public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderRequest request){
+        log.info("Start createOrder");
+        OrderDto dto = OrderConverter.INSTANCE.fromRequestToDto(request);
+        return ResponseEntity.ok().body(
+                new ResponseObject("OK", "CREATE ORDER", orderService.createOrder(dto)));
     }
 }
