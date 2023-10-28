@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderController {
 
     private OrderService orderService;
 
     @GetMapping(API_PARAMS.GET_ORDER_INFO_BY_CUSTOMER)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getOrderInfoByCustomer(@PathVariable int id) {
         log.info("Start getOrderInfoByCustomer");
         return ResponseEntity.ok().body(
@@ -33,7 +33,6 @@ public class OrderController {
     }
 
     @PostMapping(API_PARAMS.CREATE_ORDER)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderRequest request){
         log.info("Start createOrder");
         OrderDto dto = OrderConverter.INSTANCE.fromRequestToDto(request);

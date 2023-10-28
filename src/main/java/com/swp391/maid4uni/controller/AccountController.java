@@ -21,6 +21,7 @@ import java.util.List;
  * The type Account controller.
  */
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(API_PARAMS.API_VERSION)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
@@ -36,7 +37,6 @@ public class AccountController {
      * @return the response entity
      */
     @PostMapping(API_PARAMS.LOGIN_BY_USERNAME)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> loginByUsername(
             @RequestBody LoginByUsernameRequest request) {
         log.info("Start login by username");
@@ -51,7 +51,6 @@ public class AccountController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ACCOUNT_LIST)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getAccountList() {
         log.info("Start get account list");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -65,7 +64,6 @@ public class AccountController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_MANAGER_LIST)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getManagerList() {
         log.info("Start get manager list");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -79,7 +77,6 @@ public class AccountController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_STAFF_LIST)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getStaffList() {
         log.info("Start get staff list");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -94,7 +91,6 @@ public class AccountController {
      * @return the customer list
      */
     @GetMapping(API_PARAMS.GET_CUSTOMER_LIST)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getCustomerList() {
         log.info("Start get customer list");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -109,7 +105,6 @@ public class AccountController {
      * @return the response entity
      */
     @PostMapping(API_PARAMS.REGISTER)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> register(
             @RequestBody RegisterAccountRequest registerAccountRequest) {
         log.info("Start register");
@@ -125,7 +120,6 @@ public class AccountController {
      * @return the response entity
      */
     @PutMapping(API_PARAMS.UPDATE_ACCOUNT_INFO)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> updateAccountInfoById(
             @RequestBody UpdateAccountRequest updateAccountRequest) {
         log.info("Start update by id");

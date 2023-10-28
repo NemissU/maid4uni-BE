@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(API_PARAMS.API_VERSION)
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ServiceController {
     @Autowired
@@ -37,7 +38,6 @@ public class ServiceController {
      * @return the response entity
      */
     @PostMapping(API_PARAMS.CREATE_SERVICE)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> createService(@RequestBody CreateServiceRequest createServiceRequest){
         log.info("Start create package");
         ServiceDto serviceDto = ServiceConverter
@@ -56,7 +56,6 @@ public class ServiceController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ALL_SERVICE)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getAllService(){
         log.info("Start get all service");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -74,7 +73,6 @@ public class ServiceController {
      * @return the response entity
      */
     @PutMapping(API_PARAMS.UPDATE_SERVICE)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> updateService(@PathVariable int id,
                                                         @RequestBody UpdateServiceRequest updateServiceRequest){
         log.info("Start update service");
@@ -93,7 +91,6 @@ public class ServiceController {
      * @return the response entity
      */
     @DeleteMapping(API_PARAMS.DELETE_SERVICE)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> deleteService(@PathVariable int id){
         log.info("Start delete service");
         return ResponseEntity.status(HttpStatus.OK).body(
