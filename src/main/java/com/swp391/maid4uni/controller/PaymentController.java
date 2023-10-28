@@ -26,14 +26,15 @@ import java.time.LocalDateTime;
 @RequestMapping(API_PARAMS.API_VERSION)
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentController {
     @Autowired
     private VNPayService vnPayService;
     @Autowired
     private PaymentRepository paymentRepository;
+
     @PostMapping(API_PARAMS.CREATE_VNPAY_PAYMENT)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> createVNPayPayment(@RequestBody VNPayRequest request){
 
         // todo
@@ -45,7 +46,6 @@ public class PaymentController {
     }
 
     @GetMapping(API_PARAMS.GET_VNPAY_PAYMENT)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getVNPayPayment(
             @RequestParam(value = "vnp_Amount") String price,
             @RequestParam(value = "vnp_OrderInfo") String content,

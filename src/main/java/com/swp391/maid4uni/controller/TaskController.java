@@ -25,13 +25,13 @@ import org.springframework.web.bind.annotation.*;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskController {
     @Autowired
     TaskService taskService;
 
     @PutMapping(API_PARAMS.UPDATE_TASK)
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> updateTask(
             @PathVariable int id,
             @RequestBody UpdateTaskRequest updateTaskRequest) {
