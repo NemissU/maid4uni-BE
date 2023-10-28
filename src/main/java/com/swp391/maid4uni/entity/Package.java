@@ -53,4 +53,8 @@ public class Package {
             , joinColumns = @JoinColumn(name = "package_id")
             , inverseJoinColumns = @JoinColumn(name = "service_id"))
     List<Service> serviceList;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    Order order;
 }

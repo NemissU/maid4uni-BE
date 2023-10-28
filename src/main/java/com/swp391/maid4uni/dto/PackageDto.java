@@ -28,4 +28,5 @@ public class PackageDto {
     short logicalDeleteStatus;
     AccountDto creator;
     List<ServiceDto> serviceList;
+    OrderDto orderDto;
 }

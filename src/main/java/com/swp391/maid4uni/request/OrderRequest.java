@@ -13,6 +13,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 @Builder
@@ -22,7 +27,9 @@ public class OrderRequest {
     double price;
     String address;
     int duration;
+    Arrays workDay;
+    LocalTime startTime;
+    LocalDate startDay; // format YY/MM/DD
     PeriodType periodType;
     AccountDutyRequest customer;
-    Payment payment;
 }
