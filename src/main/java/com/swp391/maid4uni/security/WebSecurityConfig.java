@@ -1,6 +1,10 @@
 package com.swp391.maid4uni.security;
 
+
 import jakarta.servlet.Filter;
+
+import com.swp391.maid4uni.ulti.CorsConfig;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -49,6 +53,7 @@ public class WebSecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize -> authorize
@@ -68,12 +73,20 @@ public class WebSecurityConfig {
 //        Class<? extends Filter> clazz = UsernamePasswordAuthenticationFilter.class;
 //
 //        return httpSecurity.csrf(Customizer.withDefaults()).disable()
+
+//                 .sessionManagement()
+//                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                 .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
+//
+//        return httpSecurity.csrf().disable()
+
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and().cors().configurationSource(corsConfigurationSource()).and()
 //                .authorizeHttpRequests()
 //                .antMatchers("/login").permitAll()
 //                .antMatchers("/register").permitAll()
 //                .anyRequest().permitAll()
+
 //                .and()
 //                .addFilterBefore( jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
 //                .build();
@@ -87,6 +100,7 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
+
     }
 
 }
