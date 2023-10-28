@@ -36,6 +36,7 @@ public class FeedbackController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ALL_FEEDBACK_LIST)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getAllFeedbackList(){
         log.info("Start get all feedback list");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -50,6 +51,7 @@ public class FeedbackController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_FEEDBACK_BY_RECEIVER_ID)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getFeedbackByReceiverId(@PathVariable int id){
         log.info("Start get feedback by receiver id");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -65,6 +67,7 @@ public class FeedbackController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_FEEDBACK_BY_SENDER_ID)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getFeedbackBySenderId(@PathVariable int id){
         log.info("Start get feedback by sender id");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -74,6 +77,7 @@ public class FeedbackController {
     }
 
     @PostMapping(API_PARAMS.CREATE_FEEDBACK)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> createFeedback(@RequestBody CreateFeedbackRequest createFeedbackRequest){
         log.info("Start create feedback");
         FeedBackDto feedBackDto = FeedbackConverter.INSTANCE.fromCreateFeedbackRequestToFeedbackDto(createFeedbackRequest);
@@ -83,6 +87,7 @@ public class FeedbackController {
     }
 
     @GetMapping(API_PARAMS.GET_ACCOUNT_RATING)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getAccountRating(@PathVariable int id){
         log.info("Start get account rating");
         return ResponseEntity.status(HttpStatus.OK).body(

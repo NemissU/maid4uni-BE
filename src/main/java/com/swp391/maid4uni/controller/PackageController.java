@@ -36,6 +36,7 @@ public class PackageController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ALL_PACKAGE)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> getAllPackage() {
         log.info("Start get all package");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -52,6 +53,7 @@ public class PackageController {
      * @return the response entity
      */
     @PostMapping(API_PARAMS.CREATE_PACKAGE)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> createPackage(
             @RequestBody CreatePackageRequest createPackageRequest) {
         log.info("Start create package");
@@ -74,6 +76,7 @@ public class PackageController {
      * @return the response entity
      */
     @DeleteMapping(API_PARAMS.DELETE_PACKAGE)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> deletePackage(@PathVariable int id) {
         log.info("Start delete package");
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -91,6 +94,7 @@ public class PackageController {
      * @return the response entity
      */
     @PutMapping(API_PARAMS.UPDATE_PACKAGE)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> updatePackage(
             @PathVariable int id,
             @RequestBody UpdatePackageRequest updatePackageRequest) {
