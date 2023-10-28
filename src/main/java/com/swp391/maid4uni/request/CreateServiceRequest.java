@@ -14,7 +14,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateServiceRequest {
-    int id;
     String name;
     String description;
     double price;
