@@ -1,17 +1,22 @@
 package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.AccountConverter;
+import com.swp391.maid4uni.converter.TrackerConverter;
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Role;
+import com.swp391.maid4uni.entity.Task;
+import com.swp391.maid4uni.entity.Tracker;
 import com.swp391.maid4uni.enums.Constants;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.AccountRepository;
+import com.swp391.maid4uni.repository.TrackerRepository;
 import com.swp391.maid4uni.request.LoginByUsernameRequest;
 import com.swp391.maid4uni.request.RegisterAccountRequest;
 import com.swp391.maid4uni.request.UpdateAccountRequest;
 import com.swp391.maid4uni.response.AccountResponse;
 import com.swp391.maid4uni.response.LoginByUsernameResponse;
 import com.swp391.maid4uni.service.AccountService;
+import com.swp391.maid4uni.service.TrackerService;
 import com.swp391.maid4uni.ulti.JwtTokenUtil;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -42,6 +47,10 @@ public class AccountServiceImpl implements AccountService {
     PasswordEncoder passwordEncoder;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    TrackerRepository trackerRepository;
+    @Autowired
+    TrackerService trackerService;
 
     /**
      * Login by username
@@ -161,6 +170,9 @@ public class AccountServiceImpl implements AccountService {
             String rawPassword = updatedAccount.getPassword();
             updatedAccount.setPassword(passwordEncoder.encode(rawPassword));
             updatedAccount = accountRepository.save(updatedAccount);
+            if(updatedAccount.getRole() == Role.STAFF){
+                trackerService.createTrackerForStaff(accountId);
+            }
         } else {
             // handle logic sau
         }
