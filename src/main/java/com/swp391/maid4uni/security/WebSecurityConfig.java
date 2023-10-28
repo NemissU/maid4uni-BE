@@ -1,11 +1,13 @@
 package com.swp391.maid4uni.security;
 
+import jakarta.servlet.Filter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 /**
  * The type Web security config.
@@ -46,22 +49,34 @@ public class WebSecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
+        httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 // quyền login + register thì ai cũng đc permit
                                 .requestMatchers("/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/register").permitAll()
+                                .requestMatchers("/register").permitAll()
                                 // tất cả những cái khác cần phân quyền
                                 .anyRequest().permitAll()
                 )
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().cors().configurationSource(corsConfigurationSource()).and()
-                .build();
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(Customizer.withDefaults());
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
+
+//        Filter filter =  jwtRequestFilter;
+//        Class<? extends Filter> clazz = UsernamePasswordAuthenticationFilter.class;
+//
+//        return httpSecurity.csrf(Customizer.withDefaults()).disable()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and().cors().configurationSource(corsConfigurationSource()).and()
+//                .authorizeHttpRequests()
+//                .antMatchers("/login").permitAll()
+//                .antMatchers("/register").permitAll()
+//                .anyRequest().permitAll()
+//                .and()
+//                .addFilterBefore( jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
