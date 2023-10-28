@@ -5,6 +5,7 @@ import com.swp391.maid4uni.dto.PaymentDto;
 import com.swp391.maid4uni.entity.Payment;
 import com.swp391.maid4uni.enums.API_PARAMS;
 import com.swp391.maid4uni.repository.PaymentRepository;
+import com.swp391.maid4uni.request.VNPayRequest;
 import com.swp391.maid4uni.response.PaymentResponse;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.VNPayService;
@@ -32,11 +33,11 @@ public class PaymentController {
     @Autowired
     private PaymentRepository paymentRepository;
     @PostMapping(API_PARAMS.CREATE_VNPAY_PAYMENT)
-    public ResponseEntity<ResponseObject> createVNPayPayment(@RequestParam("amount") int orderTotal,
-                                      @RequestParam("orderInfo") String orderInfo){
+    public ResponseEntity<ResponseObject> createVNPayPayment(@RequestBody VNPayRequest request){
+
         // todo
         //  String vnpayUrl = "redirect:" + vnPayService.createPayment(orderTotal, orderInfo, baseUrl);
-        String vnpayUrl = vnPayService.createPayment(orderTotal, orderInfo);
+        String vnpayUrl = vnPayService.createPayment(request.getOrderTotal(), request.getOrderInfo());
         return ResponseEntity.ok().body(
                 new ResponseObject("OK", "CREATE PAYMENT SUCCESSFULLY", vnpayUrl)
         );

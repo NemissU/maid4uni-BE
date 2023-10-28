@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import jakarta.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column
-    LocalDate workDay;
+    LocalDate workDay; // format YY/MM/DD
     @Column(name = "start_time")
-    Time startTime;
+    LocalTime startTime;
     @Column(name = "end_time")
-    Time endTime;
+    LocalTime endTime;
     @Column
     boolean status;
     @ManyToOne

@@ -6,9 +6,14 @@ import com.swp391.maid4uni.request.AccountDutyRequest;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,9 +24,14 @@ import java.util.Date;
 public class OrderDto {
     double price;
     String address;
+    Arrays workDay;
+    LocalDate startDay; // format YY/MM/DD
+    LocalDate endDay; // format YY/MM/DD
     LocalDateTime time;
+    LocalTime startTime;
     int duration;
     PeriodType periodType;
     AccountDto customer;
-    Payment paymentMethod;
+    PaymentDto payment;
+    PackageDto packageDto;
 }

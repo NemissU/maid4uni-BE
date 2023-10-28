@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -19,8 +20,8 @@ import java.util.List;
 public class OrderDetailDto {
     int id;
     LocalDate workDay;
-    Time startTime;
-    Time endTime;
+    LocalTime startTime;
+    LocalTime endTime;
     boolean status;
     OrderDto order;
     List<TaskDto> taskList;
