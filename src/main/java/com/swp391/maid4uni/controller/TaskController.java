@@ -31,6 +31,7 @@ public class TaskController {
     TaskService taskService;
 
     @PutMapping(API_PARAMS.UPDATE_TASK)
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ResponseObject> updateTask(
             @PathVariable int id,
             @RequestBody UpdateTaskRequest updateTaskRequest) {
