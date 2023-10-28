@@ -1,4 +1,4 @@
-package com.swp391.maid4uni.response;
+package com.swp391.maid4uni.request;
 
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.OrderDetail;
@@ -12,13 +12,11 @@ import jakarta.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
 
-public class OrderResponse {
-    int id;
+public class OrderRequest {
     double price;
     String address;
-    Date time;
     int duration;
     PeriodType periodType;
-    List<OrderDetailResponse> orderDetailList;
-    PaymentResponse paymentMethod;
+    AccountDutyRequest customer;
+    Payment paymentMethod;
 }
