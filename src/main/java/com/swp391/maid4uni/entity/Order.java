@@ -1,10 +1,13 @@
 package com.swp391.maid4uni.entity;
 
 
+import com.swp391.maid4uni.enums.PeriodType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -27,11 +30,11 @@ public class Order {
     @Column
     String address;
     @Column
-    Date time;
+    LocalDateTime time;
     @Column
     int duration;
     @Column(name = "period_Type")
-    String periodType;
+    PeriodType periodType;
     @Column
     short logicalDeleteStatus;
     @ManyToOne

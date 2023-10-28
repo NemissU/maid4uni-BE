@@ -92,6 +92,10 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public int getRatingByAccountId(int id) {
+        Account staff = accountRepository.findAccountByIdAndLogicalDeleteStatus(id, 0);
+        if (staff == null) {
+            throw Maid4UniException.notFound("Staff does not exist");
+        }
         int avgRating = 0;
 //        List<FeedbackResponse> feedbackList = getFeedbackByReceiverId(id);
         List<Feedback> feedbackList = feedbackRepository.findAllByReceiverIdAndLogicalDeleteStatus(id,0);
