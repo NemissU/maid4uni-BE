@@ -46,5 +46,5 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "payment_id")
-    Payment paymentMethod;
+    Payment payment;
 }

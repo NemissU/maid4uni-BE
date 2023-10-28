@@ -1,9 +1,10 @@
-package com.swp391.maid4uni.response;
+package com.swp391.maid4uni.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PaymentResponse {
+public class PaymentDto {
     String paymentContent;
     LocalDateTime paymentTime;
     String paymentStatus;

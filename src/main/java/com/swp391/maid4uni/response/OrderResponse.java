@@ -8,10 +8,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 import java.util.List;
-
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
 public class OrderResponse {
     int id;
     double price;
@@ -19,6 +25,6 @@ public class OrderResponse {
     Date time;
     int duration;
     PeriodType periodType;
-    List<OrderDetailResponse> orderDetailList;
-    PaymentResponse paymentMethod;
+//    List<OrderDetailResponse> orderDetailResponseList;
+//    PaymentResponse paymentMethod;
 }

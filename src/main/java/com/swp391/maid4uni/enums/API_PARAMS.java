@@ -129,6 +129,17 @@ public class API_PARAMS {
      ********************************************************/
 
     public static final String GET_ORDER_INFO_BY_CUSTOMER = "/get-order-info-by-customer/{id}";
+
     public static final String CREATE_ORDER = "/create-order";
+
+    /********************************************************
+     *                     PAYMENT APIs                     *
+     ********************************************************/
+    public static final String CREATE_VNPAY_PAYMENT = "/create-vnpay-payment";
+    public static final String GET_VNPAY_PAYMENT = "/get-vnpay-payment";
+    public static final String VNPAY_PAYURL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+
+    public static final String UPDATE_TASK = "/update-task/{id}";
+
 }
 

@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
 @Table(name = "TRACKER_TBL")
 @Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -23,6 +27,7 @@ public class Tracker {
     @Column(name = "tracker_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    @UpdateTimestamp
     @Column(name = "recorded_time")
     Date recordedTime;
     @Column(name = "task_done")

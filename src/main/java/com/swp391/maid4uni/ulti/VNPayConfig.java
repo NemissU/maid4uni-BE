@@ -1,5 +1,6 @@
 package com.swp391.maid4uni.ulti;
 
+import com.swp391.maid4uni.enums.API_PARAMS;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,19 @@ import java.util.*;
 
 @Component
 public class VNPayConfig {
-    public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_Returnurl = "/vnpay-payment";
+    public static String vnp_PayUrl = API_PARAMS.VNPAY_PAYURL;
+    // todo
+    //  change to server side api
+    public static String vnp_Returnurl = "http://localhost:8080" + API_PARAMS.API_VERSION + API_PARAMS.GET_VNPAY_PAYMENT;
     @Value("${VNP_TMNCODE}")
     public static String vnp_TmnCode;
     @Value("${VNP_HASHSECRECT}")
     public static String vnp_HashSecret;
+    public static String vnp_Version = "2.1.0";
+    public static String vnp_Command = "pay";
+    public static String vnp_IpAddr = "192.168.0.106";
+    public static String vnp_CurrCode = "VND";
+    public static String vnp_BankCode = "";
     public static String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
     public static String md5(String message) {
