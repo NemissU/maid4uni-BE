@@ -7,7 +7,10 @@ import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
 
+import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +33,12 @@ public class Order {
     @Column
     String address;
     @Column
+    LocalDate startDay; // format YY/MM/DD
+    @Column
+    LocalDate endDay; // format YY/MM/DD
+    @Column
+    LocalTime startTime;
+    @Column
     LocalDateTime time;
     @Column
     int duration;
@@ -47,4 +56,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "payment_id")
     Payment payment;
+
+    @OneToOne
+    @JoinColumn(name = "package_id")
+    Package aPackage;
+
 }
