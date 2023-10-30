@@ -30,6 +30,6 @@ public class Payment {
     LocalDateTime paymentTime;
     @Column(name = "payment_status")
     String paymentStatus;
-    @OneToMany(mappedBy = "payment")
-    List<Order> orders;
+    @OneToOne(mappedBy = "payment")
+    Order order;
 }

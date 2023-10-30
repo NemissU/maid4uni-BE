@@ -54,7 +54,6 @@ public class Package {
             , inverseJoinColumns = @JoinColumn(name = "service_id"))
     List<Service> serviceList;
 
-    @OneToOne
-    @JoinColumn(name = "order_id")
-    Order order;
+    @OneToMany(mappedBy = "aPackage")
+    List<Order> orderList;
 }

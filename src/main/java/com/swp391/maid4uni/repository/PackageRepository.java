@@ -16,4 +16,6 @@ public interface PackageRepository extends JpaRepository<Package,Integer> {
      * @return the list
      */
     List<Package> findAllByLogicalDeleteStatus(int logicalDeleteStatus);
+
+    Package findByIdAndLogicalDeleteStatus(int id, int logicalDeleteStatus);
 }

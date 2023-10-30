@@ -16,6 +16,8 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreatePackageRequest {
+    int id;
+
     String name;
     String description;
     AccountDutyRequest creator;

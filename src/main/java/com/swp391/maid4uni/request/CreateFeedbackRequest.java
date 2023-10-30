@@ -11,6 +11,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateFeedbackRequest {
+    int id;
+
     String comment;
     AccountDutyRequest sender;
     AccountDutyRequest receiver;

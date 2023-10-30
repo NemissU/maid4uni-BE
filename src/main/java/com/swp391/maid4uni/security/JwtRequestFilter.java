@@ -42,7 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String token = null;
         TokenPayload tokenPayload = null;
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-            token = requestTokenHeader.split(" ")[1];
+            token = requestTokenHeader.split(" ")[1].trim();
             try {
                 tokenPayload = jwtTokenUtil.getTokenPayload(token);
             } catch (ExpiredJwtException ex) {
