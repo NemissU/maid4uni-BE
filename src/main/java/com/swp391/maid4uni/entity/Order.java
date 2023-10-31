@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class Order {
     @Column
     LocalTime startTime;
     @Column
-    LocalDateTime time;
+    LocalDateTime createdAt;
     @Column
     int duration;
     @Column(name = "period_Type")
@@ -53,11 +54,11 @@ public class Order {
     @OneToMany(mappedBy = "order")
     List<OrderDetail> orderDetailList;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "payment_id")
     Payment payment;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "package_id")
     Package aPackage;
 

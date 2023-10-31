@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -24,10 +25,10 @@ import java.util.concurrent.TimeUnit;
 public class OrderDto {
     double price;
     String address;
-    Arrays workDay;
+    ArrayList<Integer> workDay;
     LocalDate startDay; // format YY/MM/DD
     LocalDate endDay; // format YY/MM/DD
-    LocalDateTime time;
+    LocalDateTime createdAt;
     LocalTime startTime;
     int duration;
     PeriodType periodType;

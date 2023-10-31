@@ -121,4 +121,6 @@ public interface PackageConverter {
      * @return the list
      */
     List<ServiceDto> mapUpdateServiceRequestList(List<UpdateServiceRequest> serviceList);
+
+    PackageDto map(PackageDutyRequest packageDutyRequest);
 }
