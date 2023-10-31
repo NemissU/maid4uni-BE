@@ -128,7 +128,7 @@ public class API_PARAMS {
      *                      ORDER APIs                      *
      ********************************************************/
 
-    public static final String GET_ORDER_INFO_BY_CUSTOMER = "/get-order-info-by-customer/{id}";
+    public static final String GET_ORDER_LIST_BY_CUSTOMER = "/get-order-list-by-customer/{id}";
 
     public static final String CREATE_ORDER = "/create-order";
 

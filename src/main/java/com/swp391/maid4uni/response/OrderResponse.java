@@ -13,6 +13,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Builder
@@ -22,9 +25,12 @@ public class OrderResponse {
     int id;
     double price;
     String address;
-    Date time;
+    LocalDateTime createdAt;
     int duration;
     PeriodType periodType;
+    LocalDate endDay; // format YY/MM/DD
+    LocalDate startDay; // format YY/MM/DD
+    PackageResponse pkgRes;
 //    List<OrderDetailResponse> orderDetailResponseList;
 //    PaymentResponse paymentMethod;
 }

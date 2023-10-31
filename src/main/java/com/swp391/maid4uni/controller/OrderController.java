@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.controller;
 
 import com.swp391.maid4uni.converter.OrderConverter;
+import com.swp391.maid4uni.converter.PackageConverter;
 import com.swp391.maid4uni.dto.OrderDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
 import com.swp391.maid4uni.request.OrderRequest;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,20 +24,21 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderController {
-
+    @Autowired
     private OrderService orderService;
 
-    @GetMapping(API_PARAMS.GET_ORDER_INFO_BY_CUSTOMER)
-    public ResponseEntity<ResponseObject> getOrderInfoByCustomer(@PathVariable int id) {
+    @GetMapping(API_PARAMS.GET_ORDER_LIST_BY_CUSTOMER)
+    public ResponseEntity<ResponseObject> getOrderListByCustomer(@PathVariable int id) {
         log.info("Start getOrderInfoByCustomer");
         return ResponseEntity.ok().body(
-                new ResponseObject("OK", "GET ORDER INFO BY CUSTOMER ID SUCCESSFULLY", orderService.getOrderInfoByCustomer(id)));
+                new ResponseObject("OK", "GET ORDER LIST BY CUSTOMER ID SUCCESSFULLY", orderService.getOrderInfoByCustomer(id)));
     }
 
     @PostMapping(API_PARAMS.CREATE_ORDER)
     public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderRequest request){
         log.info("Start createOrder");
-        OrderDto dto = OrderConverter.INSTANCE.fromRequestToDto(request);
+        OrderDto dto = OrderConverter.INSTANCE.fromOrderRequestToOrderDto(request);
+        dto.setPackageDto(PackageConverter.INSTANCE.map(request.getPkgDuty()));
         return ResponseEntity.ok().body(
                 new ResponseObject("OK", "CREATE ORDER", orderService.createOrder(dto)));
     }
