@@ -91,4 +91,12 @@ public class FeedbackController {
         );
     }
 
+    @GetMapping(API_PARAMS.GET_BEST_REVIEWS)
+    public ResponseEntity<ResponseObject> getBestReview() {
+        log.info("Start get best review");
+        return ResponseEntity.ok().body(
+                new ResponseObject("OK", "GET BEST REVIEW SUCCESSFULLY", feedbackService.getBestReview())
+        );
+    }
+
 }

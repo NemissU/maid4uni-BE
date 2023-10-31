@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.entity;
 
 
+import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.PeriodType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -33,6 +34,8 @@ public class Order {
     double price;
     @Column
     String address;
+    @Column(name = "work_day")
+    String workDay;
     @Column
     LocalDate startDay; // format YY/MM/DD
     @Column
@@ -43,17 +46,17 @@ public class Order {
     LocalDateTime createdAt;
     @Column
     int duration;
-    @Column(name = "period_Type")
+    @Column(name = "period_type")
     PeriodType periodType;
     @Column
     short logicalDeleteStatus;
     @ManyToOne
     @JoinColumn(name = "cutomer_id")
     Account customer;
-
     @OneToMany(mappedBy = "order")
     List<OrderDetail> orderDetailList;
-
+    @Column(name = "order_status")
+    OrderStatus orderStatus;
     @OneToOne
     @JoinColumn(name = "payment_id")
     Payment payment;
