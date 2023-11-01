@@ -1,5 +1,6 @@
 package com.swp391.maid4uni.entity;
 
+import com.swp391.maid4uni.enums.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class Account {
+public class    Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")

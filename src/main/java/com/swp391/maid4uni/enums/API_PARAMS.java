@@ -141,5 +141,7 @@ public class API_PARAMS {
 
     public static final String UPDATE_TASK = "/update-task/{id}";
 
+    public static final String GET_BEST_REVIEWS = "/get-best-review";
+    public static final String UPDATE_ORDER_STATUS = "/update-order-status";
 }
 

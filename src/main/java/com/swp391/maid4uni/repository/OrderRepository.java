@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findAllByCustomerIdAndLogicalDeleteStatus(int id, short logicalDeleteStatus);
+
+    Order findByIdAndLogicalDeleteStatus(int id, int logicalDeleteStatus);
 }

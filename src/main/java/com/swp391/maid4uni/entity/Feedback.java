@@ -31,8 +31,6 @@ public class Feedback {
     LocalDate date;
     @Column
     short logicalDeleteStatus;
-
-
     @ManyToOne
     @JoinColumn(name = "sender")
     Account sender;

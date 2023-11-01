@@ -5,6 +5,7 @@ import com.swp391.maid4uni.converter.PackageConverter;
 import com.swp391.maid4uni.dto.OrderDto;
 import com.swp391.maid4uni.enums.API_PARAMS;
 import com.swp391.maid4uni.request.OrderRequest;
+import com.swp391.maid4uni.request.UpdateOrderRequest;
 import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.OrderService;
 import lombok.AccessLevel;
@@ -43,5 +44,11 @@ public class OrderController {
                 new ResponseObject("OK", "CREATE ORDER", orderService.createOrder(dto)));
     }
 
+    @PutMapping(API_PARAMS.UPDATE_ORDER_STATUS)
+    public ResponseEntity<ResponseObject> updateOrderStatus(@RequestBody UpdateOrderRequest request){
+        log.info("Start updateOrderStatus");
+        return ResponseEntity.ok().body(
+                orderService.updateOrderStatus(request));
+    }
 
 }

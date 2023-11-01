@@ -34,4 +34,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
      * @return the list
      */
     List<Feedback> findAllByLogicalDeleteStatus(int logicalDeleteStatus);
+
+    Feedback findByRatingIdAndLogicalDeleteStatus(int id, int logicalDeleteStatus);
 }

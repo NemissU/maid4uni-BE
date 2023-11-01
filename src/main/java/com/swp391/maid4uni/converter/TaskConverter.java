@@ -7,6 +7,8 @@ import com.swp391.maid4uni.response.TaskResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
+
 @Mapper(componentModel = "spring")
 public interface TaskConverter {
     TaskConverter INSTANCE = Mappers.getMapper(TaskConverter.class);
@@ -16,4 +18,15 @@ public interface TaskConverter {
     Task fromTaskDtoToTask(TaskDto taskDto);
 
     TaskResponse fromTaskToTaskResponse(Task updatedTask);
+
+    default String convertToString(ArrayList<Integer> inputList) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer element : inputList) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);  // Xóa dấu ',' cuối cùng
+        }
+        return sb.toString();
+    }
 }

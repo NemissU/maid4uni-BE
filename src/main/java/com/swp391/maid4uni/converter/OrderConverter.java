@@ -9,7 +9,10 @@ import com.swp391.maid4uni.request.PackageDutyRequest;
 import com.swp391.maid4uni.response.OrderResponse;
 import com.swp391.maid4uni.response.PackageResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.ArrayList;
 
 @Mapper(componentModel = "spring")
 
@@ -42,5 +45,16 @@ public interface OrderConverter {
     PackageDto map(PackageDutyRequest packageDutyRequest);
 
     PackageResponse map(Package pkg);
+
+    default String convertToString(ArrayList<Integer> inputList) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer element : inputList) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);  // Xóa dấu ',' cuối cùng
+        }
+        return sb.toString();
+    }
 
 }

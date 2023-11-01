@@ -1,17 +1,17 @@
 package com.swp391.maid4uni.service.impl;
 
-import com.swp391.maid4uni.converter.AccountConverter;
 import com.swp391.maid4uni.converter.OrderConverter;
-import com.swp391.maid4uni.converter.PackageConverter;
-import com.swp391.maid4uni.converter.TaskConverter;
 import com.swp391.maid4uni.dto.*;
 import com.swp391.maid4uni.entity.*;
 import com.swp391.maid4uni.entity.Package;
+import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.PeriodType;
+import com.swp391.maid4uni.enums.Role;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.*;
-import com.swp391.maid4uni.request.OrderRequest;
+import com.swp391.maid4uni.request.UpdateOrderRequest;
 import com.swp391.maid4uni.response.OrderResponse;
+import com.swp391.maid4uni.response.ResponseObject;
 import com.swp391.maid4uni.service.OrderService;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,8 +24,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @Data
@@ -60,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         if (getCustomer == null) {
             throw Maid4UniException.notFound("Not found Customer info.");
         }
-        dto.setCreatedAt(LocalDateTime.now());
+        dto.setCreatedAt(LocalDateTime.now()); //có thể không cần thiết vì đã dùng @CreatedTimeStamp
         Package pkg = packageRepository.findByIdAndLogicalDeleteStatus(dto.getPackageDto().getId(), 0);
         dto.setPrice(pkg.getPrice());
         if (dto.getPeriodType().equals(PeriodType.ONE_MONTH)) {
@@ -68,18 +69,84 @@ public class OrderServiceImpl implements OrderService {
         } else {
             dto.setEndDay(dto.getStartDay().atStartOfDay().toLocalDate().plus(Period.ofDays(60)));
         }
-        // workday sẽ handle = cách chạy for rồi cộng thêm dần dần vào
-        // for
-
         Order order = converter.fromDtoToEntity(dto);
+        // todo
+        //  vì cái order entity k thể nhận vào 1 cái arraylist cho nên phải ép kiểu qua string
+        //   convert dto.workday -> String để nhét vào entity
+        String workDay = dto.getWorkDay().toString();
+        workDay = workDay.substring(1, workDay.length() - 1);
+        order.setWorkDay(workDay);
 
         order.setAPackage(pkg);
         order.setCustomer(getCustomer);
+        order.setOrderStatus(OrderStatus.WAITING_FOR_APPROVAL);
         orderRepository.save(order);
 
-        ArrayList<Integer> workDayList = dto.getWorkDay();
-        List<OrderDetail> orderDetailList = new ArrayList<>();
+        OrderResponse response = OrderConverter.INSTANCE.fromOrderToOrderResponse(order);
+        // payment set sau khi thanh toán thành công
+        return response;
+    }
 
+    @Override
+    public ResponseObject updateOrderStatus(UpdateOrderRequest request) {
+        Order order = orderRepository.findByIdAndLogicalDeleteStatus(request.getId(), 0);
+        OrderStatus status = request.getStatus();
+        String paymentStatus = order.getPayment().getPaymentStatus();
+        // truong hop chua thanh toan
+        if (paymentStatus.equals("Failed")) {
+            order.setOrderStatus(OrderStatus.DECLINED);
+            return new ResponseObject("FAILED", "PAYMENT STATUS IS `FAILED`", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
+        }
+        // truong hop da thanh toan && duyet thanh cong
+        if (status.equals(OrderStatus.APPROVED) && paymentStatus.equals("Success")) {
+            createOrderDetail(order);
+            order.setOrderStatus(status);
+            return new ResponseObject("OK", "SUCCESSFULLY CREATE ORDER", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
+        }
+        // truong hop thanh toan nhung huy order
+        order.setOrderStatus(OrderStatus.DECLINED);
+        return new ResponseObject("OK", "ORDER IS DECLINED, CONTACT HOTLINE FOR REFUND INFO", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
+    }
+
+    private List<OrderDetail> getWorkDay(Order order, ArrayList<Integer> workDayList, List<OrderDetail> orderDetailList, LocalDate workDay) {
+        Duration d = Duration.ofHours(order.getDuration());
+        for (int j = 0; j < workDayList.size(); j++) {
+            //OrderDetail od = createOrderDetail(order);
+            OrderDetail detail = OrderDetail
+                    .builder()
+                    .order(order)
+                    //todo handle logic sau
+                    .status(false)
+                    .startTime(order.getStartTime())
+                    //todo handle plus
+                    .endTime(order.getStartTime().plus(d))
+                    .build();
+            while (workDay.getDayOfWeek().getValue() != workDayList.get(j) ){
+                workDay = workDay.atStartOfDay().toLocalDate().plus(Period.ofDays(1));
+            }
+
+            detail.setWorkDay(workDay);
+            orderDetailList.add(detail);
+        }
+
+        return orderDetailList;
+    }
+
+    public void createOrderDetail(Order order) {
+        // todo
+        //  đổi từ string qua array string -> parse lại qua thành integer để nhét vào workDayList
+        //   handle đc đoạn này là bing. không được thì phải nghĩ cách khác không dùng đến order entity để lấy đc workDay từ request
+
+        ArrayList<String> workDayArr = new ArrayList<>(Arrays.asList(order.getWorkDay().split(", ")));
+        ArrayList<Integer> workDayList = new ArrayList<>();
+        for (int i = 0; i < workDayArr.size(); i++) {
+            workDayList.add(Integer.parseInt(workDayArr.get(i)));
+        }
+        //todo: đã handle - kết quả: đang thử nghiệm
+
+
+        List<OrderDetail> orderDetailList = new ArrayList<>();
+        Collections.sort(workDayList);
         LocalDate currentDate = order.getStartDay().atStartOfDay().toLocalDate();
         LocalDate actualStartDate = currentDate;
         int firstWorkDay = workDayList.get(0);
@@ -89,68 +156,88 @@ public class OrderServiceImpl implements OrderService {
         }
         actualStartDate = actualStartDate.plus(Period.ofDays(firstWorkDay));
         LocalDate workDay = actualStartDate;
+        Duration d = Duration.ofHours(order.getDuration());
         if (order.getPeriodType().equals(PeriodType.ONE_MONTH)) {
             for (int i = 0; i < 4; i++) {
-                workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+   //             workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+                workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
+                orderDetailList = getWorkDay(order, workDayList, orderDetailList, workDay);
+//                OrderDetail od = new OrderDetail();
+//                od.setWorkDay(workDay);
+//                orderDetailList.add(od);
+//                OrderDetail detail = OrderDetail
+//                        .builder()
+//                        .order(order)
+//                        //todo handle logic sau
+//                        .status(false)
+//                        .startTime(order.getStartTime())
+//                        //todo handle plus
+//                        .endTime(order.getStartTime().plus(d))
+//                        .build();
+//                detail.setWorkDay(workDay);
+              //  orderDetailList.add(detail);
             }
         } else {
             for (int i = 0; i < 8; i++) {
-                workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+ //               workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+//                OrderDetail od = new OrderDetail();
+//                od.setWorkDay(workDay);
+//                orderDetailList.add(od);
             }
         }
         orderDetailRepository.saveAll(orderDetailList);
-        OrderResponse response = OrderConverter.INSTANCE.fromOrderToOrderResponse(order);
-        // payment set sau khi thanh toán thành công
-        return response;
-    }
+        //TODO: DONE ORDER DETAIL
 
-    private LocalDate getWorkDay(Order order, ArrayList<Integer> workDayList, List<OrderDetail> orderDetailList, LocalDate workDay) {
-        for (int j = 0; j < workDayList.size(); j++) {
-            OrderDetail od = createOrderDetail(order);
-            while (workDay.getDayOfWeek().getValue() != workDayList.get(j) ){
-                workDay = workDay.atStartOfDay().toLocalDate().plus(Period.ofDays(1));
-            }
-            od.setWorkDay(workDay);
-            orderDetailList.add(od);
-        }
-        workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
-        return workDay;
-    }
 
-    public OrderDetail createOrderDetail(Order order) {
-        Duration d = Duration.ofHours(order.getDuration());
-        OrderDetail detail = OrderDetail
-                .builder()
-                .order(order)
-                //todo handle logic sau
-                .status(false)
-                .startTime(order.getStartTime())
-                //todo handle plus
-                .endTime(order.getStartTime().plus(d))
-                .build();
-        List<Task> taskList = new ArrayList<>();
-        for (com.swp391.maid4uni.entity.Service item: order.getAPackage().getServiceList()) {
-            List<Account> staffList = accountRepository.findByRoleAndLogicalDeleteStatus(Role.STAFF, (short) 0);
-            List<Tracker> trackerList = new ArrayList<>();
-            for (Account staff: staffList) {
-                trackerList.add(staff.getTracker());
+        //TODO: XỬ LÝ STAFF - XẾP LỊCH
+        for (OrderDetail ord:orderDetailList) {
+            for (com.swp391.maid4uni.entity.Service item: order.getAPackage().getServiceList()) {
+                List<Account> staffList = accountRepository.findByRoleAndLogicalDeleteStatus(Role.STAFF, (short) 0);
+                List<Tracker> trackerList = new ArrayList<>();
+                for (Account staff: staffList) {
+                    trackerList.add(staff.getTracker());
+                }
+                Task task = Task
+                        .builder()
+                        .status(false)
+                        .service(item)
+                        .orderDetail(ord)
+                        //todo handle list
+                        .staffs(staffList)
+                        .belongedTrackers(trackerList)
+                        .build();
+                //todo
+                // sửa cái mớ này lại
+                taskRepository.save(task);
             }
-            Task task = Task
-                    .builder()
-                    .status(false)
-                    .service(item)
-                    //todo handle list
-                    .staffs(staffList)
-                    .belongedTrackers(trackerList)
-                    .build();
-            //todo
-            // sửa cái mớ này lại
-            taskRepository.save(task);
         }
+
 //        orderDetailRepository.save(detail);
-        return detail;
+    }
+    private ArrayList<Integer> getIntegerArray(ArrayList<String> stringArray) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for(String stringValue : stringArray) {
+            try {
+                //Convert String to Integer, and store it into integer array list.
+                result.add(Integer.parseInt(stringValue));
+            } catch(NumberFormatException nfe) {
+                //System.out.println("Could not parse " + nfe);
+                log.info("NumberFormat", "Parsing failed! " + stringValue + " can not be an integer");
+            }
+        }
+        return result;
     }
 
+    private String convertToString(ArrayList<Integer> inputList) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer element : inputList) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);  // Xóa dấu ',' cuối cùng
+        }
+        return sb.toString();
+    }
 
 
 }

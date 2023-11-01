@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.dto;
 
 import com.swp391.maid4uni.entity.Payment;
+import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.PeriodType;
 import com.swp391.maid4uni.request.AccountDutyRequest;
 import lombok.*;
@@ -31,6 +32,7 @@ public class OrderDto {
     LocalDateTime createdAt;
     LocalTime startTime;
     int duration;
+    OrderStatus status;
     PeriodType periodType;
     AccountDto customer;
     PaymentDto payment;
