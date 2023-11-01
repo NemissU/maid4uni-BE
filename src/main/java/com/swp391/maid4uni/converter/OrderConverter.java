@@ -12,6 +12,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
+
 @Mapper(componentModel = "spring")
 
 public interface OrderConverter {
@@ -38,11 +40,21 @@ public interface OrderConverter {
 
     OrderDto fromOrderRequestToOrderDto(OrderRequest request);
 
-    @Mapping(target = "workDay", ignore = true)
     Order fromDtoToEntity(OrderDto dto);
 
     PackageDto map(PackageDutyRequest packageDutyRequest);
 
     PackageResponse map(Package pkg);
+
+    default String convertToString(ArrayList<Integer> inputList) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer element : inputList) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);  // Xóa dấu ',' cuối cùng
+        }
+        return sb.toString();
+    }
 
 }

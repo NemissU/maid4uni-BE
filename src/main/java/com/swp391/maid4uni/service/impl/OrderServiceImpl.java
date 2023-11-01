@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         if (getCustomer == null) {
             throw Maid4UniException.notFound("Not found Customer info.");
         }
-        dto.setCreatedAt(LocalDateTime.now());
+        dto.setCreatedAt(LocalDateTime.now()); //có thể không cần thiết vì đã dùng @CreatedTimeStamp
         Package pkg = packageRepository.findByIdAndLogicalDeleteStatus(dto.getPackageDto().getId(), 0);
         dto.setPrice(pkg.getPrice());
         if (dto.getPeriodType().equals(PeriodType.ONE_MONTH)) {
@@ -108,29 +108,43 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseObject("OK", "ORDER IS DECLINED, CONTACT HOTLINE FOR REFUND INFO", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
     }
 
-    private LocalDate getWorkDay(Order order, ArrayList<Integer> workDayList, List<OrderDetail> orderDetailList, LocalDate workDay) {
+    private List<OrderDetail> getWorkDay(Order order, ArrayList<Integer> workDayList, List<OrderDetail> orderDetailList, LocalDate workDay) {
+        Duration d = Duration.ofHours(order.getDuration());
         for (int j = 0; j < workDayList.size(); j++) {
-            OrderDetail od = createOrderDetail(order);
+            //OrderDetail od = createOrderDetail(order);
+            OrderDetail detail = OrderDetail
+                    .builder()
+                    .order(order)
+                    //todo handle logic sau
+                    .status(false)
+                    .startTime(order.getStartTime())
+                    //todo handle plus
+                    .endTime(order.getStartTime().plus(d))
+                    .build();
             while (workDay.getDayOfWeek().getValue() != workDayList.get(j) ){
                 workDay = workDay.atStartOfDay().toLocalDate().plus(Period.ofDays(1));
             }
-            od.setWorkDay(workDay);
-            orderDetailList.add(od);
+
+            detail.setWorkDay(workDay);
+            orderDetailList.add(detail);
         }
-        workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
-        return workDay;
+
+        return orderDetailList;
     }
 
-    public OrderDetail createOrderDetail(Order order) {
+    public void createOrderDetail(Order order) {
         // todo
         //  đổi từ string qua array string -> parse lại qua thành integer để nhét vào workDayList
         //   handle đc đoạn này là bing. không được thì phải nghĩ cách khác không dùng đến order entity để lấy đc workDay từ request
-        String[] workDayArr = order.getWorkDay().split(",");
-        Arrays.stream(workDayArr).toList();
+
+        ArrayList<String> workDayArr = new ArrayList<>(Arrays.asList(order.getWorkDay().split(", ")));
         ArrayList<Integer> workDayList = new ArrayList<>();
-//        for (int i = 0; i < workDayArr.length; i++) {
-//            workDayList.add(Integer.parseInt(workDayArr[i].trim()));
-//        }
+        for (int i = 0; i < workDayArr.size(); i++) {
+            workDayList.add(Integer.parseInt(workDayArr.get(i)));
+        }
+        //todo: đã handle - kết quả: đang thử nghiệm
+
+
         List<OrderDetail> orderDetailList = new ArrayList<>();
         Collections.sort(workDayList);
         LocalDate currentDate = order.getStartDay().atStartOfDay().toLocalDate();
@@ -142,46 +156,63 @@ public class OrderServiceImpl implements OrderService {
         }
         actualStartDate = actualStartDate.plus(Period.ofDays(firstWorkDay));
         LocalDate workDay = actualStartDate;
+        Duration d = Duration.ofHours(order.getDuration());
         if (order.getPeriodType().equals(PeriodType.ONE_MONTH)) {
             for (int i = 0; i < 4; i++) {
-                workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+   //             workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+                workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
+                orderDetailList = getWorkDay(order, workDayList, orderDetailList, workDay);
+//                OrderDetail od = new OrderDetail();
+//                od.setWorkDay(workDay);
+//                orderDetailList.add(od);
+//                OrderDetail detail = OrderDetail
+//                        .builder()
+//                        .order(order)
+//                        //todo handle logic sau
+//                        .status(false)
+//                        .startTime(order.getStartTime())
+//                        //todo handle plus
+//                        .endTime(order.getStartTime().plus(d))
+//                        .build();
+//                detail.setWorkDay(workDay);
+              //  orderDetailList.add(detail);
             }
         } else {
             for (int i = 0; i < 8; i++) {
-                workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+ //               workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
+//                OrderDetail od = new OrderDetail();
+//                od.setWorkDay(workDay);
+//                orderDetailList.add(od);
             }
         }
         orderDetailRepository.saveAll(orderDetailList);
-        Duration d = Duration.ofHours(order.getDuration());
-        OrderDetail detail = OrderDetail
-                .builder()
-                .order(order)
-                //todo handle logic sau
-                .status(false)
-                .startTime(order.getStartTime())
-                //todo handle plus
-                .endTime(order.getStartTime().plus(d))
-                .build();
-        for (com.swp391.maid4uni.entity.Service item: order.getAPackage().getServiceList()) {
-            List<Account> staffList = accountRepository.findByRoleAndLogicalDeleteStatus(Role.STAFF, (short) 0);
-            List<Tracker> trackerList = new ArrayList<>();
-            for (Account staff: staffList) {
-                trackerList.add(staff.getTracker());
+        //TODO: DONE ORDER DETAIL
+
+
+        //TODO: XỬ LÝ STAFF - XẾP LỊCH
+        for (OrderDetail ord:orderDetailList) {
+            for (com.swp391.maid4uni.entity.Service item: order.getAPackage().getServiceList()) {
+                List<Account> staffList = accountRepository.findByRoleAndLogicalDeleteStatus(Role.STAFF, (short) 0);
+                List<Tracker> trackerList = new ArrayList<>();
+                for (Account staff: staffList) {
+                    trackerList.add(staff.getTracker());
+                }
+                Task task = Task
+                        .builder()
+                        .status(false)
+                        .service(item)
+                        .orderDetail(ord)
+                        //todo handle list
+                        .staffs(staffList)
+                        .belongedTrackers(trackerList)
+                        .build();
+                //todo
+                // sửa cái mớ này lại
+                taskRepository.save(task);
             }
-            Task task = Task
-                    .builder()
-                    .status(false)
-                    .service(item)
-                    //todo handle list
-                    .staffs(staffList)
-                    .belongedTrackers(trackerList)
-                    .build();
-            //todo
-            // sửa cái mớ này lại
-            taskRepository.save(task);
         }
+
 //        orderDetailRepository.save(detail);
-        return detail;
     }
     private ArrayList<Integer> getIntegerArray(ArrayList<String> stringArray) {
         ArrayList<Integer> result = new ArrayList<Integer>();
@@ -195,6 +226,17 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return result;
+    }
+
+    private String convertToString(ArrayList<Integer> inputList) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer element : inputList) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);  // Xóa dấu ',' cuối cùng
+        }
+        return sb.toString();
     }
 
 
