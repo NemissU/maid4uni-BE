@@ -27,9 +27,13 @@ public class OrderResponse {
     String address;
     LocalDateTime createdAt;
     int duration;
+
     PeriodType periodType;
-    LocalDate endDay; // format YY/MM/DD
+    ArrayList<Integer> workDay;
+
     LocalDate startDay; // format YY/MM/DD
+
+    LocalDate endDay; // format YY/MM/DD
     PackageResponse pkgRes;
 //    List<OrderDetailResponse> orderDetailResponseList;
 //    PaymentResponse paymentMethod;

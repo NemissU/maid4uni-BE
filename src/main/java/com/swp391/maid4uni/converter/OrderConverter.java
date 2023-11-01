@@ -9,6 +9,7 @@ import com.swp391.maid4uni.request.PackageDutyRequest;
 import com.swp391.maid4uni.response.OrderResponse;
 import com.swp391.maid4uni.response.PackageResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
@@ -37,6 +38,7 @@ public interface OrderConverter {
 
     OrderDto fromOrderRequestToOrderDto(OrderRequest request);
 
+    @Mapping(target = "workDay", ignore = true)
     Order fromDtoToEntity(OrderDto dto);
 
     PackageDto map(PackageDutyRequest packageDutyRequest);

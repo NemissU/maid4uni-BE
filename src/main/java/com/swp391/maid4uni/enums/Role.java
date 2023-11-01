@@ -1,4 +1,4 @@
-package com.swp391.maid4uni.entity;
+package com.swp391.maid4uni.enums;
 
 
 /**

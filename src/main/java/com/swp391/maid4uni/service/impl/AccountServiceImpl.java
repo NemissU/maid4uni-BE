@@ -1,11 +1,8 @@
 package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.AccountConverter;
-import com.swp391.maid4uni.converter.TrackerConverter;
 import com.swp391.maid4uni.entity.Account;
-import com.swp391.maid4uni.entity.Role;
-import com.swp391.maid4uni.entity.Task;
-import com.swp391.maid4uni.entity.Tracker;
+import com.swp391.maid4uni.enums.Role;
 import com.swp391.maid4uni.enums.Constants;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.AccountRepository;

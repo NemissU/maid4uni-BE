@@ -1,7 +1,7 @@
 package com.swp391.maid4uni.repository;
 
 import com.swp391.maid4uni.entity.Account;
-import com.swp391.maid4uni.entity.Role;
+import com.swp391.maid4uni.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

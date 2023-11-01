@@ -1,6 +1,6 @@
 package com.swp391.maid4uni.request;
 
-import com.swp391.maid4uni.entity.Role;
+import com.swp391.maid4uni.enums.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
