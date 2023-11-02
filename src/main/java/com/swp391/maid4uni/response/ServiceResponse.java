@@ -16,6 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ServiceResponse {
+    int id;
     String name;
     String description;
     double price;

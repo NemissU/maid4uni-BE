@@ -70,13 +70,12 @@ public class OrderServiceImpl implements OrderService {
             dto.setEndDay(dto.getStartDay().atStartOfDay().toLocalDate().plus(Period.ofDays(60)));
         }
         Order order = converter.fromDtoToEntity(dto);
-        // todo
-        //  vì cái order entity k thể nhận vào 1 cái arraylist cho nên phải ép kiểu qua string
-        //   convert dto.workday -> String để nhét vào entity
+
+        // convert từ array qua string
         String workDay = dto.getWorkDay().toString();
         workDay = workDay.substring(1, workDay.length() - 1);
-        order.setWorkDay(workDay);
 
+        order.setWorkDay(workDay);
         order.setAPackage(pkg);
         order.setCustomer(getCustomer);
         order.setOrderStatus(OrderStatus.WAITING_FOR_APPROVAL);
@@ -111,14 +110,11 @@ public class OrderServiceImpl implements OrderService {
     private List<OrderDetail> getWorkDay(Order order, ArrayList<Integer> workDayList, List<OrderDetail> orderDetailList, LocalDate workDay) {
         Duration d = Duration.ofHours(order.getDuration());
         for (int j = 0; j < workDayList.size(); j++) {
-            //OrderDetail od = createOrderDetail(order);
             OrderDetail detail = OrderDetail
                     .builder()
                     .order(order)
-                    //todo handle logic sau
                     .status(false)
                     .startTime(order.getStartTime())
-                    //todo handle plus
                     .endTime(order.getStartTime().plus(d))
                     .build();
             while (workDay.getDayOfWeek().getValue() != workDayList.get(j) ){
@@ -128,23 +124,15 @@ public class OrderServiceImpl implements OrderService {
             detail.setWorkDay(workDay);
             orderDetailList.add(detail);
         }
-
         return orderDetailList;
     }
 
     public void createOrderDetail(Order order) {
-        // todo
-        //  đổi từ string qua array string -> parse lại qua thành integer để nhét vào workDayList
-        //   handle đc đoạn này là bing. không được thì phải nghĩ cách khác không dùng đến order entity để lấy đc workDay từ request
-
         ArrayList<String> workDayArr = new ArrayList<>(Arrays.asList(order.getWorkDay().split(", ")));
         ArrayList<Integer> workDayList = new ArrayList<>();
         for (int i = 0; i < workDayArr.size(); i++) {
             workDayList.add(Integer.parseInt(workDayArr.get(i)));
         }
-        //todo: đã handle - kết quả: đang thử nghiệm
-
-
         List<OrderDetail> orderDetailList = new ArrayList<>();
         Collections.sort(workDayList);
         LocalDate currentDate = order.getStartDay().atStartOfDay().toLocalDate();
@@ -159,30 +147,13 @@ public class OrderServiceImpl implements OrderService {
         Duration d = Duration.ofHours(order.getDuration());
         if (order.getPeriodType().equals(PeriodType.ONE_MONTH)) {
             for (int i = 0; i < 4; i++) {
-   //             workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
                 workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
                 orderDetailList = getWorkDay(order, workDayList, orderDetailList, workDay);
-//                OrderDetail od = new OrderDetail();
-//                od.setWorkDay(workDay);
-//                orderDetailList.add(od);
-//                OrderDetail detail = OrderDetail
-//                        .builder()
-//                        .order(order)
-//                        //todo handle logic sau
-//                        .status(false)
-//                        .startTime(order.getStartTime())
-//                        //todo handle plus
-//                        .endTime(order.getStartTime().plus(d))
-//                        .build();
-//                detail.setWorkDay(workDay);
-              //  orderDetailList.add(detail);
             }
         } else {
             for (int i = 0; i < 8; i++) {
- //               workDay = getWorkDay(order, workDayList, orderDetailList, workDay);
-//                OrderDetail od = new OrderDetail();
-//                od.setWorkDay(workDay);
-//                orderDetailList.add(od);
+                workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
+                orderDetailList = getWorkDay(order, workDayList, orderDetailList, workDay);
             }
         }
         orderDetailRepository.saveAll(orderDetailList);
@@ -209,6 +180,7 @@ public class OrderServiceImpl implements OrderService {
                 //todo
                 // sửa cái mớ này lại
                 taskRepository.save(task);
+
             }
         }
 
