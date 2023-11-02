@@ -41,4 +41,6 @@ public interface PackageService {
      * @return the package response
      */
     PackageResponse updatePackage(PackageDto packageDto, int id);
+
+    PackageResponse getAPackage(int id);
 }

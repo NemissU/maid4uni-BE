@@ -143,5 +143,6 @@ public class API_PARAMS {
 
     public static final String GET_BEST_REVIEWS = "/get-best-review";
     public static final String UPDATE_ORDER_STATUS = "/update-order-status";
+    public static final String GET_A_PACKAGE = "/get-a-package/{id}";
 }
 

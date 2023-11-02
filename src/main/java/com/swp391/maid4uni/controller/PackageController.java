@@ -105,4 +105,12 @@ public class PackageController {
                 , packageService.updatePackage(packageDto, id))
         );
     }
+
+    @GetMapping(API_PARAMS.GET_A_PACKAGE)
+    public ResponseEntity<ResponseObject> getAPackage(@PathVariable int id){
+        log.info("Start get a package by id");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"GET A PACKAGE SUCCESSFULL"
+                ,packageService.getAPackage(id)));
+    }
 }

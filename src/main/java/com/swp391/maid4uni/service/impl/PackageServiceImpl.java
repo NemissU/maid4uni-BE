@@ -111,6 +111,15 @@ public class PackageServiceImpl implements PackageService {
         return PackageConverter.INSTANCE.fromPackageToPackageResponse(aPackage.get());
     }
 
+    @Override
+    public PackageResponse getAPackage(int id) {
+        Package aPackage = packageRepository.findByIdAndLogicalDeleteStatus(id,0);
+        if(aPackage == null){
+            throw Maid4UniException.notFound("Package id " + id + " does not exist");
+        }
+        return PackageConverter.INSTANCE.fromPackageToPackageResponse(aPackage);
+    }
+
     private double getPriceFromListService(List<com.swp391.maid4uni.entity.Service> serviceList) {
         double sum = 0;
         for (com.swp391.maid4uni.entity.Service s : serviceList) {
