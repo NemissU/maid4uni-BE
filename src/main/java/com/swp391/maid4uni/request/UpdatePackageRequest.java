@@ -19,6 +19,7 @@ import java.util.List;
 public class UpdatePackageRequest {
     int id;
     String name;
+    String imageUrl;
     String description;
     List<UpdateServiceRequest> serviceList;
 }
