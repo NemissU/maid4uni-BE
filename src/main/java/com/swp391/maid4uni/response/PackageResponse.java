@@ -22,6 +22,7 @@ public class PackageResponse {
     String description;
     double price;
     Date createdAt;
+    String imageUrl;
     Date updatedAt;
     AccountResponse creator;
     List<ServiceResponse> serviceList;

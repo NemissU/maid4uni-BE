@@ -26,6 +26,7 @@ public class PackageDto {
     Date createdAt;
     Date updatedAt;
     short logicalDeleteStatus;
+    String imageUrl;
     AccountDto creator;
     List<ServiceDto> serviceList;
 }

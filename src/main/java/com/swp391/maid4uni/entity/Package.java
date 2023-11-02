@@ -43,7 +43,8 @@ public class Package {
     Date updatedAt;
     @Column
     short logicalDeleteStatus;
-
+    @Column
+    String imageUrl;
     @ManyToOne
     @JoinColumn(name = "creator_id")
     Account creator;
