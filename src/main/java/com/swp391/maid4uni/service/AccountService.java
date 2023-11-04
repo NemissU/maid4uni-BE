@@ -67,4 +67,6 @@ public interface AccountService {
      * @return the account response
      */
     AccountResponse updateAccountInfoById(Integer accountId, UpdateAccountRequest updateAccountRequest);
+
+    AccountResponse deleteAccount(int id);
 }
