@@ -17,6 +17,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -37,8 +39,9 @@ public class ServiceServiceImpl implements ServiceService {
     PackageRepository packageRepository;
 
     @Override
-    public List<ServiceResponse> getAllService() {
-        List<Service> serviceList = serviceRepository.findAllByLogicalDeleteStatus(0);
+    public List<ServiceResponse> getAllService(int page) {
+        Pageable pageable = PageRequest.of(page,10);
+        List<Service> serviceList = serviceRepository.findAllByLogicalDeleteStatusWithOffsetAndLimit(0,pageable);
         List<ServiceResponse> serviceResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(serviceList)) {
             serviceResponseList =

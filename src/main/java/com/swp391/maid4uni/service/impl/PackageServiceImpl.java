@@ -138,6 +138,19 @@ public class PackageServiceImpl implements PackageService {
         return packageResponseList;
     }
 
+    @Override
+    public List<PackageResponse> getMostPopularPackages() {
+        List<Package> packages = packageRepository.findTop3PackagesWithMostOrders();
+        List<PackageResponse> packageResponseList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(packages)) {
+            packageResponseList =
+                    packages.stream()
+                            .map(PackageConverter.INSTANCE::fromPackageToPackageResponse)
+                            .toList();
+        }
+        return packageResponseList;
+    }
+
     private double getPriceFromListService(List<com.swp391.maid4uni.entity.Service> serviceList) {
         double sum = 0;
         for (com.swp391.maid4uni.entity.Service s : serviceList) {

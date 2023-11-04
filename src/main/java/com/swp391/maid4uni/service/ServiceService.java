@@ -15,7 +15,7 @@ public interface ServiceService {
      *
      * @return the all service
      */
-    List<ServiceResponse> getAllService();
+    List<ServiceResponse> getAllService(int page);
 
     /**
      * Create service service response.
