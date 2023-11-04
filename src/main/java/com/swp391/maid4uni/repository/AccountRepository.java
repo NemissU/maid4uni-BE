@@ -2,7 +2,10 @@ package com.swp391.maid4uni.repository;
 
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.enums.Role;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -61,6 +64,10 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
      * @return the list
      */
     List<Account> findAllByLogicalDeleteStatus(short logicalDeleteStatus);
+
+    @Query(value = "SELECT a FROM Account a WHERE a.logicalDeleteStatus = :logicalDeleteStatus")
+    List<Account> findAllByLogicalDeleteStatusWithOffsetAndLimit(@Param("logicalDeleteStatus") int logicalDeleteStatus,
+                                                                 Pageable pageable);
 
     /**
      * Find by role and logical delete status list.

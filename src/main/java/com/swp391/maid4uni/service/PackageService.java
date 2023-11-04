@@ -43,4 +43,8 @@ public interface PackageService {
     PackageResponse updatePackage(PackageDto packageDto, int id);
 
     PackageResponse getAPackage(int id);
+
+    List<PackageResponse> getPackageByCategory(int id, int page);
+
+    List<PackageResponse> getMostPopularPackages();
 }

@@ -39,6 +39,8 @@ public class TrackerServiceImpl implements TrackerService {
                     .taskDone(0)
                     .build();
             Tracker trackerDtoConverTracker = TrackerConverter.INSTANCE.fromTrackerDtoToTracker(trackerDto);
+            staff.setTracker(tracker);
+            accountRepository.save(staff);
             trackerRepository.save(trackerDtoConverTracker);
         }
     }

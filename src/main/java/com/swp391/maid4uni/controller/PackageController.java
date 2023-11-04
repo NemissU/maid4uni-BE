@@ -113,4 +113,20 @@ public class PackageController {
                 ,"GET A PACKAGE SUCCESSFULL"
                 ,packageService.getAPackage(id)));
     }
+
+    @GetMapping(API_PARAMS.GET_PACKAGE_BY_CATEGORY)
+    public ResponseEntity<ResponseObject> getPackageOfCombo1(@PathVariable int id, @PathVariable int page){
+        log.info("Start get package by category");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"GET PACKAGE BY CATEGORY SUCCESSFULLY"
+                ,packageService.getPackageByCategory(id, page)));
+    }
+
+    @GetMapping(API_PARAMS.GET_MOST_POPULAR_PACKAGES)
+    public ResponseEntity<ResponseObject> getMostPopularPackages(){
+        log.info("Start get most popular packages");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"GET MOST POPULAR PACKAGES SUCCESSFULLY"
+                ,packageService.getMostPopularPackages()));
+    }
 }

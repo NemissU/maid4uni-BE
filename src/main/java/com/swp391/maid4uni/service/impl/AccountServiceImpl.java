@@ -2,8 +2,8 @@ package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.AccountConverter;
 import com.swp391.maid4uni.entity.Account;
-import com.swp391.maid4uni.enums.Role;
 import com.swp391.maid4uni.enums.Constants;
+import com.swp391.maid4uni.enums.Role;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.AccountRepository;
 import com.swp391.maid4uni.repository.TrackerRepository;
@@ -19,6 +19,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -80,8 +82,9 @@ public class AccountServiceImpl implements AccountService {
      */
 
     @Override
-    public List<AccountResponse> getAccountList() {
-        List<Account> accountList = accountRepository.findAllByLogicalDeleteStatus((short) 0);
+    public List<AccountResponse> getAccountList(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        List<Account> accountList = accountRepository.findAllByLogicalDeleteStatusWithOffsetAndLimit(0, pageable);
         // !CollectionUtils.isEmpty(accountList) trả về true nếu list k rỗng và khác null
         List<AccountResponse> accountResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(accountList)) {
@@ -103,9 +106,9 @@ public class AccountServiceImpl implements AccountService {
         List<AccountResponse> managerResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(managerList)) {
             managerResponseList =
-            managerList.stream()
-                    .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
-                    .toList();
+                    managerList.stream()
+                            .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
+                            .toList();
         }
         return managerResponseList;
     }
@@ -120,9 +123,9 @@ public class AccountServiceImpl implements AccountService {
         List<AccountResponse> staffResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(staffList)) {
             staffResponseList =
-            staffList.stream()
-                    .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
-                    .toList();
+                    staffList.stream()
+                            .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
+                            .toList();
         }
         return staffResponseList;
     }
@@ -133,9 +136,9 @@ public class AccountServiceImpl implements AccountService {
         List<AccountResponse> customerResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(customerList)) {
             customerResponseList =
-            customerList.stream()
-                    .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
-                    .toList();
+                    customerList.stream()
+                            .map(AccountConverter.INSTANCE::fromAccountToAccountResponse)
+                            .toList();
         }
         return customerResponseList;
     }
@@ -161,19 +164,30 @@ public class AccountServiceImpl implements AccountService {
         validateUpdateAccountRequest(updateAccountRequest);
         Optional<Account> oldAccount = accountRepository.findById(accountId);
         Account updatedAccount = new Account();
-        if(oldAccount.isPresent()){
+        if (oldAccount.isPresent()) {
             updateAccountRequest.setId(oldAccount.get().getId());
             updatedAccount = AccountConverter.INSTANCE.fromUpdateAccountRequestToAccount(updateAccountRequest);
             String rawPassword = updatedAccount.getPassword();
             updatedAccount.setPassword(passwordEncoder.encode(rawPassword));
             updatedAccount = accountRepository.save(updatedAccount);
-            if(updatedAccount.getRole() == Role.STAFF){
+            if (updatedAccount.getRole() == Role.STAFF) {
                 trackerService.createTrackerForStaff(accountId);
             }
         } else {
             // handle logic sau
         }
         return AccountConverter.INSTANCE.fromAccountToAccountResponse(updatedAccount);
+    }
+
+    @Override
+    public AccountResponse deleteAccount(int id) {
+        Account account = accountRepository.findAccountByIdAndLogicalDeleteStatus(id, 0);
+        if (account != null) {
+            account.setLogicalDeleteStatus((short) 1);
+            accountRepository.save(account);
+        } else
+            throw Maid4UniException.notFound("Account id " + id + " does not exist");
+        return AccountConverter.INSTANCE.fromAccountToAccountResponse(account);
     }
 
     private void validateRegisterAccountRequest(RegisterAccountRequest RegisterAccountRequest) {
