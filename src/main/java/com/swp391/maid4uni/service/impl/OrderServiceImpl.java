@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Data
@@ -41,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
     private TaskRepository taskRepository;
     private OrderDetailRepository orderDetailRepository;
     private OrderConverter converter = OrderConverter.INSTANCE;
+    private TrackerRepository trackerRepository;
 
     @Override
     public List<OrderResponse> getOrderInfoByCustomer(int id) {
@@ -154,37 +152,31 @@ public class OrderServiceImpl implements OrderService {
             for (int i = 0; i < 8; i++) {
                 workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
                 orderDetailList = getWorkDay(order, workDayList, orderDetailList, workDay);
+
             }
         }
         orderDetailRepository.saveAll(orderDetailList);
         //TODO: DONE ORDER DETAIL
 
-
         //TODO: XỬ LÝ STAFF - XẾP LỊCH
-        for (OrderDetail ord:orderDetailList) {
-            for (com.swp391.maid4uni.entity.Service item: order.getAPackage().getServiceList()) {
-                List<Account> staffList = accountRepository.findByRoleAndLogicalDeleteStatus(Role.STAFF, (short) 0);
-                List<Tracker> trackerList = new ArrayList<>();
-                for (Account staff: staffList) {
-                    trackerList.add(staff.getTracker());
-                }
-                Task task = Task
-                        .builder()
+        List<Account> staffList = accountRepository.findByRoleAndLogicalDeleteStatus(Role.STAFF, (short) 0);
+        Random rand = new Random();
+        for (OrderDetail ord : orderDetailList) {
+            for (com.swp391.maid4uni.entity.Service item : order.getAPackage().getServiceList()) {
+                Account staffTask = staffList.get(rand.nextInt(staffList.size()-1));
+                Tracker trackerStaff = staffTask.getTracker();
+                Task task = Task.builder()
                         .status(false)
                         .service(item)
+                        .staffs(new ArrayList<>())
+                        .belongedTrackers(new ArrayList<>())
                         .orderDetail(ord)
-                        //todo handle list
-                        .staffs(staffList)
-                        .belongedTrackers(trackerList)
                         .build();
-                //todo
-                // sửa cái mớ này lại
+                task.getStaffs().add(staffTask);
+                task.getBelongedTrackers().add(trackerStaff);
                 taskRepository.save(task);
-
             }
         }
-
-//        orderDetailRepository.save(detail);
     }
     private ArrayList<Integer> getIntegerArray(ArrayList<String> stringArray) {
         ArrayList<Integer> result = new ArrayList<Integer>();

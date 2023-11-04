@@ -19,6 +19,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -80,8 +82,9 @@ public class AccountServiceImpl implements AccountService {
      */
 
     @Override
-    public List<AccountResponse> getAccountList() {
-        List<Account> accountList = accountRepository.findAllByLogicalDeleteStatus((short) 0);
+    public List<AccountResponse> getAccountList(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        List<Account> accountList = accountRepository.findAllByLogicalDeleteStatusWithOffsetAndLimit(0, pageable);
         // !CollectionUtils.isEmpty(accountList) trả về true nếu list k rỗng và khác null
         List<AccountResponse> accountResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(accountList)) {

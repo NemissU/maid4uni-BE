@@ -18,7 +18,7 @@ public class VNPayConfig {
     public static String vnp_PayUrl = API_PARAMS.VNPAY_PAYURL;
     // todo
     //  change to server side api
-    public static String vnp_Returnurl = "http://localhost:8080" + API_PARAMS.API_VERSION + API_PARAMS.GET_VNPAY_PAYMENT;
+    public static String vnp_Returnurl = "http://localhost:3000";
     @Value("${VNP_TMNCODE}")
     public static String vnp_TmnCode;
     @Value("${VNP_HASHSECRECT}")

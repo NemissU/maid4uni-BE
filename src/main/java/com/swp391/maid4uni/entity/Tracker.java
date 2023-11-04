@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -29,14 +30,14 @@ public class Tracker {
     int id;
     @UpdateTimestamp
     @Column(name = "recorded_time")
-    Date recordedTime;
+    LocalDate recordedTime;
     @Column(name = "task_done")
     int taskDone;
-    @OneToOne
-    @JoinColumn(name = "staff_id")
+
+    @OneToOne(mappedBy = "tracker")
     Account account;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tracker_task"
             , joinColumns = @JoinColumn(name = "tracker_id")
             , inverseJoinColumns = @JoinColumn(name = "task_id"))

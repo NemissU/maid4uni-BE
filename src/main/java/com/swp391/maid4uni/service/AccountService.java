@@ -27,7 +27,7 @@ public interface AccountService {
      *
      * @return the account list
      */
-    List<AccountResponse> getAccountList();
+    List<AccountResponse> getAccountList(int page);
 
     /**
      * Gets manager list.
