@@ -129,4 +129,12 @@ public class AccountController {
         );
     }
 
+    @DeleteMapping(API_PARAMS.DELETE_ACCOUNT_BY_ID)
+    public ResponseEntity<ResponseObject> deleteAccount(@PathVariable int id){
+        log.info("Start delete account by id");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"DELETE SUCCESSFULLY"
+                ,accountService.deleteAccount(id)));
+    }
+
 }
