@@ -5,6 +5,7 @@ import com.swp391.maid4uni.dto.PackageDto;
 import com.swp391.maid4uni.dto.ServiceDto;
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Package;
+import com.swp391.maid4uni.enums.Category;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.AccountRepository;
 import com.swp391.maid4uni.repository.PackageRepository;
@@ -17,6 +18,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -118,6 +121,21 @@ public class PackageServiceImpl implements PackageService {
             throw Maid4UniException.notFound("Package id " + id + " does not exist");
         }
         return PackageConverter.INSTANCE.fromPackageToPackageResponse(aPackage);
+    }
+
+    @Override
+    public List<PackageResponse> getPackageByCategory(int id, int page) {
+        Category c = Category.values()[id];
+        Pageable pageable = PageRequest.of(page, 10);
+        List<Package> packages = packageRepository.findByCategoryAndLogicalDeleteStatusWithOffsetAndLimit(c,0,pageable);
+        List<PackageResponse> packageResponseList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(packages)) {
+            packageResponseList =
+                    packages.stream()
+                            .map(PackageConverter.INSTANCE::fromPackageToPackageResponse)
+                            .toList();
+        }
+        return packageResponseList;
     }
 
     private double getPriceFromListService(List<com.swp391.maid4uni.entity.Service> serviceList) {

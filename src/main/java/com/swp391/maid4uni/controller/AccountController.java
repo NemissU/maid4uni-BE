@@ -51,10 +51,10 @@ public class AccountController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ACCOUNT_LIST)
-    public ResponseEntity<ResponseObject> getAccountList() {
+    public ResponseEntity<ResponseObject> getAccountList(@PathVariable int page) {
         log.info("Start get account list");
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK", "GET ALL ACCOUNT SUCCESSFULLY", accountService.getAccountList())
+                new ResponseObject("OK", "GET ALL ACCOUNT SUCCESSFULLY", accountService.getAccountList(page))
         );
     }
 

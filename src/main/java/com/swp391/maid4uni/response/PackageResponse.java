@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.response;
 
 import com.swp391.maid4uni.entity.Account;
+import com.swp391.maid4uni.enums.Category;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,5 +24,6 @@ public class PackageResponse {
     Date createdAt;
     Date updatedAt;
     AccountResponse creator;
+    Category category;
     List<ServiceResponse> serviceList;
 }

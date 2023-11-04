@@ -1,5 +1,6 @@
 package com.swp391.maid4uni.dto;
 
+import com.swp391.maid4uni.enums.Category;
 import com.swp391.maid4uni.response.AccountResponse;
 import com.swp391.maid4uni.response.ServiceResponse;
 import lombok.*;
@@ -27,5 +28,6 @@ public class PackageDto {
     Date updatedAt;
     short logicalDeleteStatus;
     AccountDto creator;
+    Category category;
     List<ServiceDto> serviceList;
 }
