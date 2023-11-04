@@ -56,12 +56,12 @@ public class ServiceController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ALL_SERVICE)
-    public ResponseEntity<ResponseObject> getAllService(){
+    public ResponseEntity<ResponseObject> getAllService(@PathVariable int page){
         log.info("Start get all service");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK"
                         ,"GET ALL SERVICE SUCCESSFULLY"
-                        ,serviceService.getAllService())
+                        ,serviceService.getAllService(page))
         );
     }
 

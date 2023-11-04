@@ -121,4 +121,12 @@ public class PackageController {
                 ,"GET PACKAGE BY CATEGORY SUCCESSFULLY"
                 ,packageService.getPackageByCategory(id, page)));
     }
+
+    @GetMapping(API_PARAMS.GET_MOST_POPULAR_PACKAGES)
+    public ResponseEntity<ResponseObject> getMostPopularPackages(){
+        log.info("Start get most popular packages");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"GET MOST POPULAR PACKAGES SUCCESSFULLY"
+                ,packageService.getMostPopularPackages()));
+    }
 }
