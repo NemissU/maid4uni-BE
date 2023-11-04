@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentResponse {
+    int id;
     String paymentContent;
     LocalDateTime paymentTime;
     String paymentStatus;

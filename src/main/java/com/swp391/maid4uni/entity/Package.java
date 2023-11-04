@@ -46,7 +46,8 @@ public class Package {
     short logicalDeleteStatus;
     @Enumerated
     Category category;
-
+    @Column
+    String imageUrl;
     @ManyToOne
     @JoinColumn(name = "creator_id")
     Account creator;

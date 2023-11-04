@@ -4,6 +4,7 @@ import com.swp391.maid4uni.converter.PaymentConverter;
 import com.swp391.maid4uni.dto.PaymentDto;
 import com.swp391.maid4uni.entity.Payment;
 import com.swp391.maid4uni.enums.API_PARAMS;
+import com.swp391.maid4uni.repository.OrderRepository;
 import com.swp391.maid4uni.repository.PaymentRepository;
 import com.swp391.maid4uni.request.VNPayRequest;
 import com.swp391.maid4uni.response.PaymentResponse;
@@ -33,6 +34,8 @@ public class PaymentController {
     private VNPayService vnPayService;
     @Autowired
     private PaymentRepository paymentRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @PostMapping(API_PARAMS.CREATE_VNPAY_PAYMENT)
     public ResponseEntity<ResponseObject> createVNPayPayment(@RequestBody VNPayRequest request){

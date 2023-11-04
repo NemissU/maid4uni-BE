@@ -18,10 +18,12 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PackageResponse {
+    int id;
     String name;
     String description;
     double price;
     Date createdAt;
+    String imageUrl;
     Date updatedAt;
     AccountResponse creator;
     Category category;
