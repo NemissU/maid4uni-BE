@@ -83,7 +83,7 @@ public class API_PARAMS {
     /**
      * The constant GET_ALL_PACKAGE.
      */
-    public static final String GET_ALL_PACKAGE = "/get-all-package";
+    public static final String GET_ALL_PACKAGE = "/get-all-package/{page}";
 
     /**
      * The constant CREATE_PACKAGE.
