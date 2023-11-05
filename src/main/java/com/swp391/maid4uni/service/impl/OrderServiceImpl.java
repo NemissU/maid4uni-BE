@@ -38,7 +38,6 @@ public class OrderServiceImpl implements OrderService {
     private TaskRepository taskRepository;
     private OrderDetailRepository orderDetailRepository;
     private OrderConverter converter = OrderConverter.INSTANCE;
-    private TrackerRepository trackerRepository;
 
     @Override
     public List<OrderResponse> getOrderInfoByCustomer(int id) {
@@ -164,16 +163,13 @@ public class OrderServiceImpl implements OrderService {
         for (OrderDetail ord : orderDetailList) {
             for (com.swp391.maid4uni.entity.Service item : order.getAPackage().getServiceList()) {
                 Account staffTask = staffList.get(rand.nextInt(staffList.size()-1));
-                Tracker trackerStaff = staffTask.getTracker();
                 Task task = Task.builder()
                         .status(false)
                         .service(item)
                         .staffs(new ArrayList<>())
-                        .belongedTrackers(new ArrayList<>())
                         .orderDetail(ord)
                         .build();
                 task.getStaffs().add(staffTask);
-                task.getBelongedTrackers().add(trackerStaff);
                 taskRepository.save(task);
             }
         }

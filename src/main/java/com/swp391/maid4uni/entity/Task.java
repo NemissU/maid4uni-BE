@@ -37,7 +37,4 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "order_detail_id")
     OrderDetail orderDetail;
-
-    @ManyToMany(mappedBy = "taskList", fetch = FetchType.LAZY)
-    List<Tracker> belongedTrackers;
 }
