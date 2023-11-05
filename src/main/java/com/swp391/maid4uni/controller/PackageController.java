@@ -37,12 +37,12 @@ public class PackageController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ALL_PACKAGE)
-    public ResponseEntity<ResponseObject> getAllPackage() {
+    public ResponseEntity<ResponseObject> getAllPackage(@PathVariable int page) {
         log.info("Start get all package");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK"
                         , "GET ALL PACKAGE SUCCESSFULLY"
-                        , packageService.getAllPackage())
+                        , packageService.getAllPackage(page))
         );
     }
 
