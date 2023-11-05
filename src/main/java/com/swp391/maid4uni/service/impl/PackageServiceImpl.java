@@ -42,8 +42,9 @@ public class PackageServiceImpl implements PackageService {
     ServiceRepository serviceRepository;
 
     @Override
-    public List<PackageResponse> getAllPackage() {
-        List<Package> packageList = packageRepository.findAllByLogicalDeleteStatus(0);
+    public List<PackageResponse> getAllPackage(int page) {
+        Pageable p = PageRequest.of(page, 10);
+        List<Package> packageList = packageRepository.findAllByLogicalDeleteStatusWithOffsetAndLimit(0,p);
         List<PackageResponse> packageResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(packageList)) {
             packageResponseList =

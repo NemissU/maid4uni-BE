@@ -21,6 +21,9 @@ public interface PackageRepository extends JpaRepository<Package,Integer> {
      */
     List<Package> findAllByLogicalDeleteStatus(int logicalDeleteStatus);
 
+    @Query(value = "SELECT p FROM Package p WHERE p.logicalDeleteStatus = :logicalDeleteStatus ORDER BY p.id")
+    List<Package> findAllByLogicalDeleteStatusWithOffsetAndLimit(@Param("logicalDeleteStatus") int logicalDeleteStatus, Pageable pageable);
+
     Package findByIdAndLogicalDeleteStatus(int id, int logicalDeleteStatus);
 
     @Query(value = "SELECT p FROM Package p WHERE p.category = :category AND p.logicalDeleteStatus = :logicalDeleteStatus ORDER BY p.id")

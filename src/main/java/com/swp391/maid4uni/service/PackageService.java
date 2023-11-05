@@ -15,7 +15,7 @@ public interface PackageService {
      *
      * @return the all package
      */
-    List<PackageResponse> getAllPackage();
+    List<PackageResponse> getAllPackage(int page);
 
     /**
      * Create package package dto.
