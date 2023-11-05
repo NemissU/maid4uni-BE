@@ -1,5 +1,10 @@
 package com.swp391.maid4uni.service.impl;
 
+import com.swp391.maid4uni.converter.PaymentConverter;
+import com.swp391.maid4uni.dto.PaymentDto;
+import com.swp391.maid4uni.entity.Payment;
+import com.swp391.maid4uni.repository.PaymentRepository;
+import com.swp391.maid4uni.response.PaymentResponse;
 import com.swp391.maid4uni.service.VNPayService;
 import com.swp391.maid4uni.ulti.VNPayConfig;
 import lombok.*;
@@ -18,10 +23,12 @@ import java.util.*;
 @Service
 @Data
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Builder
 public class VNPayServiceImpl implements VNPayService {
+
+    PaymentRepository paymentRepository;
     @Override
     public String createPayment(int orderTotal, String orderInfo) {
 
@@ -92,5 +99,13 @@ public class VNPayServiceImpl implements VNPayService {
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
         return paymentUrl;
+    }
+
+    @Override
+    public String getVNPayPayment(PaymentDto dto) {
+        Payment p = PaymentConverter.INSTANCE.fromDtoToEntity(dto);
+        paymentRepository.save(p);
+        String res = "https://maid4uni-be-production.up.railway.app/" + p.getPaymentStatus();
+        return res;
     }
 }
