@@ -49,18 +49,22 @@ public class    Account {
     @Enumerated
     Role role;
 
+    //------FEEDBACK
     @OneToMany(mappedBy = "sender")
     List<Feedback> sentFeedback;
 
     @OneToMany(mappedBy = "receiver")
     List<Feedback> receivedFeedback;
 
+    //-------MANAGE PACKAGE
     @OneToMany(mappedBy = "creator")
     List<Package> createdPackage;
 
+    //--------ORDERED LIST OF CUSTOMER
     @OneToMany(mappedBy = "customer")
     List<Order> orderedList;
 
-    @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
+    //--------TASK LIST OF STAFF
+    @OneToMany(mappedBy = "staff")
     List<Task> taskList;
 }
