@@ -1,6 +1,7 @@
 package com.swp391.maid4uni.repository;
 
 import com.swp391.maid4uni.entity.Feedback;
+import com.swp391.maid4uni.entity.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -35,5 +36,5 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
      */
     List<Feedback> findAllByLogicalDeleteStatus(int logicalDeleteStatus);
 
-    Feedback findByRatingIdAndLogicalDeleteStatus(int id, int logicalDeleteStatus);
+    Feedback findByRatingAndLogicalDeleteStatus(Rating rating, int logicalDeleteStatus);
 }
