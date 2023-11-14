@@ -1,7 +1,5 @@
 package com.swp391.maid4uni.dto;
 
-import com.swp391.maid4uni.entity.OrderDetail;
-import com.swp391.maid4uni.entity.Tracker;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,5 +18,4 @@ public class TaskDto {
     ServiceDto service;
     List<AccountDto> staffs;
     OrderDetailDto orderDetail;
-    List<TrackerDto> belongedTrackers;
 }

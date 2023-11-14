@@ -1,5 +1,6 @@
 package com.swp391.maid4uni.entity;
 
+import com.swp391.maid4uni.enums.Category;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -43,6 +44,8 @@ public class Package {
     Date updatedAt;
     @Column
     short logicalDeleteStatus;
+    @Enumerated
+    Category category;
     @Column
     String imageUrl;
     @ManyToOne

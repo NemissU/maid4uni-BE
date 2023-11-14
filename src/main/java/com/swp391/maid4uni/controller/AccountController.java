@@ -51,10 +51,10 @@ public class AccountController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ACCOUNT_LIST)
-    public ResponseEntity<ResponseObject> getAccountList() {
+    public ResponseEntity<ResponseObject> getAccountList(@PathVariable int page) {
         log.info("Start get account list");
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK", "GET ALL ACCOUNT SUCCESSFULLY", accountService.getAccountList())
+                new ResponseObject("OK", "GET ALL ACCOUNT SUCCESSFULLY", accountService.getAccountList(page))
         );
     }
 
@@ -127,6 +127,14 @@ public class AccountController {
         return ResponseEntity.ok().body(
                 new ResponseObject("OK", "UPDATE BY ID SUCCESSFULLY", accountService.updateAccountInfoById(accountId, updateAccountRequest))
         );
+    }
+
+    @DeleteMapping(API_PARAMS.DELETE_ACCOUNT_BY_ID)
+    public ResponseEntity<ResponseObject> deleteAccount(@PathVariable int id){
+        log.info("Start delete account by id");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"DELETE SUCCESSFULLY"
+                ,accountService.deleteAccount(id)));
     }
 
 }

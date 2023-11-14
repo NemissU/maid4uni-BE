@@ -15,7 +15,7 @@ public interface PackageService {
      *
      * @return the all package
      */
-    List<PackageResponse> getAllPackage();
+    List<PackageResponse> getAllPackage(int page);
 
     /**
      * Create package package dto.
@@ -43,4 +43,8 @@ public interface PackageService {
     PackageResponse updatePackage(PackageDto packageDto, int id);
 
     PackageResponse getAPackage(int id);
+
+    List<PackageResponse> getPackageByCategory(int id, int page);
+
+    List<PackageResponse> getMostPopularPackages();
 }

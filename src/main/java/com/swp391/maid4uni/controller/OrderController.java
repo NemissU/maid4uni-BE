@@ -11,6 +11,7 @@ import com.swp391.maid4uni.service.OrderService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(API_PARAMS.API_VERSION)
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 @CrossOrigin(origins = "*")
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
+    OrderService orderService;
 
     @GetMapping(API_PARAMS.GET_ORDER_LIST_BY_CUSTOMER)
     public ResponseEntity<ResponseObject> getOrderListByCustomer(@PathVariable int id) {

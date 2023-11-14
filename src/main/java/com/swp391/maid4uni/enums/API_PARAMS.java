@@ -27,7 +27,7 @@ public class API_PARAMS {
     /**
      * The constant GET_ACCOUNT_LIST.
      */
-    public static final String GET_ACCOUNT_LIST = "/get-account-list";
+    public static final String GET_ACCOUNT_LIST = "/get-account-list/{page}";
 
     /**
      * The constant GET_MANAGER_LIST.
@@ -83,7 +83,7 @@ public class API_PARAMS {
     /**
      * The constant GET_ALL_PACKAGE.
      */
-    public static final String GET_ALL_PACKAGE = "/get-all-package";
+    public static final String GET_ALL_PACKAGE = "/get-all-package/{page}";
 
     /**
      * The constant CREATE_PACKAGE.
@@ -112,7 +112,7 @@ public class API_PARAMS {
     /**
      * The constant GET_ALL_SERVICE.
      */
-    public static final String GET_ALL_SERVICE = "/get-all-service";
+    public static final String GET_ALL_SERVICE = "/get-all-service/{page}";
 
     /**
      * The constant UPDATE_SERVICE.
@@ -144,5 +144,8 @@ public class API_PARAMS {
     public static final String GET_BEST_REVIEWS = "/get-best-review";
     public static final String UPDATE_ORDER_STATUS = "/update-order-status";
     public static final String GET_A_PACKAGE = "/get-a-package/{id}";
+    public static final String GET_PACKAGE_BY_CATEGORY = "/get-package-by-category/{id}&{page}";
+    public static final String DELETE_ACCOUNT_BY_ID = "/delete-account-by-id/{id}";
+    public static final String GET_MOST_POPULAR_PACKAGES = "/get-most-popular-packages";
 }
 

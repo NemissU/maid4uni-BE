@@ -37,12 +37,12 @@ public class PackageController {
      * @return the response entity
      */
     @GetMapping(API_PARAMS.GET_ALL_PACKAGE)
-    public ResponseEntity<ResponseObject> getAllPackage() {
+    public ResponseEntity<ResponseObject> getAllPackage(@PathVariable int page) {
         log.info("Start get all package");
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK"
                         , "GET ALL PACKAGE SUCCESSFULLY"
-                        , packageService.getAllPackage())
+                        , packageService.getAllPackage(page))
         );
     }
 
@@ -112,5 +112,21 @@ public class PackageController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
                 ,"GET A PACKAGE SUCCESSFULL"
                 ,packageService.getAPackage(id)));
+    }
+
+    @GetMapping(API_PARAMS.GET_PACKAGE_BY_CATEGORY)
+    public ResponseEntity<ResponseObject> getPackageOfCombo1(@PathVariable int id, @PathVariable int page){
+        log.info("Start get package by category");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"GET PACKAGE BY CATEGORY SUCCESSFULLY"
+                ,packageService.getPackageByCategory(id, page)));
+    }
+
+    @GetMapping(API_PARAMS.GET_MOST_POPULAR_PACKAGES)
+    public ResponseEntity<ResponseObject> getMostPopularPackages(){
+        log.info("Start get most popular packages");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"GET MOST POPULAR PACKAGES SUCCESSFULLY"
+                ,packageService.getMostPopularPackages()));
     }
 }

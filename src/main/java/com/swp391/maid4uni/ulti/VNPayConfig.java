@@ -18,12 +18,9 @@ public class VNPayConfig {
     public static String vnp_PayUrl = API_PARAMS.VNPAY_PAYURL;
     // todo
     //  change to server side api
-    public static String vnp_Returnurl = "https://maid4uni-be-production.up.railway.app" + API_PARAMS.API_VERSION + API_PARAMS.GET_VNPAY_PAYMENT;
-//    public static String vnp_Returnurl = "http://localhost:3000";
-
+    public static String vnp_Returnurl = "http://localhost:3000";
     @Value("${VNP_TMNCODE}")
     public static String vnp_TmnCode;
-
     @Value("${VNP_HASHSECRECT}")
     public static String vnp_HashSecret;
     public static String vnp_Version = "2.1.0";

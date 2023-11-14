@@ -63,8 +63,4 @@ public class    Account {
 
     @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
     List<Task> taskList;
-
-    @OneToOne
-    @JoinColumn(name = "tracker_id")
-    Tracker tracker;
 }
