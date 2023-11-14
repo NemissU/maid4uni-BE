@@ -37,6 +37,7 @@ public class PaymentController {
     @Autowired
     private OrderRepository orderRepository;
 
+
     @PostMapping(API_PARAMS.CREATE_VNPAY_PAYMENT)
     public ResponseEntity<ResponseObject> createVNPayPayment(@RequestBody VNPayRequest request){
 
@@ -64,11 +65,11 @@ public class PaymentController {
                 dto.setPaymentContent(content);
                 dto.setPaymentStatus("Failed");
             }
-        Payment payment = PaymentConverter.INSTANCE.fromDtoToEntity(dto);
-        paymentRepository.save(payment);
-        PaymentResponse response = PaymentConverter.INSTANCE.fromEntityToResponse(payment);
+        //Payment payment = PaymentConverter.INSTANCE.fromDtoToEntity(dto);
+       // paymentRepository.save(payment);
+        // PaymentResponse response = PaymentConverter.INSTANCE.fromEntityToResponse(payment);
         return ResponseEntity.ok().body(
-                new ResponseObject("OK", "GET VNPAY PAYMENT SUCCESSFULLY", response)
+                new ResponseObject("OK", "GET VNPAY PAYMENT SUCCESSFULLY", vnPayService.getVNPayPayment(dto))
         );
     }
 }
