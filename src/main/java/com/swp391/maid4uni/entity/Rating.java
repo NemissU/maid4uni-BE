@@ -24,4 +24,7 @@ public class Rating {
 
     @Column(name = "star")
     int star;
+
+    @OneToOne(mappedBy = "rating")
+    Feedback feedback;
 }
