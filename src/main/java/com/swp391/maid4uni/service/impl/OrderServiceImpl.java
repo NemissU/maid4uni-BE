@@ -7,6 +7,7 @@ import com.swp391.maid4uni.entity.Package;
 import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.PeriodType;
 import com.swp391.maid4uni.enums.Role;
+import com.swp391.maid4uni.enums.Status;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.*;
 import com.swp391.maid4uni.request.UpdateOrderRequest;
@@ -110,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
             OrderDetail detail = OrderDetail
                     .builder()
                     .order(order)
-                    .status(false)
+                    .status(Status.ON_GOING)
                     .startTime(order.getStartTime())
                     .endTime(order.getStartTime().plus(d))
                     .build();
@@ -157,19 +158,18 @@ public class OrderServiceImpl implements OrderService {
         orderDetailRepository.saveAll(orderDetailList);
         //TODO: DONE ORDER DETAIL
 
-        //TODO: XỬ LÝ STAFF - XẾP LỊCH
+        //TODO: XỬ LÝ STAFF - XẾP LỊCH - DANG XU LY RANDOM
         List<Account> staffList = accountRepository.findByRoleAndLogicalDeleteStatus(Role.STAFF, (short) 0);
         Random rand = new Random();
         for (OrderDetail ord : orderDetailList) {
             for (com.swp391.maid4uni.entity.Service item : order.getAPackage().getServiceList()) {
-                Account staffTask = staffList.get(rand.nextInt(staffList.size()-1));
+                Account staffTask = staffList.get(rand.nextInt(staffList.size()));
                 Task task = Task.builder()
                         .status(false)
                         .service(item)
-                        .staffs(new ArrayList<>())
+                        .staff(staffTask)
                         .orderDetail(ord)
                         .build();
-                task.getStaffs().add(staffTask);
                 taskRepository.save(task);
             }
         }
