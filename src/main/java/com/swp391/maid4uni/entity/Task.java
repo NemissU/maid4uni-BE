@@ -28,11 +28,9 @@ public class Task {
     @JoinColumn(name = "service_id")
     Service service;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "task_staff"
-            , joinColumns = @JoinColumn(name = "task_id")
-            , inverseJoinColumns = @JoinColumn(name = "staff_id"))
-    List<Account> staffs;
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    Account staff;
 
     @ManyToOne
     @JoinColumn(name = "order_detail_id")

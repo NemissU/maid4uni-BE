@@ -1,5 +1,6 @@
 package com.swp391.maid4uni.entity;
 
+import com.swp391.maid4uni.enums.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -31,13 +32,16 @@ public class OrderDetail {
     LocalTime startTime;
     @Column(name = "end_time")
     LocalTime endTime;
+    @Enumerated
+    Status status;
     @Column
-    boolean status;
+    short logicalDeleteStatus;
+
+    /* TABLE REFERENCE */
     @ManyToOne
     @JoinColumn(name = "order_id")
     Order order;
     @OneToMany(mappedBy = "orderDetail")
     List<Task> taskList;
-    @Column
-    short logicalDeleteStatus;
+
 }

@@ -16,6 +16,6 @@ public class TaskDto {
     int id;
     boolean status;
     ServiceDto service;
-    List<AccountDto> staffs;
+    AccountDto staff;
     OrderDetailDto orderDetail;
 }
