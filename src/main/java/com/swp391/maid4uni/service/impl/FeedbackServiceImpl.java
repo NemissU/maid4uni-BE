@@ -101,10 +101,14 @@ public class FeedbackServiceImpl implements FeedbackService {
         int avgRating = 0;
 //        List<FeedbackResponse> feedbackList = getFeedbackByReceiverId(id);
         List<Feedback> feedbackList = feedbackRepository.findAllByReceiverIdAndLogicalDeleteStatus(id, 0);
-        for (Feedback item : feedbackList) {
-            avgRating += item.getRating().getStar();
+        if (!CollectionUtils.isEmpty(feedbackList)) {
+            for (Feedback item : feedbackList) {
+                avgRating += item.getRating().getStar();
+            }
+            avgRating = avgRating / feedbackList.size();
+        } else {
+            throw Maid4UniException.notFound("Staff doesn't have any feedback");
         }
-        avgRating = avgRating / feedbackList.size();
         return avgRating;
     }
 
@@ -113,17 +117,21 @@ public class FeedbackServiceImpl implements FeedbackService {
         // lấy ra 1 trong những feedback có highest star rating
         List<Rating> ratingList = ratingRepository.findTop5ByOrderByStarDesc();
         List<Feedback> feedbackList = new ArrayList<>();
-        for (Rating itemR: ratingList) {
-            Feedback fb = feedbackRepository.findByRatingIdAndLogicalDeleteStatus(itemR.getId(), 0);
-            feedbackList.add(fb);
+        if (!CollectionUtils.isEmpty(ratingList)) {
+            for (Rating itemR: ratingList) {
+                Feedback fb = feedbackRepository.findByRatingIdAndLogicalDeleteStatus(itemR.getId(), 0);
+                feedbackList.add(fb);
+            }
         }
         List<BestFeedbackResponse> bestFeedbackResponseList = new ArrayList<>();
-        for (Feedback itemF : feedbackList) {
-            BestFeedbackResponse bfr = new BestFeedbackResponse();
-            bfr.setStar(itemF.getRating().getStar());
-            bfr.setFullname(itemF.getReceiver().getFullName());
-            bfr.setContent(itemF.getComment());
-            bestFeedbackResponseList.add(bfr);
+        if (!CollectionUtils.isEmpty(feedbackList)) {
+            for (Feedback itemF : feedbackList) {
+                BestFeedbackResponse bfr = new BestFeedbackResponse();
+                bfr.setStar(itemF.getRating().getStar());
+                bfr.setFullname(itemF.getReceiver().getFullName());
+                bfr.setContent(itemF.getComment());
+                bestFeedbackResponseList.add(bfr);
+            }
         }
         return bestFeedbackResponseList;
     }
