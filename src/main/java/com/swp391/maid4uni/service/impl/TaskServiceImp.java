@@ -2,8 +2,11 @@ package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.TaskConverter;
 import com.swp391.maid4uni.dto.TaskDto;
+import com.swp391.maid4uni.entity.OrderDetail;
 import com.swp391.maid4uni.entity.Task;
+import com.swp391.maid4uni.enums.Status;
 import com.swp391.maid4uni.exception.Maid4UniException;
+import com.swp391.maid4uni.repository.OrderDetailRepository;
 import com.swp391.maid4uni.repository.TaskRepository;
 import com.swp391.maid4uni.response.TaskResponse;
 import com.swp391.maid4uni.service.TaskService;
@@ -25,15 +28,29 @@ import java.util.Optional;
 @Builder
 public class TaskServiceImp implements TaskService {
     TaskRepository taskRepository;
+    OrderDetailRepository orderDetailRepository;
 
     @Override
     public TaskResponse updateTask(TaskDto taskDto, int id) {
         Optional<Task> task = taskRepository.findById(id);
         Task updatedTask = new Task();
         if (task.isPresent()) {
-            updatedTask.setId(id);
-            updatedTask = TaskConverter.INSTANCE.fromTaskDtoToTask(taskDto);
+            updatedTask = task.get();
+            updatedTask.setStatus(taskDto.isStatus());
             taskRepository.save(updatedTask);
+
+            boolean flag = true;
+            OrderDetail orderDetailValidate = updatedTask.getOrderDetail();
+            for (Task t : orderDetailValidate.getTaskList()) {
+                if(!t.isStatus()){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                orderDetailValidate.setStatus(Status.DONE);
+                orderDetailRepository.save(orderDetailValidate);
+            }
         } else {
             throw Maid4UniException.notFound("Task " + id + " does not exist");
         }

@@ -36,6 +36,7 @@ public class TaskController {
             @PathVariable int id,
             @RequestBody UpdateTaskRequest updateTaskRequest) {
         log.info("Start update task");
+        updateTaskRequest.setId(id);
         TaskDto taskDto = TaskConverter
                 .INSTANCE
                 .fromUpdateTaskRequestToTaskDto(updateTaskRequest);
@@ -45,4 +46,5 @@ public class TaskController {
                         ,taskService.updateTask(taskDto, id))
         );
     }
+
 }

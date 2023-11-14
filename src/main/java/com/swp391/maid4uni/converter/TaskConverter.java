@@ -1,8 +1,10 @@
 package com.swp391.maid4uni.converter;
 
 import com.swp391.maid4uni.dto.TaskDto;
+import com.swp391.maid4uni.entity.OrderDetail;
 import com.swp391.maid4uni.entity.Task;
 import com.swp391.maid4uni.request.UpdateTaskRequest;
+import com.swp391.maid4uni.response.OrderDetailResponse;
 import com.swp391.maid4uni.response.TaskResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,6 +18,8 @@ public interface TaskConverter {
     TaskDto fromUpdateTaskRequestToTaskDto(UpdateTaskRequest updateTaskRequest);
 
     Task fromTaskDtoToTask(TaskDto taskDto);
+
+    OrderDetailResponse map(OrderDetail orderDetail);
 
     TaskResponse fromTaskToTaskResponse(Task updatedTask);
 
