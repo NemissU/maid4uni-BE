@@ -4,6 +4,7 @@ import com.swp391.maid4uni.enums.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ public class AccountResponse {
     String email;
     String phoneNumber;
     String fullName;
-    Date dOB;
+    LocalDate dOB;
     String gender;
     String address;
     String img;

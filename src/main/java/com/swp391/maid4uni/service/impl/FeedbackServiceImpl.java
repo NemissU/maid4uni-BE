@@ -119,7 +119,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         List<Feedback> feedbackList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(ratingList)) {
             for (Rating itemR: ratingList) {
-                Feedback fb = feedbackRepository.findByRatingIdAndLogicalDeleteStatus(itemR.getId(), 0);
+                Feedback fb = feedbackRepository.findByRatingAndLogicalDeleteStatus(itemR, 0);
                 feedbackList.add(fb);
             }
         }
@@ -130,6 +130,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                 bfr.setStar(itemF.getRating().getStar());
                 bfr.setFullname(itemF.getReceiver().getFullName());
                 bfr.setContent(itemF.getComment());
+                bfr.setImg(itemF.getReceiver().getImg());
                 bestFeedbackResponseList.add(bfr);
             }
         }

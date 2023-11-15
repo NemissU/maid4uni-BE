@@ -155,14 +155,25 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountResponse updateAccountInfoById(Integer accountId, UpdateAccountRequest updateAccountRequest) {
         log.info("Start Validating update request");
-        validateUpdateAccountRequest(updateAccountRequest);
         Optional<Account> oldAccount = accountRepository.findById(accountId);
         Account updatedAccount = new Account();
         if (oldAccount.isPresent()) {
             updateAccountRequest.setId(oldAccount.get().getId());
-            updatedAccount = AccountConverter.INSTANCE.fromUpdateAccountRequestToAccount(updateAccountRequest);
-            String rawPassword = updatedAccount.getPassword();
-            updatedAccount.setPassword(passwordEncoder.encode(rawPassword));
+            validateUpdateAccountRequest(updateAccountRequest);
+
+            Account reqAcc = AccountConverter.INSTANCE.fromUpdateAccountRequestToAccount(updateAccountRequest);
+            updatedAccount = oldAccount.get();
+            /**SET ATTRIBUTE**/
+            updatedAccount.setFullName(reqAcc.getFullName());
+            updatedAccount.setPassword(passwordEncoder.encode(reqAcc.getPassword()));
+            updatedAccount.setEmail(reqAcc.getEmail());
+            updatedAccount.setPhoneNumber(reqAcc.getPhoneNumber());
+            updatedAccount.setUsername(reqAcc.getUsername());
+            updatedAccount.setDOB(reqAcc.getDOB());
+            updatedAccount.setGender(reqAcc.getGender());
+            updatedAccount.setAddress(reqAcc.getAddress());
+            updatedAccount.setImg(reqAcc.getImg());
+            updatedAccount.setRole(reqAcc.getRole());
             updatedAccount = accountRepository.save(updatedAccount);
         } else {
             // handle logic sau
@@ -195,13 +206,16 @@ public class AccountServiceImpl implements AccountService {
 
     private void validateUpdateAccountRequest(UpdateAccountRequest updateAccountRequest) {
         if (accountRepository.existsByUsernameAndLogicalDeleteStatus(updateAccountRequest.getUsername(), (short) 0)) {
-            throw Maid4UniException.badRequest("Username is existed");
+            if(accountRepository.findByUsername(updateAccountRequest.getUsername()).get().getId() != updateAccountRequest.getId())
+                throw Maid4UniException.badRequest("Username is existed");
         }
         if (accountRepository.existsByEmailAndLogicalDeleteStatus(updateAccountRequest.getEmail(), (short) 0)) {
-            throw Maid4UniException.badRequest("Email is existed");
+            if(accountRepository.findByEmail(updateAccountRequest.getEmail()).getId() != updateAccountRequest.getId())
+                throw Maid4UniException.badRequest("Email is existed");
         }
         if (accountRepository.existsByPhoneNumberAndLogicalDeleteStatus(updateAccountRequest.getPhoneNumber(), (short) 0)) {
-            throw Maid4UniException.badRequest("Phone is existed");
+            if(accountRepository.findByPhoneNumber(updateAccountRequest.getPhoneNumber()).getId() != updateAccountRequest.getId())
+                throw Maid4UniException.badRequest("Phone is existed");
         }
     }
 }
