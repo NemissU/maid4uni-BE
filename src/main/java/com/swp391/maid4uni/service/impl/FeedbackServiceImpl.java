@@ -130,6 +130,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                 bfr.setStar(itemF.getRating().getStar());
                 bfr.setFullname(itemF.getReceiver().getFullName());
                 bfr.setContent(itemF.getComment());
+                bfr.setImg(itemF.getReceiver().getImg());
                 bestFeedbackResponseList.add(bfr);
             }
         }

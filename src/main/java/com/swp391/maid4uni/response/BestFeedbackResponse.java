@@ -16,4 +16,5 @@ public class BestFeedbackResponse {
     String content;
     Integer star;
     String fullname;
+    String img;
 }
