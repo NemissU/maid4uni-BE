@@ -7,5 +7,5 @@ public interface VNPayService {
 
     String createPayment(int orderTotal, String orderInfo);
 
-    String getVNPayPayment(PaymentDto dto);
+    String getVNPayPayment(PaymentDto dto, int orderId);
 }
