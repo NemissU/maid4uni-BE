@@ -136,7 +136,7 @@ public class API_PARAMS {
      *                     PAYMENT APIs                     *
      ********************************************************/
     public static final String CREATE_VNPAY_PAYMENT = "/create-vnpay-payment";
-    public static final String GET_VNPAY_PAYMENT = "/get-vnpay-payment";
+    public static final String GET_VNPAY_PAYMENT = "/get-vnpay-payment/{orderId}";
     public static final String VNPAY_PAYURL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 
     public static final String UPDATE_TASK = "/update-task/{id}";
