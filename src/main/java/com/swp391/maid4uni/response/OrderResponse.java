@@ -3,6 +3,7 @@ package com.swp391.maid4uni.response;
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.OrderDetail;
 import com.swp391.maid4uni.entity.Payment;
+import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.PeriodType;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
@@ -27,14 +28,13 @@ public class OrderResponse {
     String address;
     LocalDateTime createdAt;
     int duration;
-
     PeriodType periodType;
     ArrayList<Integer> workDay;
-
     LocalDate startDay; // format YY/MM/DD
-
+    OrderStatus orderStatus;
     LocalDate endDay; // format YY/MM/DD
     PackageResponse pkgRes;
+    PaymentResponse payment;
 //    List<OrderDetailResponse> orderDetailResponseList;
 //    PaymentResponse paymentMethod;
 }
