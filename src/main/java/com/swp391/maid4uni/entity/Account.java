@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -36,8 +37,8 @@ public class    Account {
     String phoneNumber;
     @Column
     String fullName;
-    @Column(name = "dob")
-    Date dOB;
+    @Column
+    LocalDate dOB;
     @Column
     String gender;
     @Column
