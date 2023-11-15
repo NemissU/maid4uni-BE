@@ -23,5 +23,6 @@ public class CreatePackageRequest {
     String description;
     AccountDutyRequest creator;
     Category category;
+    String imageUrl;
     List<CreateServiceRequest> serviceList;
 }
