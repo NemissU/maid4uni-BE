@@ -60,10 +60,12 @@ public class PaymentController {
             if (resCd.equals("00")) {
                 dto.setPaymentContent(content);
                 dto.setPaymentStatus("Success");
+                dto.setPrice(Double.parseDouble(price));
                 dto.setPaymentTime(LocalDateTime.now());
             } else {
                 dto.setPaymentTime(LocalDateTime.now());
                 dto.setPaymentContent(content);
+                dto.setPrice(Double.parseDouble(price));
                 dto.setPaymentStatus("Failed");
             }
         //Payment payment = PaymentConverter.INSTANCE.fromDtoToEntity(dto);
