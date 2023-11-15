@@ -115,7 +115,7 @@ public class PackageController {
     }
 
     @GetMapping(API_PARAMS.GET_PACKAGE_BY_CATEGORY)
-    public ResponseEntity<ResponseObject> getPackageOfCombo1(@PathVariable int id, @PathVariable int page){
+    public ResponseEntity<ResponseObject> getPackageByCategory(@PathVariable int id, @PathVariable int page){
         log.info("Start get package by category");
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
                 ,"GET PACKAGE BY CATEGORY SUCCESSFULLY"
