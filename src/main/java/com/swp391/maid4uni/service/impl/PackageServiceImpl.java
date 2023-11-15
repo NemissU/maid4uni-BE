@@ -108,6 +108,7 @@ public class PackageServiceImpl implements PackageService {
             aPackage.get().setServiceList(uPackage.getServiceList());
             aPackage.get().setName(uPackage.getName());
             aPackage.get().setDescription(uPackage.getDescription());
+            aPackage.get().setImageUrl(uPackage.getImageUrl());
             packageRepository.save(aPackage.get());
         }
             else
