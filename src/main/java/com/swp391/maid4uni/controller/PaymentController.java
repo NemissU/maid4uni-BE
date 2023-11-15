@@ -51,6 +51,7 @@ public class PaymentController {
 
     @GetMapping(API_PARAMS.GET_VNPAY_PAYMENT)
     public ResponseEntity<ResponseObject> getVNPayPayment(
+            @PathVariable int orderId,
             @RequestParam(value = "vnp_Amount") String price,
             @RequestParam(value = "vnp_OrderInfo") String content,
             @RequestParam(value = "vnp_ResponseCode") String resCd)
@@ -69,7 +70,7 @@ public class PaymentController {
        // paymentRepository.save(payment);
         // PaymentResponse response = PaymentConverter.INSTANCE.fromEntityToResponse(payment);
         return ResponseEntity.ok().body(
-                new ResponseObject("OK", "GET VNPAY PAYMENT SUCCESSFULLY", vnPayService.getVNPayPayment(dto))
+                new ResponseObject("OK", "GET VNPAY PAYMENT SUCCESSFULLY", vnPayService.getVNPayPayment(dto, orderId))
         );
     }
 }
