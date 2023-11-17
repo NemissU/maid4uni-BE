@@ -5,6 +5,7 @@ import com.swp391.maid4uni.request.OrderRequest;
 import com.swp391.maid4uni.request.UpdateOrderRequest;
 import com.swp391.maid4uni.response.OrderResponse;
 import com.swp391.maid4uni.response.ResponseObject;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface OrderService {
     OrderResponse createOrder(OrderDto dto);
 
     ResponseObject updateOrderStatus(UpdateOrderRequest request);
+
+    List<OrderResponse> getAllOrder(int page);
 }
