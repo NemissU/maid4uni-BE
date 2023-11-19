@@ -136,7 +136,7 @@ public class API_PARAMS {
      *                     PAYMENT APIs                     *
      ********************************************************/
     public static final String CREATE_VNPAY_PAYMENT = "/create-vnpay-payment";
-    public static final String GET_VNPAY_PAYMENT = "/get-vnpay-payment";
+    public static final String GET_VNPAY_PAYMENT = "/get-vnpay-payment/{orderId}";
     public static final String VNPAY_PAYURL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 
     public static final String UPDATE_TASK = "/update-task/{id}";
@@ -147,5 +147,7 @@ public class API_PARAMS {
     public static final String GET_PACKAGE_BY_CATEGORY = "/get-package-by-category/{id}&{page}";
     public static final String DELETE_ACCOUNT_BY_ID = "/delete-account-by-id/{id}";
     public static final String GET_MOST_POPULAR_PACKAGES = "/get-most-popular-packages";
+    public static final String GET_ALL_ORDER = "get-all-order/{page}";
+    public static final String GET_TASK_BY_STAFF_ID = "get-task-by-staff-id/{id}&{page}";
 }
 

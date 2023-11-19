@@ -32,4 +32,6 @@ public class Payment {
     String paymentStatus;
     @OneToOne(mappedBy = "payment")
     Order order;
+    @Column
+    double price;
 }

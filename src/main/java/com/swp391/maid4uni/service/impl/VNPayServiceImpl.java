@@ -2,7 +2,9 @@ package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.PaymentConverter;
 import com.swp391.maid4uni.dto.PaymentDto;
+import com.swp391.maid4uni.entity.Order;
 import com.swp391.maid4uni.entity.Payment;
+import com.swp391.maid4uni.repository.OrderRepository;
 import com.swp391.maid4uni.repository.PaymentRepository;
 import com.swp391.maid4uni.response.PaymentResponse;
 import com.swp391.maid4uni.service.VNPayService;
@@ -27,7 +29,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Builder
 public class VNPayServiceImpl implements VNPayService {
-
+    OrderRepository orderRepository;
     PaymentRepository paymentRepository;
     @Override
     public String createPayment(int orderTotal, String orderInfo) {
@@ -103,9 +105,13 @@ public class VNPayServiceImpl implements VNPayService {
     }
 
     @Override
-    public String getVNPayPayment(PaymentDto dto) {
+    public String getVNPayPayment(PaymentDto dto,int orderId) {
         Payment p = PaymentConverter.INSTANCE.fromDtoToEntity(dto);
+        Order o = orderRepository.findByIdAndLogicalDeleteStatus(orderId,0);
+        p.setOrder(o);
+        o.setPayment(p);
         paymentRepository.save(p);
+        orderRepository.save(o);
         String res = "https://maid4uni-be-production.up.railway.app/" + p.getPaymentStatus();
         return res;
     }

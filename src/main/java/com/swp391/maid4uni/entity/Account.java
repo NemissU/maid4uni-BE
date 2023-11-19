@@ -38,6 +38,7 @@ public class    Account {
     @Column
     String fullName;
     @Column
+    @Temporal(TemporalType.DATE)
     LocalDate dOB;
     @Column
     String gender;

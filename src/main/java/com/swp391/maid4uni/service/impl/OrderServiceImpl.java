@@ -20,6 +20,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -103,6 +105,19 @@ public class OrderServiceImpl implements OrderService {
         // truong hop thanh toan nhung huy order
         order.setOrderStatus(OrderStatus.DECLINED);
         return new ResponseObject("OK", "ORDER IS DECLINED, CONTACT HOTLINE FOR REFUND INFO", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
+    }
+
+    @Override
+    public List<OrderResponse> getAllOrder(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        List<Order> orderList = orderRepository.findAllOrderByCreatedAtDescWithOffSetAndLimit(0, pageable);
+        List<OrderResponse> orderResponseList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(orderList)) {
+            orderResponseList = orderList.stream()
+                    .map(converter::fromOrderToOrderResponse)
+                    .toList();
+        }
+        return orderResponseList;
     }
 
     private List<OrderDetail> getWorkDay(Order order, ArrayList<Integer> workDayList, List<OrderDetail> orderDetailList, LocalDate workDay) {

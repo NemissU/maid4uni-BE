@@ -16,5 +16,6 @@ import java.util.Date;
 public class PaymentDto {
     String paymentContent;
     LocalDateTime paymentTime;
+    double price;
     String paymentStatus;
 }

@@ -51,6 +51,7 @@ public class PaymentController {
 
     @GetMapping(API_PARAMS.GET_VNPAY_PAYMENT)
     public ResponseEntity<ResponseObject> getVNPayPayment(
+            @PathVariable int orderId,
             @RequestParam(value = "vnp_Amount") String price,
             @RequestParam(value = "vnp_OrderInfo") String content,
             @RequestParam(value = "vnp_ResponseCode") String resCd)
@@ -59,17 +60,19 @@ public class PaymentController {
             if (resCd.equals("00")) {
                 dto.setPaymentContent(content);
                 dto.setPaymentStatus("Success");
+                dto.setPrice(Double.parseDouble(price));
                 dto.setPaymentTime(LocalDateTime.now());
             } else {
                 dto.setPaymentTime(LocalDateTime.now());
                 dto.setPaymentContent(content);
+                dto.setPrice(Double.parseDouble(price));
                 dto.setPaymentStatus("Failed");
             }
         //Payment payment = PaymentConverter.INSTANCE.fromDtoToEntity(dto);
        // paymentRepository.save(payment);
         // PaymentResponse response = PaymentConverter.INSTANCE.fromEntityToResponse(payment);
         return ResponseEntity.ok().body(
-                new ResponseObject("OK", "GET VNPAY PAYMENT SUCCESSFULLY", vnPayService.getVNPayPayment(dto))
+                new ResponseObject("OK", "GET VNPAY PAYMENT SUCCESSFULLY", vnPayService.getVNPayPayment(dto, orderId))
         );
     }
 }
