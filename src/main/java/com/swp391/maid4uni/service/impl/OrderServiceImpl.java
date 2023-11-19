@@ -92,9 +92,10 @@ public class OrderServiceImpl implements OrderService {
         OrderStatus status = request.getOrderStatus();
         String paymentStatus = order.getPayment().getPaymentStatus();
         // truong hop chua thanh toan
-        if (paymentStatus.equals("Failed")) {
-            order.setOrderStatus(OrderStatus.DECLINED);
-            orderRepository.save(order);
+        if (status.equals(OrderStatus.APPROVED) && paymentStatus.equals("Failed")) {
+//            order.setOrderStatus(OrderStatus.DECLINED);
+//            orderRepository.save(order);
+            //không làm gì cả, chỉ báo lỗi vì update sai logic (payment fail mà approve -> chửi)
             return new ResponseObject("FAILED", "PAYMENT STATUS IS `FAILED`", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
         }
         // truong hop da thanh toan && duyet thanh cong
