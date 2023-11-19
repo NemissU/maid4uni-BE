@@ -47,7 +47,7 @@ public class API_PARAMS {
     /**
      * The constant UPDATE_ACCOUNT_INFO.
      */
-    public static final String UPDATE_ACCOUNT_INFO = "/update-account-info";
+    public static final String UPDATE_ACCOUNT_INFO = "/update-account-info/{accountId}";
 
     /**
      * The constant UPDATE_ROLE.
