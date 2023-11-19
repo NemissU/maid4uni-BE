@@ -14,4 +14,6 @@ import lombok.experimental.FieldDefaults;
 public class TaskResponse {
     int id;
     boolean status;
+    ServiceResponse service;
+    OrderDetailResponse orderDetail;
 }
