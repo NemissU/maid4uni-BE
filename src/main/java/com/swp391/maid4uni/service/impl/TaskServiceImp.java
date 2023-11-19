@@ -8,6 +8,7 @@ import com.swp391.maid4uni.enums.Status;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.OrderDetailRepository;
 import com.swp391.maid4uni.repository.TaskRepository;
+import com.swp391.maid4uni.response.OrderResponse;
 import com.swp391.maid4uni.response.TaskResponse;
 import com.swp391.maid4uni.service.TaskService;
 import lombok.AccessLevel;
@@ -16,8 +17,13 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +61,18 @@ public class TaskServiceImp implements TaskService {
             throw Maid4UniException.notFound("Task " + id + " does not exist");
         }
         return TaskConverter.INSTANCE.fromTaskToTaskResponse(updatedTask);
+    }
+
+    @Override
+    public List<TaskResponse> getTaskByStaffId(int id, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        List<Task> taskList = taskRepository.findAllByStaffIdWithOffSetAndLimit(id, pageable);
+        List<TaskResponse> taskResponseList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(taskList)) {
+            taskResponseList = taskList.stream()
+                    .map(TaskConverter.INSTANCE::fromTaskToTaskResponse)
+                    .toList();
+        }
+        return taskResponseList;
     }
 }
