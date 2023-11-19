@@ -89,17 +89,19 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseObject updateOrderStatus(UpdateOrderRequest request) {
         Order order = orderRepository.findByIdAndLogicalDeleteStatus(request.getId(), 0);
-        OrderStatus status = request.getStatus();
+        OrderStatus status = request.getOrderStatus();
         String paymentStatus = order.getPayment().getPaymentStatus();
         // truong hop chua thanh toan
         if (paymentStatus.equals("Failed")) {
             order.setOrderStatus(OrderStatus.DECLINED);
+            orderRepository.save(order);
             return new ResponseObject("FAILED", "PAYMENT STATUS IS `FAILED`", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
         }
         // truong hop da thanh toan && duyet thanh cong
         if (status.equals(OrderStatus.APPROVED) && paymentStatus.equals("Success")) {
             createOrderDetail(order);
             order.setOrderStatus(status);
+            orderRepository.save(order);
             return new ResponseObject("OK", "SUCCESSFULLY CREATE ORDER", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
         }
         // truong hop thanh toan nhung huy order
