@@ -11,5 +11,5 @@ import lombok.experimental.FieldDefaults;
 @Data
 public class UpdateOrderRequest {
     int id;
-    OrderStatus status;
+    OrderStatus orderStatus;
 }
