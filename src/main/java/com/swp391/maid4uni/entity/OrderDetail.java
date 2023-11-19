@@ -41,7 +41,7 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name = "order_id")
     Order order;
-    @OneToMany(mappedBy = "orderDetail")
+    @OneToMany(mappedBy = "orderDetail", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Task> taskList;
 
 }
