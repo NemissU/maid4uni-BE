@@ -55,7 +55,9 @@ public class TaskServiceImp implements TaskService {
             }
             if (flag){
                 orderDetailValidate.setStatus(Status.DONE);
+                orderDetailValidate.getTaskList().clear();
                 orderDetailRepository.save(orderDetailValidate);
+                deleteAssociatedTask(orderDetailValidate);
             }
         } else {
             throw Maid4UniException.notFound("Task " + id + " does not exist");
@@ -74,5 +76,9 @@ public class TaskServiceImp implements TaskService {
                     .toList();
         }
         return taskResponseList;
+    }
+
+    private void deleteAssociatedTask(OrderDetail orderDetail){
+        taskRepository.deleteByorderDetailId(orderDetail.getId());
     }
 }
