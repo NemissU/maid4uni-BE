@@ -20,6 +20,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -91,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findByIdAndLogicalDeleteStatus(request.getId(), 0);
         OrderStatus status = request.getOrderStatus();
         String paymentStatus = order.getPayment().getPaymentStatus();
-        // truong hop chua thanh toan
+        // truong hop chua thanh toan && duyet thanh cong
         if (status.equals(OrderStatus.APPROVED) && paymentStatus.equals("Failed")) {
 //            order.setOrderStatus(OrderStatus.DECLINED);
 //            orderRepository.save(order);
@@ -103,10 +104,16 @@ public class OrderServiceImpl implements OrderService {
             createOrderDetail(order);
             order.setOrderStatus(status);
             orderRepository.save(order);
-            return new ResponseObject("OK", "SUCCESSFULLY CREATE ORDER", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
+            return new ResponseObject("OK", "SUCCESSFULLY APPROVE ORDER", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
         }
-        // truong hop thanh toan nhung huy order
-        order.setOrderStatus(OrderStatus.DECLINED);
+        // truong hop da thanh toan && tu choi order
+        if(status.equals(OrderStatus.DECLINED) && paymentStatus.equals("Success")) {
+            order.setOrderStatus(OrderStatus.REFUNDED);
+            orderRepository.save(order);
+        }
+        // truong hop con lai
+        order.setOrderStatus(status);
+        orderRepository.save(order);
         return new ResponseObject("OK", "ORDER IS DECLINED, CONTACT HOTLINE FOR REFUND INFO", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
     }
 

@@ -3,7 +3,8 @@ package com.swp391.maid4uni.enums;
 public enum OrderStatus {
     DECLINED("Từ chối"),
     WAITING_FOR_APPROVAL("Chờ duyệt"),
-    APPROVED("Đồng ý");
+    APPROVED("Đồng ý"),
+    REFUNDED("Hoàn tiền");
 
     private final String value;
 
