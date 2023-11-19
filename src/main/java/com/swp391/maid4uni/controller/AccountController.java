@@ -120,10 +120,10 @@ public class AccountController {
      * @return the response entity
      */
     @PutMapping(API_PARAMS.UPDATE_ACCOUNT_INFO)
-    public ResponseEntity<ResponseObject> updateAccountInfoById(
+    public ResponseEntity<ResponseObject> updateAccountInfoById(@PathVariable int accountId,
             @RequestBody UpdateAccountRequest updateAccountRequest) {
         log.info("Start update by id");
-        Integer accountId = updateAccountRequest.getId();
+
         return ResponseEntity.ok().body(
                 new ResponseObject("OK", "UPDATE BY ID SUCCESSFULLY", accountService.updateAccountInfoById(accountId, updateAccountRequest))
         );
