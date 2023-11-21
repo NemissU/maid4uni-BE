@@ -60,4 +60,23 @@ public class OrderController {
                         , orderService.getAllOrder(page))
         );
     }
+
+    @GetMapping(API_PARAMS.GET_TOTAL_PRICE_BY_MONTH)
+    public ResponseEntity<ResponseObject> getTotalPriceByMonth(@RequestParam int month){
+        log.info("Start get total price by month");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK"
+                        , "GET TOTAL PRICE BY MONTH SUCCESSFUL"
+                        , orderService.getTotalPriceByMonth(month))
+        );
+    }
+    @GetMapping(API_PARAMS.GET_TOTAL_BY_MONTH_OF_PACKAGE)
+    public ResponseEntity<ResponseObject> getTotalByMonthOfPackage(@RequestParam int month){
+        log.info("Start get total by month of package");
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("OK"
+                        , "GET TOTAL BY MONTH OF PACKAGE SUCCESSFUL"
+                        , orderService.getTotalPriceByMonthOfPackage(month))
+        );
+    }
 }

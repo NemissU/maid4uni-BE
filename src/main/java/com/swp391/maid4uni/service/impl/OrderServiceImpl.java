@@ -1,9 +1,9 @@
 package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.OrderConverter;
-import com.swp391.maid4uni.dto.*;
-import com.swp391.maid4uni.entity.*;
+import com.swp391.maid4uni.dto.OrderDto;
 import com.swp391.maid4uni.entity.Package;
+import com.swp391.maid4uni.entity.*;
 import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.PeriodType;
 import com.swp391.maid4uni.enums.Role;
@@ -20,7 +20,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -107,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
             return new ResponseObject("OK", "SUCCESSFULLY APPROVE ORDER", OrderConverter.INSTANCE.fromOrderToOrderResponse(order));
         }
         // truong hop da thanh toan && tu choi order
-        if(status.equals(OrderStatus.DECLINED) && paymentStatus.equals("Success")) {
+        if (status.equals(OrderStatus.DECLINED) && paymentStatus.equals("Success")) {
             order.setOrderStatus(OrderStatus.REFUNDED);
             orderRepository.save(order);
         }
@@ -130,6 +129,43 @@ public class OrderServiceImpl implements OrderService {
         return orderResponseList;
     }
 
+    @Override
+    public Map<String, Double> getTotalPriceByMonth(int month) {
+        Map<String, Double> totalPriceByMonth = new HashMap<>();
+
+        List<Order> ordersInMonth = orderRepository.findByLogicalDeleteStatusAndCreatedAtBetween(0,
+                LocalDateTime.of(LocalDateTime.now().getYear(), month, 1, 0, 0),
+                LocalDateTime.of(LocalDateTime.now().getYear(), month + 1, 1, 0, 0)
+        );
+
+        for (Order order : ordersInMonth) {
+            String monthYear = String.format("%d-%02d", order.getCreatedAt().getYear(), order.getCreatedAt().getMonthValue());
+            if (order.getOrderStatus().equals(OrderStatus.APPROVED))
+                totalPriceByMonth.merge(monthYear, order.getPrice(), Double::sum);
+        }
+
+        return totalPriceByMonth;
+    }
+
+    @Override
+    public Map<String, Double> getTotalPriceByMonthOfPackage(int month) {
+        Map<String, Double> totalPriceByMonthOfPackage = new HashMap<>();
+        List<Order> ordersInMonth = orderRepository.findByLogicalDeleteStatusAndCreatedAtBetween(0,
+                LocalDateTime.of(LocalDateTime.now().getYear(), month, 1, 0, 0),
+                LocalDateTime.of(LocalDateTime.now().getYear(), month + 1, 1, 0, 0)
+        );
+        List<Package> packageList = packageRepository.findAllByLogicalDeleteStatus(0);
+        for (Package aPackage : packageList) {
+            String packageName = aPackage.getName();
+            totalPriceByMonthOfPackage.put(packageName, (double) 0);
+            for (Order order : ordersInMonth) {
+                if (order.getAPackage().equals(aPackage) && order.getOrderStatus().equals(OrderStatus.APPROVED))
+                    totalPriceByMonthOfPackage.merge(packageName, order.getPrice(), Double::sum);
+            }
+        }
+        return totalPriceByMonthOfPackage;
+    }
+
     private List<OrderDetail> getWorkDay(Order order, ArrayList<Integer> workDayList, List<OrderDetail> orderDetailList, LocalDate workDay) {
         Duration d = Duration.ofHours(order.getDuration());
         for (int j = 0; j < workDayList.size(); j++) {
@@ -140,7 +176,7 @@ public class OrderServiceImpl implements OrderService {
                     .startTime(order.getStartTime())
                     .endTime(order.getStartTime().plus(d))
                     .build();
-            while (workDay.getDayOfWeek().getValue() != workDayList.get(j) ){
+            while (workDay.getDayOfWeek().getValue() != workDayList.get(j)) {
                 workDay = workDay.atStartOfDay().toLocalDate().plus(Period.ofDays(1));
             }
 
@@ -162,7 +198,7 @@ public class OrderServiceImpl implements OrderService {
         LocalDate actualStartDate = currentDate;
         int firstWorkDay = workDayList.get(0);
         DayOfWeek day = actualStartDate.getDayOfWeek();
-        while ( day.getValue()+1 != firstWorkDay) {
+        while (day.getValue() + 1 != firstWorkDay) {
             firstWorkDay += 1;
         }
         actualStartDate = actualStartDate.plus(Period.ofDays(firstWorkDay));
@@ -170,12 +206,12 @@ public class OrderServiceImpl implements OrderService {
         Duration d = Duration.ofHours(order.getDuration());
         if (order.getPeriodType().equals(PeriodType.ONE_MONTH)) {
             for (int i = 0; i < 4; i++) {
-                workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
+                workDay = workDay.atStartOfDay().toLocalDate().plusDays(7 - workDayList.get(0) - 1);
                 orderDetailList = getWorkDay(order, workDayList, orderDetailList, workDay);
             }
         } else {
             for (int i = 0; i < 8; i++) {
-                workDay = workDay.atStartOfDay().toLocalDate().plusDays(7-workDayList.get(0)-1);
+                workDay = workDay.atStartOfDay().toLocalDate().plusDays(7 - workDayList.get(0) - 1);
                 orderDetailList = getWorkDay(order, workDayList, orderDetailList, workDay);
 
             }
@@ -199,13 +235,14 @@ public class OrderServiceImpl implements OrderService {
             }
         }
     }
+
     private ArrayList<Integer> getIntegerArray(ArrayList<String> stringArray) {
         ArrayList<Integer> result = new ArrayList<Integer>();
-        for(String stringValue : stringArray) {
+        for (String stringValue : stringArray) {
             try {
                 //Convert String to Integer, and store it into integer array list.
                 result.add(Integer.parseInt(stringValue));
-            } catch(NumberFormatException nfe) {
+            } catch (NumberFormatException nfe) {
                 //System.out.println("Could not parse " + nfe);
                 log.info("NumberFormat", "Parsing failed! " + stringValue + " can not be an integer");
             }
