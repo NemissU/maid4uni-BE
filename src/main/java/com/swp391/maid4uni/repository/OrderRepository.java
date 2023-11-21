@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
@@ -15,4 +16,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query(value = "SELECT o FROM Order o WHERE o.logicalDeleteStatus =:logicalDeleteStatus ORDER BY o.createdAt DESC")
     List<Order> findAllOrderByCreatedAtDescWithOffSetAndLimit(@Param("logicalDeleteStatus")int logicalDeleteStatus, Pageable pageable);
+
+    List<Order> findByLogicalDeleteStatusAndCreatedAtBetween(int logicalDeleteStatus, LocalDateTime startDate, LocalDateTime endDate);
 }
