@@ -153,5 +153,6 @@ public class API_PARAMS {
     public static final String GET_ORDER_DETAIL_BY_ORDERID = "/get-order-detail-by-orderId/{id}";
     public static final String GET_TOTAL_PRICE_BY_MONTH = "/get-total-price-by-month";
     public static final String GET_TOTAL_BY_MONTH_OF_PACKAGE = "/get-total-by-month-of-package";
+    public static final String GET_ACCOUNT_INFO_BY_ID = "/get-account-info-by-id";
 }
 

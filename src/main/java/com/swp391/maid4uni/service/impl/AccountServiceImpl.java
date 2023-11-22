@@ -192,6 +192,13 @@ public class AccountServiceImpl implements AccountService {
         return AccountConverter.INSTANCE.fromAccountToAccountResponse(account);
     }
 
+    @Override
+    public AccountResponse getAccountInfoById(int id) {
+        Account account = accountRepository.findAccountByIdAndLogicalDeleteStatus(id , 0);
+
+        return AccountConverter.INSTANCE.fromAccountToAccountResponse(account);
+    }
+
     private void validateRegisterAccountRequest(RegisterAccountRequest RegisterAccountRequest) {
         if (accountRepository.existsByUsernameAndLogicalDeleteStatus(RegisterAccountRequest.getUsername(), (short) 0)) {
             throw Maid4UniException.badRequest("Username is existed");
