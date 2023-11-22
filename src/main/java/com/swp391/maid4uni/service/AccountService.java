@@ -69,4 +69,6 @@ public interface AccountService {
     AccountResponse updateAccountInfoById(Integer accountId, UpdateAccountRequest updateAccountRequest);
 
     AccountResponse deleteAccount(int id);
+
+    AccountResponse getAccountInfoById(int id);
 }
