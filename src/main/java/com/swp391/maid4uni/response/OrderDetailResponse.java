@@ -19,5 +19,5 @@ public class OrderDetailResponse {
     LocalTime startTime;
     LocalTime endTime;
     Status status;
-    OrderResponse orderResponse;
+    OrderResponse order;
 }

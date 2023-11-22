@@ -8,6 +8,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface OrderDetailConverter {
@@ -17,7 +20,25 @@ public interface OrderDetailConverter {
 
     OrderDetail fromOrderDetailDtoToOrderDetail(OrderDetailDto orderDetailDto);
 
-    OrderDetailResponse fromOrderDetailToOrderDetailResponse(OrderDetail orderDetail);
+    default ArrayList<Integer> convertWorkDayToArrayList(String inputString) {
+        if (inputString == null || inputString.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        String[] stringArray = inputString.trim().split(",");
+        List<Integer> integerList = new ArrayList<>();
+
+        for (String s : stringArray) {
+            try {
+                // Thử chuyển đổi từ chuỗi sang số
+                int number = Integer.parseInt(s.trim());
+                integerList.add(number);
+            } catch (NumberFormatException e) {
+                // Xử lý lỗi chuyển đổi (có thể log và bỏ qua hoặc xử lý tùy ý)
+                e.printStackTrace();
+            }
+        }
+        return new ArrayList<>(integerList);
+    }
 
     default String convertToString(ArrayList<Integer> inputList) {
         StringBuilder sb = new StringBuilder();
@@ -29,4 +50,8 @@ public interface OrderDetailConverter {
         }
         return sb.toString();
     }
+
+    OrderDetailResponse fromOrderDetailToOrderDetailResponse(OrderDetail orderDetail);
+
+
 }

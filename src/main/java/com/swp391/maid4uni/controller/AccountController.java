@@ -137,4 +137,13 @@ public class AccountController {
                 ,accountService.deleteAccount(id)));
     }
 
+    @GetMapping(API_PARAMS.GET_ACCOUNT_INFO_BY_ID)
+    public ResponseEntity<ResponseObject> getAccountInfoById(@RequestParam int id){
+        log.info("Start get account info by id");
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
+                ,"GET ACCOUNT INFO BY ID SUCCESSFULLY"
+                , accountService.getAccountInfoById(id))
+        );
+    }
+
 }
