@@ -11,8 +11,7 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     @Query(value = "SELECT t FROM Task t WHERE t.staff.id =:id ORDER BY t.orderDetail.workDay ASC")
-    List<Task> findAllByStaffIdWithOffSetAndLimit(@Param("id")int id
-            , Pageable pageable);
+    List<Task> findAllByStaffId(@Param("id")int id);
 
     void deleteByorderDetailId(int id);
 }

@@ -47,7 +47,7 @@ public class API_PARAMS {
     /**
      * The constant UPDATE_ACCOUNT_INFO.
      */
-    public static final String UPDATE_ACCOUNT_INFO = "/update-account-info";
+    public static final String UPDATE_ACCOUNT_INFO = "/update-account-info/{accountId}";
 
     /**
      * The constant UPDATE_ROLE.
@@ -147,7 +147,12 @@ public class API_PARAMS {
     public static final String GET_PACKAGE_BY_CATEGORY = "/get-package-by-category/{id}&{page}";
     public static final String DELETE_ACCOUNT_BY_ID = "/delete-account-by-id/{id}";
     public static final String GET_MOST_POPULAR_PACKAGES = "/get-most-popular-packages";
-    public static final String GET_ALL_ORDER = "get-all-order/{page}";
-    public static final String GET_TASK_BY_STAFF_ID = "get-task-by-staff-id/{id}&{page}";
+    public static final String GET_ALL_ORDER = "/get-all-order/{page}";
+    public static final String GET_TASK_BY_STAFF_ID = "/get-task-by-staff-id/{id}";
+    public static final String UPDATE_ORDER_DETAIL = "/update-order-detail";
+    public static final String GET_ORDER_DETAIL_BY_ORDERID = "/get-order-detail-by-orderId/{id}";
+    public static final String GET_TOTAL_PRICE_BY_MONTH = "/get-total-price-by-month";
+    public static final String GET_TOTAL_BY_MONTH_OF_PACKAGE = "/get-total-by-month-of-package";
+    public static final String GET_ACCOUNT_INFO_BY_ID = "/get-account-info-by-id";
 }
 

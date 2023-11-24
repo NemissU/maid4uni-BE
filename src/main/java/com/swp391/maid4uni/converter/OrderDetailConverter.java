@@ -1,13 +1,12 @@
 package com.swp391.maid4uni.converter;
 
-import com.swp391.maid4uni.dto.TaskDto;
+import com.swp391.maid4uni.dto.OrderDetailDto;
 import com.swp391.maid4uni.entity.OrderDetail;
 import com.swp391.maid4uni.entity.Task;
-import com.swp391.maid4uni.request.UpdateTaskRequest;
+import com.swp391.maid4uni.request.OrderDetailRequest;
 import com.swp391.maid4uni.response.OrderDetailResponse;
-import com.swp391.maid4uni.response.TaskResponse;
+import com.swp391.maid4uni.response.TaskDutyResponse;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
@@ -16,27 +15,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface TaskConverter {
-    TaskConverter INSTANCE = Mappers.getMapper(TaskConverter.class);
+public interface OrderDetailConverter {
+    OrderDetailConverter INSTANCE = Mappers.getMapper(OrderDetailConverter.class);
 
-    TaskDto fromUpdateTaskRequestToTaskDto(UpdateTaskRequest updateTaskRequest);
+    OrderDetailDto fromOrderDetailRequestToOrderDetailDto(OrderDetailRequest orderDetailRequest);
 
-    Task fromTaskDtoToTask(TaskDto taskDto);
-
-    OrderDetailResponse map(OrderDetail orderDetail);
-
-    TaskResponse fromTaskToTaskResponse(Task updatedTask);
-
-    default String convertToString(ArrayList<Integer> inputList) {
-        StringBuilder sb = new StringBuilder();
-        for (Integer element : inputList) {
-            sb.append(element).append(",");
-        }
-        if (sb.length() > 0) {
-            sb.deleteCharAt(sb.length() - 1);  // Xóa dấu ',' cuối cùng
-        }
-        return sb.toString();
-    }
+    OrderDetail fromOrderDetailDtoToOrderDetail(OrderDetailDto orderDetailDto);
 
     default ArrayList<Integer> convertWorkDayToArrayList(String inputString) {
         if (inputString == null || inputString.trim().isEmpty()) {
@@ -44,6 +28,7 @@ public interface TaskConverter {
         }
         String[] stringArray = inputString.trim().split(",");
         List<Integer> integerList = new ArrayList<>();
+
         for (String s : stringArray) {
             try {
                 // Thử chuyển đổi từ chuỗi sang số
@@ -56,4 +41,20 @@ public interface TaskConverter {
         }
         return new ArrayList<>(integerList);
     }
+
+    default String convertToString(ArrayList<Integer> inputList) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer element : inputList) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);  // Xóa dấu ',' cuối cùng
+        }
+        return sb.toString();
+    }
+    TaskDutyResponse map(Task task);
+
+    OrderDetailResponse fromOrderDetailToOrderDetailResponse(OrderDetail orderDetail);
+
+
 }
