@@ -44,11 +44,11 @@ public class TaskController {
     }
 
     @GetMapping(API_PARAMS.GET_TASK_BY_STAFF_ID)
-    public ResponseEntity<ResponseObject> getTaskByStaffId(@PathVariable int id, @PathVariable int page) {
+    public ResponseEntity<ResponseObject> getTaskByStaffId(@PathVariable int id) {
         log.info("Start get task by staff id");
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK"
                 , "GET TASK BY STAFF ID SUCCESSFULLY"
-                , taskService.getTaskByStaffId(id, page)));
+                , taskService.getTaskByStaffId(id)));
     }
 
 }
