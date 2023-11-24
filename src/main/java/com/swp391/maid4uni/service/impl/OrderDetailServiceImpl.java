@@ -3,10 +3,13 @@ package com.swp391.maid4uni.service.impl;
 import com.swp391.maid4uni.converter.OrderDetailConverter;
 import com.swp391.maid4uni.converter.PackageConverter;
 import com.swp391.maid4uni.dto.OrderDetailDto;
+import com.swp391.maid4uni.entity.Order;
 import com.swp391.maid4uni.entity.OrderDetail;
+import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.Status;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.OrderDetailRepository;
+import com.swp391.maid4uni.repository.OrderRepository;
 import com.swp391.maid4uni.repository.TaskRepository;
 import com.swp391.maid4uni.response.OrderDetailResponse;
 import com.swp391.maid4uni.response.PackageResponse;
@@ -31,6 +34,8 @@ import java.util.Optional;
 public class OrderDetailServiceImpl implements OrderDetailService {
     OrderDetailRepository orderDetailRepository;
     TaskRepository taskRepository;
+    OrderRepository orderRepository;
+
     @Override
     public OrderDetailResponse updateOrderDetail(OrderDetailDto orderDetailDto) {
         Optional<OrderDetail> oldOrderDetail = orderDetailRepository.findById(orderDetailDto.getId());
@@ -44,6 +49,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             /** NẾU MUỐN UPDATE CÁC STATUS KHÁC VÀ XÓA TASK HÔM ĐÓ THÌ NHỚ THÊM &&*/
             if (oldOrderDetail.get().getStatus().equals(Status.CANCEL)){
                 deleteAssociatedTask(oldOrderDetail.get());
+            }
+            Order orderValid = oldOrderDetail.get().getOrder();
+            List<OrderDetail> orderDetails = orderValid.getOrderDetailList();
+            if ( orderDetails.get(orderDetails.size() - 1).equals(oldOrderDetail.get())) {
+                orderValid.setOrderStatus(OrderStatus.DONE);
+                orderRepository.save(orderValid);
             }
         } else throw Maid4UniException.notFound("Order detail id " + orderDetailDto.getId() + " does not exist");
         return OrderDetailConverter.INSTANCE.fromOrderDetailToOrderDetailResponse(oldOrderDetail.get());

@@ -4,6 +4,7 @@ public enum OrderStatus {
     DECLINED("Từ chối"),
     WAITING_FOR_APPROVAL("Chờ duyệt"),
     APPROVED("Đồng ý"),
+    DONE("Hoàn thành"),
     REFUNDED("Hoàn tiền");
 
     private final String value;
