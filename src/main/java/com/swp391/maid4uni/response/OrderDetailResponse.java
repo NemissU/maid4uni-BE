@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class OrderDetailResponse {
     LocalTime endTime;
     Status status;
     OrderResponse order;
+    List<TaskDutyResponse> taskList;
 }

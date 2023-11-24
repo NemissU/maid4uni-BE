@@ -2,8 +2,10 @@ package com.swp391.maid4uni.converter;
 
 import com.swp391.maid4uni.dto.OrderDetailDto;
 import com.swp391.maid4uni.entity.OrderDetail;
+import com.swp391.maid4uni.entity.Task;
 import com.swp391.maid4uni.request.OrderDetailRequest;
 import com.swp391.maid4uni.response.OrderDetailResponse;
+import com.swp391.maid4uni.response.TaskDutyResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -50,6 +52,7 @@ public interface OrderDetailConverter {
         }
         return sb.toString();
     }
+    TaskDutyResponse map(Task task);
 
     OrderDetailResponse fromOrderDetailToOrderDetailResponse(OrderDetail orderDetail);
 
