@@ -2,11 +2,14 @@ package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.TaskConverter;
 import com.swp391.maid4uni.dto.TaskDto;
+import com.swp391.maid4uni.entity.Order;
 import com.swp391.maid4uni.entity.OrderDetail;
 import com.swp391.maid4uni.entity.Task;
+import com.swp391.maid4uni.enums.OrderStatus;
 import com.swp391.maid4uni.enums.Status;
 import com.swp391.maid4uni.exception.Maid4UniException;
 import com.swp391.maid4uni.repository.OrderDetailRepository;
+import com.swp391.maid4uni.repository.OrderRepository;
 import com.swp391.maid4uni.repository.TaskRepository;
 import com.swp391.maid4uni.response.OrderResponse;
 import com.swp391.maid4uni.response.TaskResponse;
@@ -35,6 +38,7 @@ import java.util.Optional;
 public class TaskServiceImp implements TaskService {
     TaskRepository taskRepository;
     OrderDetailRepository orderDetailRepository;
+    OrderRepository orderRepository;
 
     @Override
     public TaskResponse updateTask(TaskDto taskDto, int id) {
@@ -58,6 +62,12 @@ public class TaskServiceImp implements TaskService {
                 orderDetailValidate.getTaskList().clear();
                 orderDetailRepository.save(orderDetailValidate);
                 deleteAssociatedTask(orderDetailValidate);
+                Order orderValid = orderDetailValidate.getOrder();
+                List<OrderDetail> orderDetails = orderValid.getOrderDetailList();
+                if ( orderDetails.get(orderDetails.size() - 1).equals(orderDetailValidate)) {
+                        orderValid.setOrderStatus(OrderStatus.DONE);
+                        orderRepository.save(orderValid);
+                }
             }
         } else {
             throw Maid4UniException.notFound("Task " + id + " does not exist");
@@ -66,9 +76,8 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public List<TaskResponse> getTaskByStaffId(int id, int page) {
-        Pageable pageable = PageRequest.of(page, 10);
-        List<Task> taskList = taskRepository.findAllByStaffIdWithOffSetAndLimit(id, pageable);
+    public List<TaskResponse> getTaskByStaffId(int id) {
+        List<Task> taskList = taskRepository.findAllByStaffId(id);
         List<TaskResponse> taskResponseList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(taskList)) {
             taskResponseList = taskList.stream()
