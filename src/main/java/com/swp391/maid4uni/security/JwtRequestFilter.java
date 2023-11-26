@@ -60,6 +60,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 if (jwtTokenUtil.isValid(token, AccountConverter.INSTANCE.fromAccountToTokenPayload(account))) {
                     // Tạo user detail -> lưu vào context holder
                     List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                    if (account.getRole() != null) {
+                        authorities.add(new SimpleGrantedAuthority("ROLE_" + account.getRole().name()));
+                    }
                     UserDetails userDetails = new User(account.getUsername(), account.getPassword(), authorities);
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
