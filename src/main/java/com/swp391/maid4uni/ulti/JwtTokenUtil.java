@@ -47,7 +47,7 @@ public class JwtTokenUtil {
         return getClaimsFromToken(token, (Claims claim) -> {
             Map<String, Object> mapResult = (Map<String, Object>) claim.get("payload");
             return TokenPayload.builder()
-                    .accountId((Integer) mapResult.get("acountId"))
+                    .accountId((Integer) mapResult.get("accountId"))
                     .username((String) mapResult.get("username"))
                     .build();
         });
