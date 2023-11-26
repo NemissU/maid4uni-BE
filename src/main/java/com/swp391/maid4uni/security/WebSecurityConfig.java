@@ -53,43 +53,28 @@ public class WebSecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
+
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 // quyền login + register thì ai cũng đc permit
-                                .requestMatchers("/login").permitAll()
-                                .requestMatchers("/register").permitAll()
+                                .requestMatchers("/api/v1/login").permitAll()
+                                .requestMatchers("/api/v1/register").permitAll()
+                                .requestMatchers("/api/v1/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers("/api/v1/manager/**").hasAnyAuthority("ROLE_MANAGER", "ROLE_ADMIN")
+                                .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/staff/**").hasAnyRole( "ADMIN","STAFF")
+                                .requestMatchers("/api/v1/**").permitAll()
                                 // tất cả những cái khác cần phân quyền
-                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
+
                 )
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(Customizer.withDefaults());
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
-
-//        Filter filter =  jwtRequestFilter;
-//        Class<? extends Filter> clazz = UsernamePasswordAuthenticationFilter.class;
-//
-//        return httpSecurity.csrf(Customizer.withDefaults()).disable()
-
-//                 .sessionManagement()
-//                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                 .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).build();
-//
-//        return httpSecurity.csrf().disable()
-
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and().cors().configurationSource(corsConfigurationSource()).and()
-//                .authorizeHttpRequests()
-//                .antMatchers("/login").permitAll()
-//                .antMatchers("/register").permitAll()
-//                .anyRequest().permitAll()
-
-//                .and()
-//                .addFilterBefore( jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-//                .build();
 
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
