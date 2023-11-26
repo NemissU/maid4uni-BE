@@ -1,7 +1,6 @@
 package com.swp391.maid4uni.service.impl;
 
 import com.swp391.maid4uni.converter.ServiceConverter;
-import com.swp391.maid4uni.dto.ServiceDto;
 import com.swp391.maid4uni.entity.Account;
 import com.swp391.maid4uni.entity.Package;
 import com.swp391.maid4uni.entity.Service;
@@ -20,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
-
+import com.swp391.maid4uni.dto.ServiceDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,8 +74,11 @@ public class ServiceServiceImpl implements ServiceService {
         Service service = serviceRepository.findByIdAndLogicalDeleteStatus(id, 0);
         if (service == null)
             throw Maid4UniException.notFound("Service id: " + id + " does not exist");
+        if(!serviceDto.getName().isEmpty() || !serviceDto.getName().equals(""));
         service.setName(serviceDto.getName());
+        if(!serviceDto.getDescription().isEmpty() || !serviceDto.getDescription().equals(""));
         service.setDescription(serviceDto.getDescription());
+        if(serviceDto.getPrice() >= 0)
         service.setPrice(serviceDto.getPrice());
         serviceRepository.save(service);
         reUpdatePackage(service);

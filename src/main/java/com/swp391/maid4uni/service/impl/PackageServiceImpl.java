@@ -105,9 +105,13 @@ public class PackageServiceImpl implements PackageService {
             Package uPackage = PackageConverter.INSTANCE.fromPackageDtoToPackage(packageDto);
 
             //Update vào package có id được truyền vào
+            if (!uPackage.getServiceList().isEmpty())
             aPackage.get().setServiceList(uPackage.getServiceList());
+            if (!uPackage.getName().equals("") || !uPackage.getName().isEmpty())
             aPackage.get().setName(uPackage.getName());
+            if (!uPackage.getDescription().equals("") || !uPackage.getDescription().isEmpty())
             aPackage.get().setDescription(uPackage.getDescription());
+            if (!uPackage.getImageUrl().equals("") || !uPackage.getImageUrl().isEmpty())
             aPackage.get().setImageUrl(uPackage.getImageUrl());
             packageRepository.save(aPackage.get());
         }
