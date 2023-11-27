@@ -18,7 +18,7 @@ public class VNPayConfig {
     public static String vnp_PayUrl = API_PARAMS.VNPAY_PAYURL;
     // todo
     //  change to server side api
-    public static String vnp_Returnurl = "http://localhost:3000";
+    public static String vnp_Returnurl = "https://maid4uni-fe.vercel.app";
     @Value("${VNP_TMNCODE}")
     public static String vnp_TmnCode;
     @Value("${VNP_HASHSECRECT}")
