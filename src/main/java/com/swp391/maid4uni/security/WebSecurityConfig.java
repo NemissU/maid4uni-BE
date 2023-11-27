@@ -66,7 +66,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/staff/**").hasAnyRole( "ADMIN","STAFF")
                                 .requestMatchers("/api/v1/**").permitAll()
-                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll()
+                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                                 // tất cả những cái khác cần phân quyền
                                 .anyRequest().authenticated()
 
